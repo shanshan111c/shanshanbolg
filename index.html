@@ -57,7 +57,7 @@
       --secondary: #69655d;
 
       --header-bg:
-        rgba(239,236,226,.80);
+        rgb(239,236,226);
 
       --header-border:
         rgba(30,25,20,.10);
@@ -88,7 +88,7 @@
       --secondary: #9b9992;
 
       --header-bg:
-        rgba(1,5,14,.72);
+        rgb(1,5,14);
 
       --header-border:
         rgba(255,255,255,.055);
@@ -139,7 +139,7 @@
         var(--header-border);
 
       backdrop-filter:
-        blur(7px);
+        none;
 
       transition:
         background-color .6s ease,
@@ -285,7 +285,7 @@
         var(--cord);
 
       transition:
-        height .18s cubic-bezier(.2,.8,.2,1);
+        height .12s cubic-bezier(.2,.9,.2,1);
     }
 
 
@@ -310,7 +310,7 @@
       user-select: none;
 
       transition:
-        top .22s cubic-bezier(.18,.82,.2,1);
+        top .12s cubic-bezier(.18,.9,.2,1);
     }
 
 
@@ -1265,7 +1265,7 @@ bulbHandle.addEventListener(
 
         Math.min(
 
-          26,
+          30,
 
           event.clientY -
           startY
@@ -1286,7 +1286,7 @@ bulbHandle.addEventListener(
     */
 
     if (
-      distance >= 14 &&
+      distance >= 8 &&
       !triggered
     ) {
 
@@ -2912,348 +2912,296 @@ function drawRiver(
    不是太阳火焰。
 ===================================================== */
 
-const ghostFires = [
+/*
+  每次打开网页都会重新随机分布。
+  分区随机保证整片江面都有火焰，同时不会全部挤在一边。
+*/
+const fireWispCount = 8;
 
-  {
-    x: 50,
-    baseY: 144,
-    height: 24,
-    phase: .3,
-    lean: 1.0
-  },
+const fireWisps = Array.from(
+  { length: fireWispCount },
+  (_, index) => {
 
-  {
-    x: 91,
-    baseY: 148,
-    height: 16,
-    phase: 1.8,
-    lean: .7
-  },
+    /* 小火最常见，大火较少。 */
+    const size =
+      Math.pow(Math.random(), 1.7);
 
-  {
-    x: 158,
-    baseY: 142,
-    height: 28,
-    phase: 3.2,
-    lean: 1.2
-  },
+    /* 一条最常见，两条较少，三条最少。 */
+    const lineRoll =
+      Math.random();
 
-  {
-    x: 268,
-    baseY: 146,
-    height: 20,
-    phase: 5.1,
-    lean: .9
+    const lineCount =
+      lineRoll < .70
+      ? 1
+      : lineRoll < .93
+      ? 2
+      : 3;
+
+    return {
+      x:
+        12 +
+        ((index + Math.random()) / fireWispCount) * 296,
+
+      baseY:
+        156 + Math.random() * 11,
+
+      rise:
+        45 + size * 35 + Math.random() * 8,
+
+      length:
+        22 + size * 22 + Math.random() * 5,
+
+      speed:
+        .000068 +
+        (1 - size) * .000052 +
+        Math.random() * .000020,
+
+      phase:
+        Math.random(),
+
+      activeFraction:
+        .65 + Math.random() * .13,
+
+      sway:
+        1.5 + Math.random() * 2.3,
+
+      frequency:
+        .00078 + Math.random() * .00102,
+
+      drift:
+        4 + Math.random() * 12,
+
+      rightLean:
+        3 + Math.random() * 15,
+
+      fadePower:
+        .70 + (1 - size) * .95,
+
+      base:
+        2 + Math.floor(size * 2 + Math.random() * .55),
+
+      asym:
+        Math.floor(Math.random() * 3) - 1,
+
+      lines:
+        Array.from(
+          { length: lineCount },
+          (_, lineIndex) => ({
+            offset:
+              (lineIndex - (lineCount - 1) / 2) *
+              (5 + Math.random() * 3),
+
+            lengthScale:
+              .78 + Math.random() * .35,
+
+            baseScale:
+              .72 + Math.random() * .42,
+
+            asym:
+              Math.floor(Math.random() * 3) - 1,
+
+            phase:
+              Math.random(),
+
+            lean:
+              Math.random() * 7,
+
+            bottomLeft:
+              Math.floor(Math.random() * 3) - 1,
+
+            bottomRight:
+              Math.floor(Math.random() * 3) - 1,
+
+            cupDepth:
+              1 + Math.floor(Math.random() * 3)
+          }))
+    };
+  }
+);
+
+
+/* 用与背景相同的 2×2 像素逐格连接，火线不会断开。 */
+function drawFirePixelLine(points, alpha, colorOffset) {
+
+  let pixelIndex = colorOffset;
+
+  for (let pointIndex = 1; pointIndex < points.length; pointIndex++) {
+    let x = Math.round(points[pointIndex - 1][0] / PX) * PX;
+    let y = Math.round(points[pointIndex - 1][1] / PX) * PX;
+    const endX = Math.round(points[pointIndex][0] / PX) * PX;
+    const endY = Math.round(points[pointIndex][1] / PX) * PX;
+
+    while (x !== endX || y !== endY) {
+      px(
+        x,
+        y,
+        pixelIndex % 5 < 3 ? "#ed5429" : "#b92518",
+        alpha
+      );
+
+      if (y !== endY && (x === endX || pixelIndex % 3 !== 0)) {
+        y += Math.sign(endY - y) * PX;
+      }
+      else if (x !== endX) {
+        x += Math.sign(endX - x) * PX;
+      }
+
+      pixelIndex++;
+    }
   }
 
-];
+  const last = points[points.length - 1];
+  px(
+    last[0],
+    last[1],
+    pixelIndex % 5 < 3 ? "#ed5429" : "#b92518",
+    alpha
+  );
+}
 
 
+function drawGhostFire(state) {
 
-function drawGhostFire(
-  state
-) {
-
-  if (
-    document.body
-      .dataset
-      .theme
-    !==
-    "day"
-  ) {
-
+  if (document.body.dataset.theme !== "day") {
     return;
   }
 
-
-  ghostFires.forEach(
-    (
-      flame,
-      flameIndex
-    ) => {
-
-      const segments =
-        Math.round(
-          flame.height /
-          2
-        );
-
-
-      let previousX =
-        flame.x;
-
-
-      let previousY =
-        flame.baseY;
-
-
-      for (
-        let i = 0;
-        i < segments;
-        i++
-      ) {
-
-        const progress =
-          i /
-          Math.max(
-            1,
-            segments - 1
-          );
-
-
-        /*
-          越往上越细，
-          越容易往右飘
-        */
-
-        const sway =
-          Math.sin(
-
-            state.time *
-            (
-              .0011 +
-              flameIndex *
-              .00008
-            )
-            +
-
-            flame.phase +
-
-            i *
-            .46
-
-          )
-          *
-          (
-            1 +
-            progress *
-            3
-          );
-
-
-        const windLean =
-          progress *
-          progress *
-          5 *
-          flame.lean;
-
-
-        const taperNoise =
-          Math.sin(
-            state.time *
-            .0017 +
-            flame.phase *
-            1.8 +
-            i *
-            .9
-          );
-
-
-        const x =
-          flame.x +
-          windLean +
-          sway;
-
-
-        const y =
-          flame.baseY -
-          i *
-          2;
-
-
-        const gx =
-          Math.round(
-            x /
-            PX
-          )
-          *
-          PX;
-
-
-        const gy =
-          Math.round(
-            y /
-            PX
-          )
-          *
-          PX;
-
-
-        /*
-          外层幽青
-        */
-
-        px(
-
-          gx,
-
-          gy,
-
-          "#78c8c4",
-
-          .36 +
-          (
-            1 -
-            progress
-          )
-          *
-          .14
-
-        );
-
-
-        /*
-          中层青白
-        */
-
-        if (
-          i % 2 === 0 &&
-          progress < .82
-        ) {
-
-          px(
-
-            gx + 2,
-
-            gy,
-
-            "#a6dfd4",
-
-            .50
-
-          );
-
-        }
-
-
-        /*
-          火根较亮
-        */
-
-        if (
-          progress < .36 &&
-          taperNoise > -.5
-        ) {
-
-          px(
-
-            gx - 2,
-
-            gy,
-
-            "#d6eee0",
-
-            .58
-
-          );
-
-        }
-
-
-        /*
-          顶端断掉，
-          形成传统妖火那种游离火舌
-        */
-
-        if (
-          progress > .65 &&
-          taperNoise > .55
-        ) {
-
-          px(
-
-            gx + 4,
-
-            gy - 2,
-
-            "#8ed6ce",
-
-            .32
-
-          );
-
-        }
-
-
-        /*
-          水面根部两侧一点幽光
-        */
-
-        if (
-          i === 0
-        ) {
-
-          px(
-            gx - 2,
-            gy,
-            "#a7ddd2",
-            .40
-          );
-
-          px(
-            gx + 2,
-            gy,
-            "#a7ddd2",
-            .40
-          );
-
-        }
-
-
-        previousX =
-          gx;
-
-
-        previousY =
-          gy;
-
-      }
-
-
-      /*
-        水上的很淡倒影
-      */
-
-      const reflectionPulse =
-        .5 +
-        .5 *
-        Math.sin(
-          state.time *
-          .0013 +
-          flame.phase
-        );
-
-
-      px(
-
-        flame.x,
-
-        flame.baseY + 4,
-
-        "#8ac8c6",
-
-        .16 +
-        reflectionPulse *
-        .08
-
-      );
-
-
-      px(
-
-        flame.x + 2,
-
-        flame.baseY + 6,
-
-        "#8ac8c6",
-
-        .10
-
-      );
-
+  fireWisps.forEach((wisp, wispIndex) => {
+
+    /* 每一缕都有自己的速度、相位和生命周期。 */
+    const cycle = (
+      state.time * wisp.speed +
+      wisp.phase
+    ) % 1;
+
+    /* 消失后保留一段空档，不会立刻重新出现。 */
+    if (cycle > wisp.activeFraction) {
+      return;
     }
-  );
 
+    const progress =
+      cycle / wisp.activeFraction;
+
+    const life = 1 - progress;
+    const rise = progress * wisp.rise;
+
+    /* 刚离开水面时细长，升高后逐渐缩短并压扁。 */
+    const flameHeight = Math.max(
+      PX * 2,
+      Math.round((wisp.length * (.40 + life * .60)) / PX) * PX
+    );
+
+    const independentSway =
+      Math.sin(state.time * wisp.frequency + wisp.phase * 11) *
+      wisp.sway *
+      (.35 + progress) +
+      Math.sin(state.time * wisp.frequency * .43 + wisp.phase * 23) *
+      wisp.sway * .42;
+
+    const drift =
+      wisp.drift *
+      progress *
+      progress;
+
+    const centerX = Math.round((
+      wisp.x + independentSway + drift
+    ) / PX) * PX;
+
+    const groupBottomY = Math.round((wisp.baseY - rise) / PX) * PX;
+
+    /* 每团火由随机 1～3 条细线共同组成。 */
+    wisp.lines.forEach((line, lineIndex) => {
+
+      const lineSway =
+        Math.sin(
+          state.time * wisp.frequency * (.82 + line.phase * .34) +
+          line.phase * 19
+        ) *
+        (.7 + progress * 1.2);
+
+      const lineCenterX = Math.round((
+        centerX + line.offset + lineSway
+      ) / PX) * PX;
+
+      const lineBottomY =
+        groupBottomY +
+        Math.round((line.phase - .5) * 2) * PX;
+
+      const lineHeight = Math.max(
+        PX * 2,
+        Math.round((flameHeight * line.lengthScale) / PX) * PX
+      );
+
+      const topY = lineBottomY - lineHeight;
+      const stemHalfWidth = PX;
+
+      /* 线身一格宽，只有每条线的 U 形底部略宽。 */
+      const baseWidth = Math.max(
+        PX * 2,
+        Math.round((
+          wisp.base *
+          line.baseScale *
+          (1 - progress * .38)
+        )) * PX
+      );
+
+      const lineAsym =
+        line.asym || wisp.asym;
+
+      const leftTopY =
+        topY +
+        (lineAsym > 0 ? PX * 3 : lineAsym < 0 ? 0 : PX);
+
+      const rightTopY =
+        topY +
+        (lineAsym < 0 ? PX * 4 : lineAsym > 0 ? 0 : PX * 2);
+
+      /* 所有火舌都朝右上方歪，但每团倾斜程度不同。 */
+      const topLean = Math.max(
+        PX,
+        Math.round((
+          independentSway * .28 +
+          wisp.rightLean * (.35 + progress * .75) +
+          line.lean
+        ) / PX) * PX
+      );
+
+      /* U 形底部左右不齐，可以斜、浅或深。 */
+      const leftBaseY =
+        lineBottomY + line.bottomLeft * PX;
+
+      const rightBaseY =
+        lineBottomY + line.bottomRight * PX;
+
+      const cupY =
+        Math.max(leftBaseY, rightBaseY) +
+        line.cupDepth * PX;
+
+      const points = [
+        [lineCenterX - stemHalfWidth + topLean, leftTopY],
+        [lineCenterX - stemHalfWidth, lineBottomY - PX * 2],
+        [lineCenterX - baseWidth, leftBaseY - PX],
+        [lineCenterX - baseWidth, leftBaseY],
+        [lineCenterX, cupY],
+        [lineCenterX + baseWidth, rightBaseY],
+        [lineCenterX + baseWidth, rightBaseY - PX],
+        [lineCenterX + stemHalfWidth, lineBottomY - PX * 2],
+        [lineCenterX + stemHalfWidth + topLean, rightTopY]
+      ];
+
+      const fadeIn = Math.min(1, progress * 12);
+      const alpha =
+        fadeIn *
+        Math.pow(life, wisp.fadePower) *
+        (.82 + line.phase * .14);
+
+      drawFirePixelLine(
+        points,
+        alpha,
+        wispIndex * 7 + lineIndex * 3
+      );
+    });
+  });
 }
 
 
