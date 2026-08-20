@@ -296,8 +296,8 @@
       top: 64px;
       right: 18px;
 
-      width: 54px;
-      height: 112px;
+      width: 86px;
+      height: 136px;
 
       z-index: 180;
 
@@ -309,7 +309,7 @@
 
       position: absolute;
 
-      left: 26px;
+      left: 42px;
       top: 0;
 
       width: 2px;
@@ -334,8 +334,8 @@
 
       left: 3px;
 
-      width: 48px;
-      height: 54px;
+      width: 80px;
+      height: 72px;
 
       cursor: grab;
 
@@ -364,8 +364,8 @@
 
       display: block;
 
-      width: 48px;
-      height: 54px;
+      width: 80px;
+      height: 72px;
 
       image-rendering: pixelated;
       image-rendering: crisp-edges;
@@ -711,8 +711,8 @@
 
     <canvas
       id="bulbCanvas"
-      width="48"
-      height="54"
+      width="80"
+      height="72"
     ></canvas>
 
   </div>
@@ -971,475 +971,133 @@ function bulbPixel(
    FIRST VERSION PIXEL LOTUS LAMP
 ===================================================== */
 
-function bulbGlow(
-  cx,
-  cy,
-  strength,
-  color
-) {
-  for (
-    let y = -22;
-    y <= 22;
-    y += BP
-  ) {
-    for (
-      let x = -22;
-      x <= 22;
-      x += BP
-    ) {
-      const dx = x;
-      const dy = y * 1.08;
-
-      const distance =
-        Math.sqrt(
-          dx * dx +
-          dy * dy
-        );
-
-      if (
-        distance > 8 &&
-        distance < 23
-      ) {
-        const fade =
-          1 -
-          (
-            distance - 8
-          ) /
-          15;
-
-        bulbPixel(
-          cx + x,
-          cy + y,
-          color,
-          fade *
-          fade *
-          strength
-        );
+function bulbGlow(cx, cy, strength, color, outerRadius = 31) {
+  for (let y = -38; y <= 32; y += BP) {
+    for (let x = -38; x <= 38; x += BP) {
+      const distance = Math.sqrt(x * x + (y * 1.08) * (y * 1.08));
+      if (distance > 11 && distance < outerRadius) {
+        const fade = 1 - (distance - 11) / (outerRadius - 11);
+        bulbPixel(cx + x, cy + y, color, fade * fade * strength);
       }
     }
   }
 }
 
-
-
-function drawLotusPixels(
-  cx,
-  cy,
-  pattern,
-  color,
-  alpha = 1
-) {
-  pattern.forEach(
-    cell => {
-      bulbPixel(
-        cx + cell[0] * BP,
-        cy + cell[1] * BP,
-        color,
-        alpha
-      );
-    }
-  );
+function drawLotusPixels(cx, cy, pattern, color, alpha = 1) {
+  pattern.forEach(([x, y]) => bulbPixel(cx + x * BP, cy + y * BP, color, alpha));
 }
 
-
+function drawLotusRows(cx, cy, rows, color, alpha = 1) {
+  rows.forEach(([y, left, right]) => {
+    for (let x = left; x <= right; x++) {
+      bulbPixel(cx + x * BP, cy + y * BP, color, alpha);
+    }
+  });
+}
 
 function drawBulb(time) {
-  bctx.clearRect(
-    0,
-    0,
-    48,
-    54
-  );
+  bctx.clearRect(0, 0, 80, 72);
 
-  const night =
-    document.body
-      .dataset
-      .theme
-    ===
-    "night";
+  const night = document.body.dataset.theme === "night";
+  const cx = 40;
+  const cy = 38;
+  const breathe = .96 + Math.sin(time * .00135) * .04;
 
-  const cx = 24;
-  const cy = 27;
-
-  /*
-   * 夜晚轻微呼吸。
-   */
-  const breathe =
-    0.94 +
-    Math.sin(
-      time * 0.0014
-    ) *
-    0.06;
-
-  /*
-   * 夜晚为淡粉白光晕。
-   * 白天不显示光晕。
-   */
-  if (night) {
-    bulbGlow(
-      cx,
-      cy,
-      0.25 +
-      Math.sin(
-        time * 0.0012
-      ) *
-      0.025,
-      "#ffd9eb"
-    );
-  }
-
-  /*
-   * 白天：青、白、黑。
-   * 晚上：白、粉。
-   */
-  const darkOutline =
-    night
-      ? "#9b4f72"
-      : "#11191d";
-
-  const outerPetal =
-    night
-      ? "#e98bb6"
-      : "#397f83";
-
-  const middlePetal =
-    night
-      ? "#f5b5d2"
-      : "#76afb0";
-
-  const innerPetal =
-    night
-      ? "#ffd9e9"
-      : "#c8e1de";
-
-  const warmLight =
-    night
-      ? "#fff0f7"
-      : "#eaf3ef";
-
-  const brightLight =
-    night
-      ? "#fffafd"
-      : "#fffefa";
-
-  const metalColor =
-    night
-      ? "#c6789f"
-      : "#172226";
-
-  /*
-   * 顶部连接扣。
-   */
-  const topHook = [
-    [-1, -10],
-    [0, -10],
-
-    [-2, -9],
-    [-1, -9],
-    [0, -9],
-    [1, -9],
-
-    [-2, -8],
-    [-1, -8],
-    [0, -8],
-    [1, -8]
-  ];
-
-  drawLotusPixels(
+  bulbGlow(
     cx,
     cy,
-    topHook,
-    metalColor
+    (night ? .34 : .25) + Math.sin(time * .0011) * (night ? .035 : .025),
+    night ? "#ffcae4" : "#ffffff",
+    night ? 39 : 31
   );
 
-  /*
-   * 莲花外侧上层花瓣。
-   */
-  const upperOuterPetals = [
-    [-7, -2],
-    [-6, -3],
-    [-5, -4],
-    [-4, -3],
+  const edge = night ? "#ffe5f1" : "#eaffff";
+  const seam = night ? "#b85f8b" : "#719796";
+  const tip = night ? "#ff4fa3" : "#00d9d2";
+  const outer = night ? "#f06aaa" : "#16c8c4";
+  const middle = night ? "#ff9bc8" : "#63e3de";
+  const inner = night ? "#ffd4e8" : "#c5fffa";
+  const core = night ? "#fff2f9" : "#efffff";
+  const white = "#ffffff";
+  const metal = night ? "#dc78a8" : "#789997";
+  const a = breathe;
+  const edgeAlpha = night ? .42 : .35;
 
-    [7, -2],
-    [6, -3],
-    [5, -4],
-    [4, -3],
+  /* 挂扣：仍然由2×2像素组成 */
+  drawLotusRows(cx, cy, [
+    [-14,-1,1],[-13,-2,2],[-12,-2,2]
+  ], metal);
 
-    [-6, -1],
-    [-5, -2],
-    [-4, -2],
+  /* 扁平莲花的深色总轮廓 */
+  drawLotusRows(cx, cy, [
+    [-8,-2,2],[-7,-5,5],[-6,-8,8],[-5,-11,11],
+    [-4,-14,14],[-3,-15,15],[-2,-15,15],[-1,-15,15],
+    [0,-15,15],[1,-14,14],[2,-13,13],[3,-12,12],
+    [4,-10,10],[5,-8,8],[6,-5,5]
+  ], edge, edgeAlpha);
 
-    [6, -1],
-    [5, -2],
-    [4, -2]
-  ];
+  /* 最后排：左右两片细长、平展的大花瓣 */
+  drawLotusRows(cx, cy, [
+    [-3,-14,-10],[-3,10,14],[-2,-14,-8],[-2,8,14],
+    [-1,-14,-7],[-1,7,14],[0,-13,-6],[0,6,13],
+    [1,-12,-6],[1,6,12],[2,-11,-7],[2,7,11],
+    [3,-10,-8],[3,8,10]
+  ], outer, a);
 
-  drawLotusPixels(
-    cx,
-    cy,
-    upperOuterPetals,
-    outerPetal,
-    night ? breathe : 1
-  );
+  /* 花瓣最外端使用最高饱和度的荧光色 */
+  drawLotusPixels(cx, cy, [
+    [-14,-3],[-14,-2],[-14,-1],
+    [14,-3],[14,-2],[14,-1],
+    [-13,0],[13,0],[-10,3],[10,3]
+  ], tip, a);
 
-  /*
-   * 中间竖起的花瓣。
-   */
-  const upperMiddlePetals = [
-    [-4, -2],
-    [-3, -4],
-    [-2, -5],
-    [-1, -3],
+  /* 左右中瓣：各自独立，不与中央粘成一团 */
+  drawLotusRows(cx, cy, [
+    [-5,-8,-6],[-5,6,8],[-4,-9,-5],[-4,5,9],
+    [-3,-9,-4],[-3,4,9],[-2,-8,-4],[-2,4,8],
+    [-1,-7,-4],[-1,4,7],[0,-6,-4],[0,4,6]
+  ], middle, a);
 
-    [4, -2],
-    [3, -4],
-    [2, -5],
-    [1, -3],
+  /* 中央花瓣降低并收窄，使整体不再圆 */
+  drawLotusRows(cx, cy, [
+    [-7,-1,1],[-6,-2,2],[-5,-3,3],[-4,-4,4],
+    [-3,-4,4],[-2,-4,4],[-1,-3,3],[0,-3,3],
+    [1,-2,2],[2,-1,1]
+  ], inner, a);
 
-    [-1, -5],
-    [0, -7],
-    [1, -5]
-  ];
+  /* 三条深色像素缝，明确分开花瓣 */
+  drawLotusPixels(cx, cy, [
+    [-4,-4],[-4,-3],[-4,-2],[-3,-1],[-3,0],
+    [4,-4],[4,-3],[4,-2],[3,-1],[3,0],
+    [0,-7],[0,-6]
+  ], seam, .72);
 
-  drawLotusPixels(
-    cx,
-    cy,
-    upperMiddlePetals,
-    middlePetal,
-    night ? breathe : 1
-  );
+  /* 莲心 */
+  drawLotusRows(cx, cy, [
+    [-4,-1,1],[-3,-2,2],[-2,-2,2],[-1,-2,2],[0,-1,1]
+  ], core, a);
+  drawLotusPixels(cx, cy, [[0,-3],[-1,-2],[0,-2],[1,-2],[0,-1]], white, .98);
 
-  /*
-   * 莲花中央主体。
-   */
-  const lampCenter = [
-    [-3, -2],
-    [-2, -3],
-    [-1, -3],
-    [0, -4],
-    [1, -3],
-    [2, -3],
-    [3, -2],
+  /* 前排左右瓣：位置更低，与后瓣错层 */
+  drawLotusRows(cx, cy, [
+    [0,-11,-7],[0,7,11],[1,-11,-6],[1,6,11],
+    [2,-10,-5],[2,5,10],[3,-9,-4],[3,4,9],
+    [4,-7,-3],[4,3,7]
+  ], middle, a);
 
-    [-4, -1],
-    [-3, -1],
-    [-2, -1],
-    [-1, -1],
-    [0, -1],
-    [1, -1],
-    [2, -1],
-    [3, -1],
-    [4, -1],
+  /* 正前方单独的一片宽瓣 */
+  drawLotusRows(cx, cy, [
+    [2,-4,4],[3,-6,6],[4,-7,7],[5,-6,6],[6,-4,4]
+  ], outer, a);
 
-    [-4, 0],
-    [-3, 0],
-    [-2, 0],
-    [-1, 0],
-    [0, 0],
-    [1, 0],
-    [2, 0],
-    [3, 0],
-    [4, 0],
+  /* 前瓣顶部的分界线 */
+  drawLotusRows(cx, cy, [[2,-4,4]], seam, .62);
 
-    [-3, 1],
-    [-2, 1],
-    [-1, 1],
-    [0, 1],
-    [1, 1],
-    [2, 1],
-    [3, 1]
-  ];
+  /* 正前瓣末端加一层高饱和荧光像素 */
+  drawLotusRows(cx, cy, [[6,-4,4]], tip, .92);
 
-  drawLotusPixels(
-    cx,
-    cy,
-    lampCenter,
-    innerPetal,
-    night ? breathe : 1
-  );
-
-  /*
-   * 中央发光莲心。
-   */
-  const lightCore = [
-    [-1, -2],
-    [0, -3],
-    [1, -2],
-
-    [-2, -1],
-    [-1, -1],
-    [0, -1],
-    [1, -1],
-    [2, -1],
-
-    [-2, 0],
-    [-1, 0],
-    [0, 0],
-    [1, 0],
-    [2, 0],
-
-    [-1, 1],
-    [0, 1],
-    [1, 1]
-  ];
-
-  drawLotusPixels(
-    cx,
-    cy,
-    lightCore,
-    warmLight,
-    night ? breathe : 1
-  );
-
-  /*
-   * 最亮的白色中心。
-   */
-  drawLotusPixels(
-    cx,
-    cy,
-    [
-      [0, -2],
-
-      [-1, -1],
-      [0, -1],
-      [1, -1],
-
-      [0, 0]
-    ],
-    brightLight,
-    night ? 0.98 : 1
-  );
-
-  /*
-   * 下方中层花瓣。
-   */
-  const lowerMiddlePetals = [
-    [-7, 1],
-    [-6, 2],
-    [-5, 3],
-    [-4, 3],
-
-    [7, 1],
-    [6, 2],
-    [5, 3],
-    [4, 3],
-
-    [-4, 2],
-    [-3, 3],
-    [-2, 4],
-    [-1, 3],
-
-    [4, 2],
-    [3, 3],
-    [2, 4],
-    [1, 3]
-  ];
-
-  drawLotusPixels(
-    cx,
-    cy,
-    lowerMiddlePetals,
-    middlePetal,
-    night ? breathe : 1
-  );
-
-  /*
-   * 最外层向下展开的花瓣。
-   */
-  const lowerOuterPetals = [
-    [-8, 1],
-    [-7, 2],
-    [-6, 3],
-    [-5, 4],
-    [-4, 4],
-
-    [8, 1],
-    [7, 2],
-    [6, 3],
-    [5, 4],
-    [4, 4],
-
-    [-4, 4],
-    [-3, 5],
-    [-2, 5],
-
-    [4, 4],
-    [3, 5],
-    [2, 5],
-
-    [-1, 4],
-    [0, 6],
-    [1, 4]
-  ];
-
-  drawLotusPixels(
-    cx,
-    cy,
-    lowerOuterPetals,
-    outerPetal,
-    night ? breathe : 1
-  );
-
-  /*
-   * 深色像素轮廓。
-   */
-  const outline = [
-    [-1, -11],
-    [0, -11],
-
-    [-3, -9],
-    [2, -9],
-
-    [0, -8],
-
-    [-8, -3],
-    [8, -3],
-
-    [-9, 0],
-    [9, 0],
-
-    [-8, 3],
-    [8, 3],
-
-    [-6, 5],
-    [6, 5],
-
-    [-3, 6],
-    [3, 6],
-
-    [0, 7]
-  ];
-
-  drawLotusPixels(
-    cx,
-    cy,
-    outline,
-    darkOutline,
-    night ? 0.9 : 1
-  );
-
-  /*
-   * 灯底小坠饰。
-   */
-  const tassel = [
-    [0, 8],
-    [0, 9],
-
-    [-1, 10],
-    [0, 10],
-    [1, 10],
-
-    [0, 11]
-  ];
-
-  drawLotusPixels(
-    cx,
-    cy,
-    tassel,
-    metalColor
-  );
-
+  /* 短坠饰 */
+  drawLotusPixels(cx, cy, [[0,7],[0,8],[-1,9],[0,9],[1,9]], metal);
   bctx.globalAlpha = 1;
 }
 
@@ -1567,7 +1225,7 @@ bulbHandle.addEventListener(
 
         Math.min(
 
-          30,
+          50,
 
           event.clientY -
           startY
@@ -1588,7 +1246,7 @@ bulbHandle.addEventListener(
     */
 
     if (
-      distance >= 8 &&
+      distance >= 16 &&
       !triggered
     ) {
 
@@ -4837,6 +4495,18 @@ requestAnimationFrame(
     "#e984ad"
   ];
 
+  const BUG_COLORS = [
+    "#ffffff",
+    "#f8ffff",
+    "#efffff",
+    "#e6fffd",
+    "#d8fbf8",
+    "#c8f4f1",
+    "#b8ebe8",
+    "#f5ffff",
+    "#ffffff"
+  ];
+
   const BURN_COLORS = [
     "#ff9b37",
     "#f06a2b",
@@ -4849,6 +4519,21 @@ requestAnimationFrame(
     "#746d6b",
     "#5b5554",
     "#3f3b3a"
+  ];
+
+  const DAY_FLAME_COLORS = [
+    "#ffb08f",
+    "#ff9a87",
+    "#ff8fa7",
+    "#f27f9f"
+  ];
+
+  const DAY_ASH_COLORS = [
+    "#ffffff",
+    "#f5f5f2",
+    "#e6e7e5",
+    "#d6d8d6",
+    "#c5c8c7"
   ];
 
   /*
@@ -5004,6 +4689,29 @@ requestAnimationFrame(
     [0, 2]
   ];
 
+  /* 白天使用的像素小飞虫，尺寸与花瓣图案一致。 */
+  const BUG_PATTERNS = [
+    [
+      [-1,-1],[1,-1],[-2,0],[-1,0],
+      [1,0],[2,0],[-1,1],[1,1]
+    ],
+    [
+      [-2,-1],[-1,-1],[1,-1],[2,-1],
+      [-1,0],[1,0],[-1,1],[1,1]
+    ],
+    [
+      [-1,-2],[1,-2],[-2,-1],[2,-1],
+      [-2,0],[-1,0],[1,0],[2,0],[0,1]
+    ]
+  ];
+
+  const BIG_BUG_PATTERN = [
+    [0,-3],[-1,-2],[0,-2],[1,-2],
+    [-3,-1],[-2,-1],[0,-1],[2,-1],[3,-1],
+    [-3,0],[-2,0],[0,0],[2,0],[3,0],
+    [-1,1],[0,1],[1,1]
+  ];
+
   function createPetal(
     x,
     y,
@@ -5017,19 +4725,44 @@ requestAnimationFrame(
     const halfFlower =
       Math.random() < 0.18;
 
+    const kind =
+      document.body.dataset.theme === "day"
+        ? "bug"
+        : "flower";
+
     const spreadAngle =
-      random(
-        -Math.PI * 0.92,
-        -Math.PI * 0.08
-      );
+      kind === "bug"
+        ? (
+            Math.random() < 0.70
+              ? random(-Math.PI * 0.92, -Math.PI * 0.08)
+              : random(0, Math.PI * 2)
+          )
+        : (
+            (index / total) * Math.PI * 2 +
+            random(-0.28, 0.28)
+          );
 
     const speed =
       (
-        halfFlower
-          ? random(13, 38)
-          : random(20, 54)
-      ) *
-      effectScale;
+        kind === "bug"
+          ? random(16, 48)
+          : (
+              halfFlower
+                ? random(13, 38)
+                : random(20, 54)
+            )
+      ) * effectScale;
+
+    const bugSpeedRatio =
+      kind === "bug"
+        ? Math.max(
+            0,
+            Math.min(
+              1,
+              (speed / effectScale - 16) / 32
+            )
+          )
+        : 0;
 
     const horizontalBurst =
       (
@@ -5058,27 +4791,28 @@ requestAnimationFrame(
         effectScale,
 
       vy:
-        Math.sin(spreadAngle) *
-        speed -
-        (
-          halfFlower
-            ? random(13, 23)
-            : random(18, 32)
-        ) *
-        effectScale,
+        Math.sin(spreadAngle) * speed +
+        random(-5, 5) * effectScale,
 
       gravity:
         (
-          halfFlower
-            ? random(19, 33)
-            : random(25, 42)
-        ) *
-        effectScale,
+          kind === "bug"
+            ? random(2, 8)
+            : (
+                halfFlower
+                  ? random(19, 33)
+                  : random(25, 42)
+              )
+        ) * effectScale,
 
       drag:
-        halfFlower
-          ? random(0.990, 0.996)
-          : random(0.985, 0.994),
+        kind === "bug"
+          ? random(0.994, 0.998)
+          : (
+              halfFlower
+                ? random(0.990, 0.996)
+                : random(0.985, 0.994)
+            ),
 
       rotation:
         random(
@@ -5089,9 +4823,9 @@ requestAnimationFrame(
       spin:
         random(-1, 1) *
         (
-          halfFlower
-            ? 2.2
-            : 4
+          kind === "bug"
+            ? random(1.5, 3)
+            : (halfFlower ? 2.2 : 4)
         ),
 
       flutterPhase:
@@ -5102,16 +4836,47 @@ requestAnimationFrame(
 
       flutter:
         (
-          halfFlower
-            ? random(5, 12)
-            : random(8, 18)
-        ) *
-        effectScale,
+          kind === "bug"
+            ? random(14, 24)
+            : (halfFlower ? random(5, 12) : random(8, 18))
+        ) * effectScale,
 
       form:
-        halfFlower
-          ? "half"
-          : "fragment",
+        kind === "bug"
+          ? "fragment"
+          : (halfFlower ? "half" : "fragment"),
+
+      kind,
+
+      originX: x,
+      originY: y,
+
+      maxDistance:
+        random(46, 102) * effectScale,
+
+      dusty:
+        kind === "bug" && Math.random() < 0.68,
+
+      dustClock: 0,
+
+      trajectory:
+        kind === "bug" && Math.random() < 0.30
+          ? "spring"
+          : "drift",
+
+      flightAngle:
+        spreadAngle,
+
+      springAmplitude:
+        random(4, 14) * effectScale,
+
+      springFrequency:
+        random(7, 14),
+
+      springPhase:
+        random(0, Math.PI * 2),
+
+      springLast: 0,
 
       variant:
         Math.floor(
@@ -5121,7 +4886,9 @@ requestAnimationFrame(
 
       color:
         choose(
-          PETAL_COLORS
+          kind === "bug"
+            ? BUG_COLORS
+            : PETAL_COLORS
         ),
 
       age: 0,
@@ -5131,9 +4898,9 @@ requestAnimationFrame(
        * 半完整花停留稍久。
        */
       life:
-        halfFlower
-          ? random(1.28, 1.88)
-          : random(0.98, 1.52),
+        kind === "bug"
+          ? 2.22 - bugSpeedRatio * 1.14 + random(-0.10, 0.14)
+          : (halfFlower ? random(1.28, 1.88) : random(0.98, 1.52)),
 
       ashClock: 0,
       burnBurst: false
@@ -5185,7 +4952,8 @@ requestAnimationFrame(
   function spawnAsh(
     x,
     y,
-    amount = 1
+    amount = 1,
+    kind = "flower"
   ) {
     for (
       let i = 0;
@@ -5193,7 +4961,7 @@ requestAnimationFrame(
       i++
     ) {
       const ember =
-        Math.random() < 0.24;
+        Math.random() < (kind === "bug" ? 0.18 : 0.24);
 
       ashes.push({
         x:
@@ -5233,9 +5001,17 @@ requestAnimationFrame(
           ),
 
         color:
-          ember
-            ? choose(BURN_COLORS)
-            : choose(ASH_COLORS),
+          kind === "bug"
+            ? (
+                ember
+                  ? choose(DAY_FLAME_COLORS)
+                  : choose(DAY_ASH_COLORS)
+              )
+            : (
+                ember
+                  ? choose(BURN_COLORS)
+                  : choose(ASH_COLORS)
+              ),
 
         ember
       });
@@ -5243,8 +5019,17 @@ requestAnimationFrame(
   }
 
   function spawnBurnBurst(petal) {
+    if (
+      petal.kind === "bug" &&
+      Math.random() > 0.24
+    ) {
+      return;
+    }
+
     const amount =
-      petal.form === "half"
+      petal.kind === "bug"
+        ? 1
+        : petal.form === "half"
         ? 6
         : 3;
 
@@ -5313,14 +5098,33 @@ requestAnimationFrame(
           ),
 
         color:
-          i < 3
-            ? choose(BURN_COLORS)
-            : choose(ASH_COLORS),
+          petal.kind === "bug"
+            ? choose(DAY_FLAME_COLORS)
+            : (
+                i < 3
+                  ? choose(BURN_COLORS)
+                  : choose(ASH_COLORS)
+              ),
 
         ember:
           i < 3
       });
     }
+  }
+
+  function spawnBugDust(x, y) {
+    ashes.push({
+      x: x + random(-2, 2) * effectScale,
+      y: y + random(-2, 2) * effectScale,
+      vx: random(-7, 7) * effectScale,
+      vy: random(-9, 2) * effectScale,
+      gravity: random(1, 4) * effectScale,
+      drag: random(0.982, 0.995),
+      age: 0,
+      life: random(0.42, 0.82),
+      color: choose(["#ffffff", "#f5ffff", "#e8fffd"]),
+      ember: false
+    });
   }
 
   function drawPixel(
@@ -5360,22 +5164,31 @@ requestAnimationFrame(
     /*
      * 生命周期最后42%开始燃烧。
      */
+    const burnStart =
+      petal.kind === "bug" ? 0.78 : 0.58;
+
     const burnProgress =
       Math.max(
         0,
         (
           progress -
-          0.58
+          burnStart
         ) /
-        0.42
+        (1 - burnStart)
       );
 
     const pattern =
-      petal.form === "half"
-        ? HALF_FLOWER_PATTERN
-        : FRAGMENT_PATTERNS[
-            petal.variant
-          ];
+      petal.kind === "bug"
+        ? (
+            petal.form === "half"
+              ? BIG_BUG_PATTERN
+              : BUG_PATTERNS[petal.variant]
+          )
+        : (
+            petal.form === "half"
+              ? HALF_FLOWER_PATTERN
+              : FRAGMENT_PATTERNS[petal.variant]
+          );
 
     /*
      * 角度限制在45度像素方向。
@@ -5467,15 +5280,20 @@ requestAnimationFrame(
           burnLine - 0.20
       ) {
         color =
-          Math.random() < 0.56
-            ? "#f06a2b"
-            : "#b92518";
+          petal.kind === "bug"
+            ? choose(DAY_FLAME_COLORS)
+            : (
+                Math.random() < 0.56
+                  ? "#f06a2b"
+                  : "#b92518"
+              );
       }
 
       /*
        * 半完整花中心颜色稍深。
        */
       if (
+        petal.kind !== "bug" &&
         petal.form === "half" &&
         Math.abs(cell[0]) <= 1 &&
         cell[1] >= -1 &&
@@ -5624,7 +5442,11 @@ requestAnimationFrame(
 
           p % 3 === 0
             ? "#ffffff"
-            : "#f4a6c2",
+            : (
+                document.body.dataset.theme === "day"
+                  ? "#73e2dd"
+                  : "#f4a6c2"
+              ),
 
           alpha
         );
@@ -5782,6 +5604,31 @@ requestAnimationFrame(
         petal.vy *
         dt;
 
+      /* 少部分飞虫沿弹簧状曲线前进。 */
+      if (
+        petal.kind === "bug" &&
+        petal.trajectory === "spring"
+      ) {
+        const springNow =
+          Math.sin(
+            petal.age * petal.springFrequency +
+            petal.springPhase
+          ) * petal.springAmplitude;
+
+        const springDelta =
+          springNow - petal.springLast;
+
+        petal.x +=
+          Math.cos(petal.flightAngle + Math.PI / 2) *
+          springDelta;
+
+        petal.y +=
+          Math.sin(petal.flightAngle + Math.PI / 2) *
+          springDelta;
+
+        petal.springLast = springNow;
+      }
+
       petal.rotation +=
         petal.spin *
         dt;
@@ -5790,16 +5637,56 @@ requestAnimationFrame(
         petal.age /
         petal.life;
 
+      let distanceAlpha = 1;
+
+      if (petal.kind === "bug") {
+        const travelled =
+          Math.hypot(
+            petal.x - petal.originX,
+            petal.y - petal.originY
+          );
+
+        const fadeDistance =
+          petal.maxDistance * 0.68;
+
+        if (travelled >= petal.maxDistance) {
+          petals.splice(i, 1);
+          continue;
+        }
+
+        if (travelled > fadeDistance) {
+          distanceAlpha =
+            1 -
+            (travelled - fadeDistance) /
+            (petal.maxDistance - fadeDistance);
+
+          if (
+            petal.dusty &&
+            distanceAlpha < 0.78
+          ) {
+            petal.dustClock +=
+              dt * (2.2 + (1 - distanceAlpha) * 3.4);
+
+            while (petal.dustClock >= 1) {
+              petal.dustClock -= 1;
+              spawnBugDust(petal.x, petal.y);
+            }
+          }
+        }
+      }
+
       /*
        * 燃烧阶段持续产生灰烬。
        */
       if (
-        progress > 0.58
+        progress > (petal.kind === "bug" ? 0.78 : 0.58)
       ) {
         petal.ashClock +=
           dt *
           (
-            petal.form === "half"
+            petal.kind === "bug"
+              ? 1.2 + progress * 2
+              : petal.form === "half"
               ? 10 +
                 progress * 12
               : 5 +
@@ -5814,7 +5701,8 @@ requestAnimationFrame(
           spawnAsh(
             petal.x,
             petal.y,
-            1
+            1,
+            petal.kind
           );
         }
       }
@@ -5824,7 +5712,7 @@ requestAnimationFrame(
        * 发生小范围火星炸开。
        */
       if (
-        progress > 0.84 &&
+        progress > (petal.kind === "bug" ? 0.95 : 0.84) &&
         !petal.burnBurst
       ) {
         petal.burnBurst = true;
@@ -5856,7 +5744,8 @@ requestAnimationFrame(
       drawPetal(
         petal,
         appearAlpha *
-        disappearAlpha
+        disappearAlpha *
+        distanceAlpha
       );
     }
   }
