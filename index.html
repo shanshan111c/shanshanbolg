@@ -1,456 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>山山田's Blog</title>
+<meta charset="UTF-8">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-    html {
-      scroll-behavior: smooth;
-    }
+<title>山山田's Blog</title>
 
-    body {
-      margin: 0;
-      background: #f6f5f1;
-      color: #222;
-      font-family: Arial, Helvetica, sans-serif;
-    }
 
-    /* =========================
-       Navigation
-    ========================== */
+<style>
 
-    header {
-      height: 68px;
-      padding: 0 40px;
+* {
+  box-sizing: border-box;
+}
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+html {
+  scroll-behavior: smooth;
+}
 
-      background: rgba(7, 10, 25, 0.92);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+body {
 
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+  margin: 0;
 
-      z-index: 1000;
+  background: #f6f5f1;
 
-      backdrop-filter: blur(8px);
-    }
+  color: #222;
 
-    header h1 {
-      margin: 0;
-      color: white;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+}
 
-      font-family:
-        "Courier New",
-        "PingFang SC",
-        "Microsoft YaHei",
-        monospace;
 
-      font-size: 21px;
-      letter-spacing: 2px;
-    }
+/* =========================
+   TOP NAVIGATION
+========================= */
 
-    nav a {
-      margin-left: 26px;
+header {
 
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
+  height: 62px;
 
-      font-size: 14px;
-      letter-spacing: 1px;
-    }
+  padding: 0 34px;
 
-    nav a:hover {
-      color: white;
-    }
+  display: flex;
 
+  align-items: center;
 
-    /* =========================
-       Hero
-    ========================== */
+  justify-content: space-between;
 
-    .hero {
-      position: relative;
+  position: fixed;
 
-      width: 100%;
-      height: 100vh;
-      min-height: 680px;
+  top: 0;
 
-      overflow: hidden;
+  left: 0;
 
-      background: #060919;
-    }
+  right: 0;
 
-    .scene {
-      position: absolute;
+  z-index: 100;
 
-      width: 100%;
-      height: 100%;
+  background: rgba(7, 9, 29, 0.72);
 
-      left: 0;
-      top: 0;
-    }
+  border-bottom:
+    1px solid rgba(255,255,255,0.08);
 
-    .scene svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
+  backdrop-filter: blur(6px);
+}
 
 
-    /* =========================
-       Main Text
-    ========================== */
+header h1 {
 
-    .hero-text {
-      position: absolute;
+  margin: 0;
 
-      left: 50%;
-      top: 47%;
+  color: white;
 
-      transform: translate(-50%, -50%);
+  font-size: 18px;
 
-      z-index: 20;
+  font-weight: normal;
 
-      width: 90%;
+  letter-spacing: 2px;
 
-      text-align: center;
+  font-family:
+    "Courier New",
+    monospace;
+}
 
-      pointer-events: none;
-    }
 
-    .pixel-title {
-      margin: 0;
+nav a {
 
-      color: #ffffff;
+  margin-left: 24px;
 
-      font-family:
-        "Courier New",
-        "PingFang SC",
-        "Microsoft YaHei",
-        monospace;
+  color: rgba(255,255,255,0.72);
 
-      font-size: clamp(34px, 6vw, 74px);
+  text-decoration: none;
 
-      font-weight: 700;
+  font-family:
+    "Courier New",
+    monospace;
 
-      letter-spacing: 5px;
+  font-size: 13px;
 
-      text-shadow:
-        4px 0 #ffffff22,
-        0 4px #ffffff18,
-        5px 5px #02040c;
+  letter-spacing: 1px;
+}
 
-      animation: titleAppear 1.5s ease-out forwards;
-    }
 
-    .hero-subtitle {
-      margin-top: 20px;
+nav a:hover {
+  color: white;
+}
 
-      color: rgba(255,255,255,0.68);
 
-      font-family: "Courier New", monospace;
+/* =========================
+   PIXEL HERO
+========================= */
 
-      font-size: 13px;
+.hero {
 
-      letter-spacing: 5px;
-    }
+  width: 100%;
 
+  height: 100vh;
 
-    @keyframes titleAppear {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
+  min-height: 620px;
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+  overflow: hidden;
 
+  position: relative;
 
-    /* =========================
-       SVG animations
-    ========================== */
+  background: #090b27;
+}
 
-    /*
-      Willow branches
-    */
 
-    .willow-left {
-      transform-box: fill-box;
-      transform-origin: 20% 0%;
+#pixelCanvas {
 
-      animation:
-        willowLeftMove 8s ease-in-out infinite alternate;
-    }
+  position: absolute;
 
-    @keyframes willowLeftMove {
-      0% {
-        transform: rotate(-1.5deg) translateX(-8px);
-      }
+  left: 50%;
 
-      50% {
-        transform: rotate(2deg) translateX(8px);
-      }
+  top: 50%;
 
-      100% {
-        transform: rotate(-0.5deg) translateX(-3px);
-      }
-    }
+  transform: translate(-50%, -50%);
 
+  /*
+    VERY IMPORTANT
 
-    .willow-moon {
-      transform-box: fill-box;
-      transform-origin: 70% 0%;
+    This prevents the browser from
+    smoothing our pixel art.
+  */
 
-      animation:
-        revealMoon 11s ease-in-out infinite;
-    }
+  image-rendering: pixelated;
 
-    /*
-      This branch covers the moon,
-      then slowly moves away.
-    */
+  image-rendering: crisp-edges;
+}
 
-    @keyframes revealMoon {
 
-      0% {
-        transform: rotate(-2deg) translateX(10px);
-      }
+/* small scroll hint */
 
-      25% {
-        transform: rotate(-1deg) translateX(5px);
-      }
+.scroll-hint {
 
-      45% {
-        transform: rotate(7deg) translateX(55px);
-      }
+  position: absolute;
 
-      65% {
-        transform: rotate(8deg) translateX(65px);
-      }
+  z-index: 20;
 
-      82% {
-        transform: rotate(1deg) translateX(10px);
-      }
+  left: 50%;
 
-      100% {
-        transform: rotate(-2deg) translateX(10px);
-      }
-    }
+  bottom: 28px;
 
+  transform: translateX(-50%);
 
-    /*
-      Moon glow
-    */
+  color: rgba(255,255,255,0.45);
 
-    .moon-glow {
-      animation: moonBreath 5s ease-in-out infinite;
-    }
+  font-family:
+    "Courier New",
+    monospace;
 
-    @keyframes moonBreath {
+  font-size: 10px;
 
-      0%,
-      100% {
-        opacity: 0.55;
-      }
+  letter-spacing: 3px;
 
-      50% {
-        opacity: 0.9;
-      }
-    }
+  animation: scrollBlink 2s steps(2) infinite;
+}
 
 
-    /*
-      Moving water
-    */
+@keyframes scrollBlink {
 
-    .water-flow-1 {
-      animation: waterMove1 11s linear infinite;
-    }
+  0% {
+    opacity: .25;
+  }
 
-    .water-flow-2 {
-      animation: waterMove2 15s linear infinite;
-    }
+  50% {
+    opacity: .8;
+  }
 
-    .water-flow-3 {
-      animation: waterMove3 19s linear infinite;
-    }
+  100% {
+    opacity: .25;
+  }
+}
 
-    @keyframes waterMove1 {
 
-      from {
-        transform: translateX(-140px);
-      }
+/* =========================
+   CONTENT
+========================= */
 
-      to {
-        transform: translateX(140px);
-      }
-    }
+.content {
 
-    @keyframes waterMove2 {
+  max-width: 850px;
 
-      from {
-        transform: translateX(-200px);
-      }
+  margin: 0 auto;
 
-      to {
-        transform: translateX(200px);
-      }
-    }
+  padding: 90px 25px;
+}
 
-    @keyframes waterMove3 {
 
-      from {
-        transform: translateX(-100px);
-      }
+.content section {
+  margin-bottom: 100px;
+}
 
-      to {
-        transform: translateX(180px);
-      }
-    }
 
+.content h2 {
 
-    /*
-      Reflection
-    */
+  font-size: 28px;
 
-    .reflection-1 {
-      animation:
-        reflectionMove 3.5s ease-in-out infinite alternate;
-    }
+  margin-bottom: 25px;
+}
 
-    .reflection-2 {
-      animation:
-        reflectionMove 2.7s ease-in-out infinite alternate-reverse;
-    }
 
-    @keyframes reflectionMove {
+.content p {
 
-      from {
-        transform: translateX(-10px);
-        opacity: 0.45;
-      }
+  color: #444;
 
-      to {
-        transform: translateX(15px);
-        opacity: 1;
-      }
-    }
+  font-size: 16px;
 
+  line-height: 1.9;
+}
 
-    /* =========================
-       Content
-    ========================== */
 
-    .content {
-      max-width: 900px;
+.blog-card {
 
-      margin: 0 auto;
+  padding: 25px 0;
 
-      padding: 90px 24px;
-    }
+  border-bottom: 1px solid #ddd;
+}
 
-    .content section {
-      margin-bottom: 100px;
-    }
 
-    .content h2 {
-      font-size: 30px;
-      margin-bottom: 25px;
-    }
+.blog-card h3 {
 
-    .content p {
-      line-height: 1.9;
-      color: #444;
-      font-size: 17px;
-    }
+  margin: 0 0 8px;
+}
 
-    .blog-card {
-      padding: 25px 0;
 
-      border-bottom: 1px solid #ddd;
-    }
+.blog-card a {
 
-    .blog-card h3 {
-      margin-bottom: 5px;
-    }
+  color: #222;
 
-    .blog-card a {
-      color: #222;
-      text-decoration: none;
-    }
+  text-decoration: none;
+}
 
-    .blog-card a:hover {
-      text-decoration: underline;
-    }
 
-    .date {
-      color: #999 !important;
-      font-size: 13px !important;
-    }
+.blog-card a:hover {
 
-    footer {
-      padding: 50px 20px;
+  text-decoration: underline;
+}
 
-      text-align: center;
 
-      font-size: 13px;
+.date {
 
-      color: #888;
-    }
+  color: #999 !important;
 
+  font-size: 13px !important;
+}
 
-    /* =========================
-       Mobile
-    ========================== */
 
-    @media (max-width: 700px) {
+footer {
 
-      header {
-        height: 60px;
-        padding: 0 18px;
-      }
+  text-align: center;
 
-      header h1 {
-        font-size: 17px;
-      }
+  padding: 40px;
 
-      nav a {
-        margin-left: 12px;
-        font-size: 12px;
-      }
+  color: #999;
 
-      .hero {
-        min-height: 620px;
-      }
+  font-size: 13px;
+}
 
-      .pixel-title {
-        font-size: 38px;
-        letter-spacing: 2px;
-      }
 
-      .hero-subtitle {
-        letter-spacing: 2px;
-        font-size: 11px;
-      }
+/* =========================
+   PHONE
+========================= */
 
-    }
+@media (max-width: 650px) {
 
-  </style>
+  header {
+
+    padding: 0 17px;
+
+    height: 56px;
+  }
+
+  header h1 {
+    font-size: 15px;
+  }
+
+  nav a {
+
+    margin-left: 12px;
+
+    font-size: 11px;
+  }
+
+}
+
+</style>
+
 </head>
 
 
@@ -462,714 +325,132 @@
   <h1>山山田</h1>
 
   <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#blog">Blog</a>
+
+    <a href="#home">
+      Home
+    </a>
+
+    <a href="#about">
+      About
+    </a>
+
+    <a href="#blog">
+      Blog
+    </a>
+
   </nav>
 
 </header>
 
 
 
-<!-- ====================================
-     Animated hero scene
-===================================== -->
-
-<section class="hero" id="home">
-
-
-  <div class="scene">
-
-    <svg
-      viewBox="0 0 1600 900"
-      preserveAspectRatio="xMidYMid slice"
-      xmlns="http://www.w3.org/2000/svg"
-      shape-rendering="geometricPrecision"
-    >
-
-
-      <!-- ==============================
-           Definitions
-      =============================== -->
-
-      <defs>
-
-
-        <!-- Night sky -->
-
-        <linearGradient
-          id="skyGradient"
-          x1="0"
-          y1="0"
-          x2="0"
-          y2="1"
-        >
-
-          <stop
-            offset="0%"
-            stop-color="#030612"
-          />
-
-          <stop
-            offset="55%"
-            stop-color="#10152f"
-          />
-
-          <stop
-            offset="100%"
-            stop-color="#17233b"
-          />
-
-        </linearGradient>
-
-
-
-        <!-- Water -->
-
-        <linearGradient
-          id="waterGradient"
-          x1="0"
-          y1="0"
-          x2="0"
-          y2="1"
-        >
-
-          <stop
-            offset="0%"
-            stop-color="#182d36"
-          />
-
-          <stop
-            offset="55%"
-            stop-color="#0b202b"
-          />
-
-          <stop
-            offset="100%"
-            stop-color="#06151e"
-          />
-
-        </linearGradient>
-
-
-
-        <!-- Moon -->
-
-        <radialGradient id="moonGradient">
-
-          <stop
-            offset="0%"
-            stop-color="#fffef2"
-          />
-
-          <stop
-            offset="70%"
-            stop-color="#fff7d1"
-          />
-
-          <stop
-            offset="100%"
-            stop-color="#eddca2"
-          />
-
-        </radialGradient>
-
-
-
-        <!-- Moon glow -->
-
-        <radialGradient id="moonGlow">
-
-          <stop
-            offset="0%"
-            stop-color="#fff8d0"
-            stop-opacity="0.48"
-          />
-
-          <stop
-            offset="45%"
-            stop-color="#fff5ca"
-            stop-opacity="0.14"
-          />
-
-          <stop
-            offset="100%"
-            stop-color="#fff5ca"
-            stop-opacity="0"
-          />
-
-        </radialGradient>
-
-
-
-      </defs>
-
-
-
-      <!-- ==============================
-           Night sky
-      =============================== -->
-
-      <rect
-        x="0"
-        y="0"
-        width="1600"
-        height="900"
-        fill="url(#skyGradient)"
-      />
-
-
-
-      <!-- ==============================
-           Tiny stars
-      =============================== -->
-
-      <g
-        fill="#dfe7e8"
-        opacity="0.38"
-        shape-rendering="crispEdges"
-      >
-
-        <rect x="210" y="170" width="3" height="3"/>
-        <rect x="370" y="250" width="2" height="2"/>
-        <rect x="515" y="120" width="3" height="3"/>
-        <rect x="720" y="205" width="2" height="2"/>
-        <rect x="905" y="145" width="3" height="3"/>
-        <rect x="1370" y="180" width="2" height="2"/>
-        <rect x="1480" y="270" width="3" height="3"/>
-
-      </g>
-
-
-
-      <!-- ==============================
-           Moon
-      =============================== -->
-
-      <g>
-
-        <circle
-          class="moon-glow"
-          cx="1170"
-          cy="275"
-          r="150"
-          fill="url(#moonGlow)"
-        />
-
-        <circle
-          cx="1170"
-          cy="275"
-          r="60"
-          fill="url(#moonGradient)"
-        />
-
-        <!-- subtle pixel edges -->
-
-        <g
-          fill="#fff8d8"
-          opacity="0.45"
-          shape-rendering="crispEdges"
-        >
-
-          <rect x="1121" y="239" width="5" height="5"/>
-          <rect x="1206" y="254" width="4" height="4"/>
-          <rect x="1145" y="309" width="5" height="5"/>
-          <rect x="1187" y="294" width="4" height="4"/>
-
-        </g>
-
-      </g>
-
-
-
-      <!-- ==============================
-           Distant horizon
-      =============================== -->
-
-      <path
-        d="
-        M0 587
-        L180 584
-        L350 590
-        L530 585
-        L710 591
-        L890 586
-        L1050 590
-        L1240 584
-        L1420 588
-        L1600 585
-        L1600 640
-        L0 640
-        Z
-        "
-        fill="#0a1b24"
-      />
-
-
-
-      <!-- ==============================
-           Water
-      =============================== -->
-
-      <path
-        d="
-        M0 590
-        Q160 578 320 590
-        T640 590
-        T960 590
-        T1280 590
-        T1600 590
-
-        L1600 900
-        L0 900
-        Z
-        "
-        fill="url(#waterGradient)"
-      >
-
-
-        <animate
-          attributeName="d"
-          dur="6s"
-          repeatCount="indefinite"
-
-          values="
-
-          M0 590
-          Q160 578 320 590
-          T640 590
-          T960 590
-          T1280 590
-          T1600 590
-          L1600 900
-          L0 900
-          Z;
-
-          M0 590
-          Q160 599 320 590
-          T640 590
-          T960 590
-          T1280 590
-          T1600 590
-          L1600 900
-          L0 900
-          Z;
-
-          M0 590
-          Q160 578 320 590
-          T640 590
-          T960 590
-          T1280 590
-          T1600 590
-          L1600 900
-          L0 900
-          Z
-          "
-        />
-
-      </path>
-
-
-
-      <!-- ==============================
-           Flowing pixel waves
-      =============================== -->
-
-      <g
-        class="water-flow-1"
-        fill="#42606a"
-        opacity="0.55"
-        shape-rendering="crispEdges"
-      >
-
-        <rect x="60" y="645" width="95" height="6"/>
-        <rect x="235" y="680" width="65" height="5"/>
-        <rect x="390" y="625" width="130" height="5"/>
-        <rect x="620" y="700" width="90" height="6"/>
-        <rect x="815" y="650" width="115" height="5"/>
-        <rect x="1050" y="720" width="80" height="6"/>
-        <rect x="1300" y="660" width="120" height="5"/>
-        <rect x="1510" y="740" width="70" height="5"/>
-
-      </g>
-
-
-
-      <g
-        class="water-flow-2"
-        fill="#25424e"
-        opacity="0.7"
-        shape-rendering="crispEdges"
-      >
-
-        <rect x="40" y="760" width="155" height="7"/>
-        <rect x="300" y="735" width="105" height="6"/>
-        <rect x="510" y="810" width="140" height="6"/>
-        <rect x="760" y="760" width="100" height="7"/>
-        <rect x="970" y="825" width="155" height="6"/>
-        <rect x="1220" y="770" width="110" height="6"/>
-        <rect x="1460" y="830" width="130" height="7"/>
-
-      </g>
-
-
-
-      <g
-        class="water-flow-3"
-        fill="#5b7075"
-        opacity="0.28"
-        shape-rendering="crispEdges"
-      >
-
-        <rect x="120" y="610" width="50" height="4"/>
-        <rect x="540" y="670" width="45" height="4"/>
-        <rect x="730" y="610" width="70" height="4"/>
-        <rect x="930" y="690" width="55" height="4"/>
-        <rect x="1380" y="620" width="65" height="4"/>
-
-      </g>
-
-
-
-      <!-- ==============================
-           Moon reflection
-      =============================== -->
-
-      <g
-        fill="#fff6c9"
-        shape-rendering="crispEdges"
-      >
-
-        <rect
-          class="reflection-1"
-          x="1125"
-          y="604"
-          width="90"
-          height="8"
-          opacity="0.72"
-        />
-
-        <rect
-          class="reflection-2"
-          x="1145"
-          y="628"
-          width="52"
-          height="7"
-          opacity="0.65"
-        />
-
-        <rect
-          class="reflection-1"
-          x="1128"
-          y="653"
-          width="80"
-          height="6"
-          opacity="0.55"
-        />
-
-        <rect
-          class="reflection-2"
-          x="1150"
-          y="680"
-          width="43"
-          height="7"
-          opacity="0.72"
-        />
-
-        <rect
-          class="reflection-1"
-          x="1135"
-          y="710"
-          width="67"
-          height="5"
-          opacity="0.45"
-        />
-
-        <rect
-          class="reflection-2"
-          x="1150"
-          y="743"
-          width="42"
-          height="5"
-          opacity="0.36"
-        />
-
-      </g>
-
-
-
-      <!-- ==============================
-           Left willow
-      =============================== -->
-
-      <g
-        class="willow-left"
-        stroke="#173f36"
-        stroke-width="13"
-        stroke-linecap="square"
-        fill="none"
-      >
-
-        <path d="M80 -20 L120 110 L110 235 L150 390 L125 540"/>
-
-        <path d="M205 -15 L235 100 L225 220 L270 350 L250 500"/>
-
-        <path d="M330 -30 L350 90 L340 180 L390 290 L375 440"/>
-
-        <path d="M460 -20 L480 110 L455 230 L500 370"/>
-
-
-        <g
-          stroke-width="8"
-          opacity="0.95"
-        >
-
-          <path d="M110 150 L65 205 L85 265"/>
-          <path d="M128 230 L180 290 L160 355"/>
-
-          <path d="M230 160 L185 225 L200 285"/>
-          <path d="M245 260 L310 325 L290 385"/>
-
-          <path d="M350 130 L300 190 L320 255"/>
-          <path d="M370 240 L435 300 L415 365"/>
-
-          <path d="M470 160 L420 230 L445 300"/>
-
-        </g>
-
-      </g>
-
-
-
-      <!-- ==============================
-           Willow near the moon
-      =============================== -->
-
-      <g
-        class="willow-moon"
-        stroke="#1c5141"
-        fill="none"
-        stroke-linecap="square"
-      >
-
-        <path
-          d="
-          M935 -30
-          L970 100
-          L1000 210
-          L1025 330
-          L1080 470
-          "
-          stroke-width="14"
-        />
-
-        <path
-          d="
-          M1080 -20
-          L1105 110
-          L1125 200
-          L1145 305
-          L1200 445
-          "
-          stroke-width="13"
-        />
-
-        <path
-          d="
-          M1210 -25
-          L1220 100
-          L1205 195
-          L1245 290
-          L1280 410
-          "
-          stroke-width="13"
-        />
-
-        <path
-          d="
-          M1350 -30
-          L1340 100
-          L1315 205
-          L1345 330
-          L1390 455
-          "
-          stroke-width="14"
-        />
-
-
-        <g stroke-width="8">
-
-          <path d="M975 130 L925 195 L945 270"/>
-          <path d="M1005 230 L1060 290 L1040 365"/>
-
-          <path d="M1115 120 L1070 190 L1090 260"/>
-          <path d="M1140 210 L1200 280 L1180 350"/>
-
-          <path d="M1215 140 L1165 210 L1180 275"/>
-          <path d="M1235 240 L1300 310 L1285 375"/>
-
-          <path d="M1330 150 L1270 220 L1295 285"/>
-          <path d="M1340 250 L1410 320 L1390 390"/>
-
-        </g>
-
-
-        <!-- pixel leaves -->
-
-        <g
-          fill="#245e49"
-          stroke="none"
-          shape-rendering="crispEdges"
-        >
-
-          <rect x="920" y="193" width="16" height="7"/>
-          <rect x="936" y="246" width="19" height="7"/>
-
-          <rect x="1052" y="284" width="18" height="7"/>
-          <rect x="1035" y="352" width="18" height="7"/>
-
-          <rect x="1064" y="188" width="17" height="7"/>
-          <rect x="1085" y="255" width="16" height="7"/>
-
-          <rect x="1190" y="275" width="20" height="7"/>
-          <rect x="1172" y="342" width="17" height="7"/>
-
-          <rect x="1160" y="205" width="17" height="7"/>
-          <rect x="1180" y="267" width="18" height="7"/>
-
-          <rect x="1290" y="305" width="20" height="7"/>
-          <rect x="1277" y="370" width="18" height="7"/>
-
-          <rect x="1265" y="215" width="18" height="7"/>
-          <rect x="1288" y="280" width="17" height="7"/>
-
-          <rect x="1400" y="317" width="18" height="7"/>
-          <rect x="1384" y="382" width="18" height="7"/>
-
-        </g>
-
-      </g>
-
-
-
-      <!-- ==============================
-           very subtle pixel texture
-      =============================== -->
-
-      <g
-        fill="#ffffff"
-        opacity="0.025"
-        shape-rendering="crispEdges"
-      >
-
-        <rect x="100" y="90" width="4" height="4"/>
-        <rect x="260" y="320" width="5" height="5"/>
-        <rect x="570" y="390" width="4" height="4"/>
-        <rect x="800" y="95" width="5" height="5"/>
-        <rect x="1010" y="470" width="4" height="4"/>
-        <rect x="1470" y="400" width="5" height="5"/>
-
-      </g>
-
-
-    </svg>
-
+<!-- =========================
+     PIXEL NIGHT
+========================= -->
+
+<section
+  class="hero"
+  id="home"
+>
+
+  <canvas
+    id="pixelCanvas"
+    width="320"
+    height="180"
+  ></canvas>
+
+  <div class="scroll-hint">
+    SCROLL ↓
   </div>
-
-
-
-  <!-- Main title -->
-
-  <div class="hero-text">
-
-    <h2 class="pixel-title">
-      hi 我是山山田
-    </h2>
-
-    <div class="hero-subtitle">
-      NOTES FROM A SMALL CORNER OF THE WORLD
-    </div>
-
-  </div>
-
 
 </section>
 
 
 
-<!-- ====================================
-     About
-===================================== -->
+<!-- =========================
+     ABOUT
+========================= -->
 
 <main class="content">
 
 
-  <section id="about">
+<section id="about">
 
-    <h2>About Me</h2>
+  <h2>
+    About Me
+  </h2>
 
-    <p>
-      Hi! I'm 山山田.
+  <p>
+    Hi! I'm 山山田.
+  </p>
+
+  <p>
+    Welcome to my personal blog.
+    This is a place where I keep thoughts,
+    memories, experiences,
+    and things I find interesting.
+  </p>
+
+</section>
+
+
+
+<!-- =========================
+     BLOG
+========================= -->
+
+<section id="blog">
+
+  <h2>
+    Blog
+  </h2>
+
+
+  <div class="blog-card">
+
+    <h3>
+
+      <a href="#">
+        My First Blog Post
+      </a>
+
+    </h3>
+
+    <p class="date">
+      August 20, 2026
     </p>
 
     <p>
-      Welcome to my personal blog.
-      This is a place where I keep thoughts,
-      memories, experiences, and things I find interesting.
+      Welcome to my little corner
+      of the internet.
     </p>
 
-  </section>
+  </div>
 
 
+  <div class="blog-card">
 
-  <!-- ====================================
-       Blog
-  ===================================== -->
+    <h3>
 
-  <section id="blog">
+      <a href="#">
+        Why I Built This Website
+      </a>
 
-    <h2>Blog</h2>
+    </h3>
 
+    <p class="date">
+      August 20, 2026
+    </p>
 
-    <div class="blog-card">
+    <p>
+      A place for things
+      that are worth remembering.
+    </p>
 
-      <h3>
-        <a href="#">
-          My First Blog Post
-        </a>
-      </h3>
-
-      <p class="date">
-        August 20, 2026
-      </p>
-
-      <p>
-        Welcome to my little corner of the internet.
-      </p>
-
-    </div>
+  </div>
 
 
-    <div class="blog-card">
-
-      <h3>
-        <a href="#">
-          Why I Built This Website
-        </a>
-      </h3>
-
-      <p class="date">
-        August 20, 2026
-      </p>
-
-      <p>
-        A place for things that are worth remembering.
-      </p>
-
-    </div>
-
-
-  </section>
+</section>
 
 
 </main>
@@ -1181,5 +462,1744 @@
 </footer>
 
 
+
+<script>
+
+
+/* ==========================================================
+   PIXEL WORLD
+
+   The entire world is only 320 × 180 pixels.
+
+   The browser enlarges those pixels without smoothing them.
+
+   That is why the entire scene looks like real pixel art.
+========================================================== */
+
+
+const canvas =
+  document.getElementById("pixelCanvas");
+
+
+const ctx =
+  canvas.getContext("2d");
+
+
+const W = 320;
+
+const H = 180;
+
+
+ctx.imageSmoothingEnabled = false;
+
+
+/* ==========================================================
+   FIT PIXEL WORLD TO SCREEN
+
+   Keeps every pixel square.
+========================================================== */
+
+
+function fitCanvas() {
+
+  const scale =
+    Math.max(
+      window.innerWidth / W,
+      window.innerHeight / H
+    );
+
+  canvas.style.width =
+    Math.ceil(W * scale) + "px";
+
+  canvas.style.height =
+    Math.ceil(H * scale) + "px";
+
+}
+
+
+window.addEventListener(
+  "resize",
+  fitCanvas
+);
+
+
+fitCanvas();
+
+
+
+/* ==========================================================
+   COLORS
+========================================================== */
+
+
+const COLORS = {
+
+  sky1: "#0b0d2c",
+
+  sky2: "#111643",
+
+  sky3: "#171f55",
+
+  sky4: "#1e285f",
+
+
+  willowDark: "#0c302c",
+
+  willowMid: "#12453b",
+
+  willowLight: "#1b5b49",
+
+
+  waterDark: "#071b2b",
+
+  water1: "#0b2637",
+
+  water2: "#123447",
+
+  water3: "#19465b",
+
+  waterLight: "#32657a",
+
+
+  moon1: "#fffbe8",
+
+  moon2: "#fff2b9",
+
+  moon3: "#d9c58b",
+
+
+  shine: "#fff9d9",
+
+  white: "#ffffff"
+
+};
+
+
+
+/* ==========================================================
+   PIXEL UTILITIES
+========================================================== */
+
+
+function pixel(
+  x,
+  y,
+  width,
+  height,
+  color
+) {
+
+  ctx.fillStyle = color;
+
+  ctx.fillRect(
+    Math.round(x),
+    Math.round(y),
+    width,
+    height
+  );
+
+}
+
+
+
+/*
+  Pixelated line.
+
+  No curves.
+  Every branch is literally individual pixels.
+*/
+
+
+function pixelLine(
+  x0,
+  y0,
+  x1,
+  y1,
+  color,
+  thickness = 1
+) {
+
+  x0 = Math.round(x0);
+
+  y0 = Math.round(y0);
+
+  x1 = Math.round(x1);
+
+  y1 = Math.round(y1);
+
+
+  let dx =
+    Math.abs(x1 - x0);
+
+
+  let sx =
+    x0 < x1 ? 1 : -1;
+
+
+  let dy =
+    -Math.abs(y1 - y0);
+
+
+  let sy =
+    y0 < y1 ? 1 : -1;
+
+
+  let error =
+    dx + dy;
+
+
+  while (true) {
+
+    pixel(
+      x0,
+      y0,
+      thickness,
+      thickness,
+      color
+    );
+
+
+    if (
+      x0 === x1 &&
+      y0 === y1
+    ) {
+      break;
+    }
+
+
+    const e2 =
+      2 * error;
+
+
+    if (e2 >= dy) {
+
+      error += dy;
+
+      x0 += sx;
+
+    }
+
+
+    if (e2 <= dx) {
+
+      error += dx;
+
+      y0 += sy;
+
+    }
+
+  }
+
+}
+
+
+
+/* ==========================================================
+   SKY
+========================================================== */
+
+
+function drawSky() {
+
+
+  /*
+    Horizontal color bands.
+
+    No gradients.
+    Keeps the whole sky pixel-art based.
+  */
+
+
+  pixel(
+    0,
+    0,
+    W,
+    38,
+    COLORS.sky1
+  );
+
+
+  pixel(
+    0,
+    38,
+    W,
+    35,
+    COLORS.sky2
+  );
+
+
+  pixel(
+    0,
+    73,
+    W,
+    27,
+    COLORS.sky3
+  );
+
+
+  pixel(
+    0,
+    100,
+    W,
+    20,
+    COLORS.sky4
+  );
+
+
+
+  /*
+    Tiny dither pixels
+  */
+
+
+  const dots = [
+
+    [17,30],
+
+    [41,66],
+
+    [72,21],
+
+    [103,48],
+
+    [131,32],
+
+    [159,71],
+
+    [184,27],
+
+    [207,58],
+
+    [268,25],
+
+    [299,63]
+
+  ];
+
+
+  dots.forEach(
+    ([x,y],i) => {
+
+      pixel(
+
+        x,
+
+        y,
+
+        i % 3 === 0 ? 2 : 1,
+
+        1,
+
+        i % 2
+          ? "#303a74"
+          : "#252f67"
+
+      );
+
+    }
+  );
+
+}
+
+
+
+/* ==========================================================
+   PIXEL MOON
+========================================================== */
+
+
+function pixelMoon(
+  cx,
+  cy
+) {
+
+
+  /*
+    Very subtle pixel glow.
+
+    Still made entirely from blocks.
+  */
+
+
+  for (
+    let y = -17;
+    y <= 17;
+    y++
+  ) {
+
+
+    for (
+      let x = -17;
+      x <= 17;
+      x++
+    ) {
+
+
+      const distance =
+        Math.sqrt(
+          x*x +
+          y*y
+        );
+
+
+      if (
+        distance < 17 &&
+        distance > 11
+      ) {
+
+        if (
+          (x + y) % 2 === 0
+        ) {
+
+          pixel(
+
+            cx + x,
+
+            cy + y,
+
+            1,
+
+            1,
+
+            "#34385f"
+
+          );
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+
+  /*
+    Main pixel moon
+  */
+
+
+  for (
+    let y = -10;
+    y <= 10;
+    y++
+  ) {
+
+
+    for (
+      let x = -10;
+      x <= 10;
+      x++
+    ) {
+
+
+      const d =
+        Math.sqrt(
+          x*x +
+          y*y
+        );
+
+
+      if (d <= 10) {
+
+
+        let color =
+          COLORS.moon1;
+
+
+        if (
+          x < -4 ||
+          y > 6
+        ) {
+
+          color =
+            COLORS.moon2;
+
+        }
+
+
+        if (
+          x < -7 &&
+          y > 0
+        ) {
+
+          color =
+            COLORS.moon3;
+
+        }
+
+
+        pixel(
+
+          cx + x,
+
+          cy + y,
+
+          1,
+
+          1,
+
+          color
+
+        );
+
+      }
+
+    }
+
+  }
+
+
+
+  /*
+    Tiny moon texture
+  */
+
+
+  pixel(
+    cx - 4,
+    cy - 4,
+    2,
+    1,
+    "#eee5c3"
+  );
+
+
+  pixel(
+    cx + 3,
+    cy + 2,
+    2,
+    1,
+    "#f3e9ca"
+  );
+
+
+  pixel(
+    cx - 2,
+    cy + 5,
+    1,
+    1,
+    "#dfd2ad"
+  );
+
+}
+
+
+
+/* ==========================================================
+   DISTANT SHORE
+========================================================== */
+
+
+function drawHorizon() {
+
+
+  /*
+    Low pixel silhouettes.
+
+    Very subtle so the picture stays
+    quiet and "spring river moon night".
+  */
+
+
+  const skyline = [
+
+    114,112,113,111,112,
+
+    110,111,108,110,109,
+
+    112,110,109,111,108,
+
+    110,112,109,110,111
+
+  ];
+
+
+  const width =
+    W / skyline.length;
+
+
+  skyline.forEach(
+    (height,i) => {
+
+      pixel(
+
+        Math.floor(i * width),
+
+        height,
+
+        Math.ceil(width),
+
+        120 - height,
+
+        "#091c2b"
+
+      );
+
+    }
+  );
+
+}
+
+
+
+/* ==========================================================
+   RIVER
+========================================================== */
+
+
+const waterStart = 118;
+
+
+
+function drawWater(frame) {
+
+
+  /*
+    River itself.
+
+    Every column is made from pixel blocks.
+
+    Slight movement makes the surface breathe.
+  */
+
+
+  for (
+    let x = 0;
+    x < W;
+    x += 2
+  ) {
+
+
+    const offset =
+      Math.round(
+        Math.sin(
+          (x + frame) / 15
+        )
+      );
+
+
+    const top =
+      waterStart +
+      offset;
+
+
+    pixel(
+
+      x,
+
+      top,
+
+      2,
+
+      H - top,
+
+      COLORS.waterDark
+
+    );
+
+  }
+
+
+
+  /*
+    Horizontal layers
+  */
+
+
+  pixel(
+    0,
+    128,
+    W,
+    14,
+    COLORS.water1
+  );
+
+
+  pixel(
+    0,
+    142,
+    W,
+    17,
+    COLORS.water2
+  );
+
+
+  pixel(
+    0,
+    159,
+    W,
+    21,
+    COLORS.water1
+  );
+
+
+}
+
+
+
+/* ==========================================================
+   MOVING WATER LINES
+========================================================== */
+
+
+const waves = [
+
+  [10,124,14,1,0],
+
+  [50,129,22,1,1],
+
+  [95,125,13,1,2],
+
+  [145,133,25,1,0],
+
+  [206,127,15,1,1],
+
+  [260,132,24,1,2],
+
+
+  [23,143,22,2,2],
+
+  [79,150,16,1,0],
+
+  [128,146,28,1,1],
+
+  [185,154,20,2,2],
+
+  [235,145,15,1,0],
+
+  [287,153,22,1,1],
+
+
+  [5,166,28,1,1],
+
+  [65,173,19,2,0],
+
+  [114,164,31,1,2],
+
+  [173,171,25,1,1],
+
+  [233,166,23,2,0],
+
+  [279,174,27,1,2]
+
+];
+
+
+
+function drawWaves(frame) {
+
+
+  waves.forEach(
+    (
+      [
+        baseX,
+        y,
+        width,
+        height,
+        type
+      ],
+      i
+    ) => {
+
+
+      /*
+        Everything moves to the right.
+      */
+
+
+      const speed =
+        1 +
+        type;
+
+
+      const move =
+        Math.floor(
+          frame / (8 - type)
+        );
+
+
+      let x =
+        (
+          baseX +
+          move * speed
+        ) %
+        (W + 50);
+
+
+      x -= 25;
+
+
+      let color =
+        COLORS.water3;
+
+
+      if (type === 1) {
+
+        color =
+          COLORS.waterLight;
+
+      }
+
+
+      if (type === 2) {
+
+        color =
+          "#587987";
+
+      }
+
+
+      pixel(
+
+        x,
+
+        y,
+
+        width,
+
+        height,
+
+        color
+
+      );
+
+
+      /*
+        wrapping copy
+      */
+
+
+      pixel(
+
+        x - W,
+
+        y,
+
+        width,
+
+        height,
+
+        color
+
+      );
+
+    }
+  );
+
+}
+
+
+
+/* ==========================================================
+   MOONLIGHT ON WATER
+========================================================== */
+
+
+function reflection(
+  frame,
+  moonX
+) {
+
+
+  const shineRows = [
+
+    [123,11],
+
+    [128,8],
+
+    [134,15],
+
+    [141,10],
+
+    [149,18],
+
+    [158,12],
+
+    [169,20]
+
+  ];
+
+
+  shineRows.forEach(
+    ([y,width],i) => {
+
+
+      /*
+        Reflection flickers only in discrete pixels.
+      */
+
+
+      const jitter =
+        (
+          (
+            Math.floor(
+              frame / 4
+            ) +
+            i * 3
+          )
+          %
+          5
+        )
+        -
+        2;
+
+
+      const shrink =
+        (
+          Math.floor(
+            frame / 6
+          ) +
+          i
+        )
+        %
+        3;
+
+
+      const actualWidth =
+        Math.max(
+          3,
+          width - shrink
+        );
+
+
+      const color =
+
+        i % 3 === 0
+
+          ? COLORS.moon1
+
+          : i % 3 === 1
+
+          ? COLORS.moon2
+
+          : "#bcb99c";
+
+
+      pixel(
+
+        moonX -
+        Math.floor(
+          actualWidth / 2
+        ) +
+        jitter,
+
+        y,
+
+        actualWidth,
+
+        i % 2 === 0
+          ? 2
+          : 1,
+
+        color
+
+      );
+
+    }
+  );
+
+}
+
+
+
+/* ==========================================================
+   PIXEL WILLOW
+========================================================== */
+
+
+/*
+  Willow branches are arrays of points.
+
+  The custom pixelLine() function joins them
+  using square pixels only.
+*/
+
+
+const willowBranches = [
+
+  {
+    x: 178,
+    points: [
+      [0,-5],
+      [1,12],
+      [3,26],
+      [1,43],
+      [4,61],
+      [3,79]
+    ]
+  },
+
+
+  {
+    x: 194,
+    points: [
+      [0,-4],
+      [2,15],
+      [0,31],
+      [4,46],
+      [2,66],
+      [6,86]
+    ]
+  },
+
+
+  {
+    x: 207,
+    points: [
+      [0,-3],
+      [-1,15],
+      [2,32],
+      [0,52],
+      [4,69],
+      [2,91]
+    ]
+  },
+
+
+  /*
+    This branch crosses the moon.
+  */
+
+  {
+    x: 220,
+    moonBranch: true,
+
+    points: [
+      [0,-4],
+      [2,13],
+      [5,29],
+      [8,45],
+      [13,61],
+      [15,81]
+    ]
+  },
+
+
+  {
+    x: 236,
+    moonBranch: true,
+
+    points: [
+      [0,-3],
+      [-1,15],
+      [1,31],
+      [3,47],
+      [7,65],
+      [9,84]
+    ]
+  },
+
+
+  {
+    x: 252,
+
+    points: [
+      [0,-4],
+      [-2,17],
+      [1,34],
+      [-1,51],
+      [3,70],
+      [1,92]
+    ]
+  },
+
+
+  {
+    x: 270,
+
+    points: [
+      [0,-5],
+      [1,15],
+      [-2,31],
+      [1,50],
+      [-1,69],
+      [3,88]
+    ]
+  },
+
+
+  {
+    x: 291,
+
+    points: [
+      [0,-5],
+      [-2,17],
+      [0,36],
+      [-3,55],
+      [0,74],
+      [-1,95]
+    ]
+  },
+
+
+  /*
+    Left side branches.
+  */
+
+  {
+    x: 16,
+
+    points: [
+      [0,-4],
+      [2,16],
+      [0,34],
+      [4,51],
+      [2,73]
+    ]
+  },
+
+
+  {
+    x: 36,
+
+    points: [
+      [0,-4],
+      [-1,15],
+      [3,33],
+      [1,52],
+      [5,77]
+    ]
+  },
+
+
+  {
+    x: 58,
+
+    points: [
+      [0,-4],
+      [2,17],
+      [1,37],
+      [5,57],
+      [4,81]
+    ]
+  }
+
+];
+
+
+
+/*
+  Moon branch moves aside every few seconds.
+
+  The movement uses integer values only.
+
+  It therefore looks like pixel animation,
+  not smooth vector movement.
+*/
+
+
+function getMoonReveal(frame) {
+
+
+  /*
+    96 frames × about 100ms
+
+    roughly one cycle every 10 seconds.
+  */
+
+
+  const cycle =
+    frame % 96;
+
+
+  if (cycle < 25) {
+
+    return 0;
+
+  }
+
+
+  if (cycle < 40) {
+
+    return Math.floor(
+      (cycle - 25) / 2
+    );
+
+  }
+
+
+  if (cycle < 61) {
+
+    return 8;
+
+  }
+
+
+  if (cycle < 78) {
+
+    return Math.max(
+
+      0,
+
+      8 -
+      Math.floor(
+        (cycle - 61) / 2
+      )
+
+    );
+
+  }
+
+
+  return 0;
+
+}
+
+
+
+function drawWillowBranch(
+  branch,
+  frame,
+  index
+) {
+
+
+  /*
+    Slow natural sway,
+    rounded to whole pixels.
+  */
+
+
+  let sway =
+    Math.round(
+      Math.sin(
+        frame / 13 +
+        index * 0.7
+      ) *
+      2
+    );
+
+
+  if (
+    branch.moonBranch
+  ) {
+
+    sway +=
+      getMoonReveal(frame);
+
+  }
+
+
+  const pts =
+    branch.points;
+
+
+  for (
+    let i = 0;
+    i < pts.length - 1;
+    i++
+  ) {
+
+
+    const p1 =
+      pts[i];
+
+
+    const p2 =
+      pts[i + 1];
+
+
+    pixelLine(
+
+      branch.x +
+      p1[0] +
+      sway,
+
+      p1[1],
+
+      branch.x +
+      p2[0] +
+      sway,
+
+      p2[1],
+
+      i < 2
+        ? COLORS.willowDark
+        : COLORS.willowMid,
+
+      i < 2
+        ? 2
+        : 1
+
+    );
+
+  }
+
+
+
+  /*
+    Small willow leaves
+  */
+
+
+  for (
+    let i = 1;
+    i < pts.length;
+    i++
+  ) {
+
+
+    const p =
+      pts[i];
+
+
+    const x =
+      branch.x +
+      p[0] +
+      sway;
+
+
+    const y =
+      p[1];
+
+
+    /*
+      left leaf
+    */
+
+
+    pixel(
+
+      x - 4,
+
+      y + 1,
+
+      4,
+
+      2,
+
+      COLORS.willowLight
+
+    );
+
+
+    pixel(
+
+      x - 3,
+
+      y + 3,
+
+      3,
+
+      1,
+
+      COLORS.willowMid
+
+    );
+
+
+    /*
+      occasional right leaf
+    */
+
+
+    if (
+      i % 2 === 0
+    ) {
+
+      pixel(
+
+        x + 1,
+
+        y + 4,
+
+        4,
+
+        2,
+
+        COLORS.willowLight
+
+      );
+
+    }
+
+  }
+
+}
+
+
+
+function drawWillows(frame) {
+
+
+  willowBranches.forEach(
+    (branch,index) => {
+
+      drawWillowBranch(
+        branch,
+        frame,
+        index
+      );
+
+    }
+  );
+
+}
+
+
+
+/* ==========================================================
+   EXTRA SMALL BRANCHES
+========================================================== */
+
+
+function tinyWillowLeaves(frame) {
+
+
+  const sway =
+    Math.round(
+      Math.sin(
+        frame / 14
+      )
+      *
+      2
+    );
+
+
+  const leaves = [
+
+    [8,37],
+    [20,48],
+    [30,27],
+    [46,63],
+    [62,45],
+    [184,39],
+    [198,55],
+    [210,67],
+    [260,38],
+    [278,61],
+    [303,42]
+
+  ];
+
+
+  leaves.forEach(
+    ([x,y],i) => {
+
+
+      const move =
+        i % 2 === 0
+          ? sway
+          : -sway;
+
+
+      pixel(
+
+        x + move,
+
+        y,
+
+        5,
+
+        2,
+
+        i % 3 === 0
+          ? COLORS.willowLight
+          : COLORS.willowMid
+
+      );
+
+    }
+  );
+
+}
+
+
+
+/* ==========================================================
+   PIXEL TEXT
+========================================================== */
+
+
+function drawTitle() {
+
+
+  /*
+    Because the entire canvas is only
+    320 × 180 pixels,
+    this text is rendered at tiny resolution
+    and enlarged as pixel art.
+  */
+
+
+  ctx.textAlign =
+    "center";
+
+
+  ctx.textBaseline =
+    "middle";
+
+
+  ctx.font =
+    'bold 14px "Courier New", "PingFang SC", monospace';
+
+
+
+  /*
+    pixel shadow
+  */
+
+
+  ctx.fillStyle =
+    "#06091d";
+
+
+  ctx.fillText(
+    "hi 我是山山田",
+    162,
+    82
+  );
+
+
+  ctx.fillText(
+    "hi 我是山山田",
+    161,
+    81
+  );
+
+
+
+  /*
+    white text
+  */
+
+
+  ctx.fillStyle =
+    COLORS.white;
+
+
+  ctx.fillText(
+    "hi 我是山山田",
+    160,
+    79
+  );
+
+
+
+  /*
+    little subtitle
+  */
+
+
+  ctx.font =
+    '5px "Courier New", monospace';
+
+
+  ctx.fillStyle =
+    "#b7bed8";
+
+
+  ctx.fillText(
+    "SPRING RIVER · MOONLIGHT · NIGHT",
+    160,
+    94
+  );
+
+}
+
+
+
+/* ==========================================================
+   LITTLE LIGHT SPARKLES
+========================================================== */
+
+
+function sparkles(frame) {
+
+
+  const points = [
+
+    [39,123],
+
+    [77,137],
+
+    [108,128],
+
+    [152,146],
+
+    [187,132],
+
+    [271,139],
+
+    [297,126]
+
+  ];
+
+
+  points.forEach(
+    ([x,y],i) => {
+
+
+      if (
+        (
+          Math.floor(
+            frame / 6
+          ) +
+          i
+        )
+        %
+        3 === 0
+      ) {
+
+        pixel(
+
+          x,
+
+          y,
+
+          2,
+
+          1,
+
+          "#8aa0a9"
+
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+
+/* ==========================================================
+   DRAW EVERYTHING
+========================================================== */
+
+
+let frame = 0;
+
+let lastUpdate = 0;
+
+
+
+function render(time) {
+
+
+  /*
+    Pixel-art animation runs slower than
+    a modern 60fps animation.
+
+    About 10 frames per second gives the
+    little "game animation" feeling.
+  */
+
+
+  if (
+    time - lastUpdate >
+    100
+  ) {
+
+    frame++;
+
+    lastUpdate =
+      time;
+
+  }
+
+
+
+  /*
+    Clear frame
+  */
+
+
+  ctx.clearRect(
+    0,
+    0,
+    W,
+    H
+  );
+
+
+
+  /*
+    Painter order is important.
+
+    Willow is painted AFTER the moon,
+    so branches actually cover the moon.
+  */
+
+
+  drawSky();
+
+
+  pixelMoon(
+    237,
+    50
+  );
+
+
+  drawHorizon();
+
+
+  drawWater(
+    frame
+  );
+
+
+  drawWaves(
+    frame
+  );
+
+
+  reflection(
+    frame,
+    237
+  );
+
+
+  sparkles(
+    frame
+  );
+
+
+  /*
+    title behind willow
+  */
+
+
+  drawTitle();
+
+
+  /*
+    Willow is foreground.
+
+    Some branches therefore cross
+    both the text and moon,
+    like a real foreground tree.
+  */
+
+
+  drawWillows(
+    frame
+  );
+
+
+  tinyWillowLeaves(
+    frame
+  );
+
+
+  requestAnimationFrame(
+    render
+  );
+
+}
+
+
+requestAnimationFrame(
+  render
+);
+
+
+</script>
+
+
 </body>
+
 </html>
