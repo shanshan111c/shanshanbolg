@@ -967,83 +967,89 @@ function bulbPixel(
 
   bctx.globalAlpha =
     1;
-}
-
-
+}/* =====================================================
+   FIRST VERSION PIXEL LOTUS LAMP
+===================================================== */
 
 function bulbGlow(
   cx,
   cy,
-  strength
+  strength,
+  color
 ) {
-
   for (
-    let y = -18;
-    y <= 18;
+    let y = -22;
+    y <= 22;
     y += BP
   ) {
-
     for (
-      let x = -18;
-      x <= 18;
+      let x = -22;
+      x <= 22;
       x += BP
     ) {
+      const dx = x;
+      const dy = y * 1.08;
 
-      const d =
+      const distance =
         Math.sqrt(
-          x*x +
-          y*y
+          dx * dx +
+          dy * dy
         );
-
 
       if (
-        d > 7 &&
-        d < 19
+        distance > 8 &&
+        distance < 23
       ) {
-
-        const f =
+        const fade =
           1 -
           (
-            d - 7
-          )
-          /
-          12;
-
+            distance - 8
+          ) /
+          15;
 
         bulbPixel(
-
           cx + x,
-
           cy + y,
-
-          "#ffe9a0",
-
-          f *
-          f *
+          color,
+          fade *
+          fade *
           strength
-
         );
-
       }
-
     }
-
   }
 }
 
 
 
-function drawBulb(
-  time
+function drawLotusPixels(
+  cx,
+  cy,
+  pattern,
+  color,
+  alpha = 1
 ) {
+  pattern.forEach(
+    cell => {
+      bulbPixel(
+        cx + cell[0] * BP,
+        cy + cell[1] * BP,
+        color,
+        alpha
+      );
+    }
+  );
+}
 
+
+
+function drawBulb(time) {
   bctx.clearRect(
     0,
     0,
     48,
     54
   );
-
 
   const night =
     document.body
@@ -1052,183 +1058,390 @@ function drawBulb(
     ===
     "night";
 
+  const cx = 24;
+  const cy = 27;
 
-  const cx =
-    24;
+  /*
+   * 夜晚轻微呼吸。
+   */
+  const breathe =
+    0.94 +
+    Math.sin(
+      time * 0.0014
+    ) *
+    0.06;
 
-
-  const cy =
-    25;
-
-
-  if (
-    night
-  ) {
-
+  /*
+   * 夜晚为淡粉白光晕。
+   * 白天不显示光晕。
+   */
+  if (night) {
     bulbGlow(
-
       cx,
-
       cy,
-
-      .18 +
+      0.25 +
       Math.sin(
-        time * .001
-      )
-      *
-      .02
-
+        time * 0.0012
+      ) *
+      0.025,
+      "#ffd9eb"
     );
-
   }
 
+  /*
+   * 白天：青、白、黑。
+   * 晚上：白、粉。
+   */
+  const darkOutline =
+    night
+      ? "#9b4f72"
+      : "#11191d";
+
+  const outerPetal =
+    night
+      ? "#e98bb6"
+      : "#397f83";
+
+  const middlePetal =
+    night
+      ? "#f5b5d2"
+      : "#76afb0";
+
+  const innerPetal =
+    night
+      ? "#ffd9e9"
+      : "#c8e1de";
+
+  const warmLight =
+    night
+      ? "#fff0f7"
+      : "#eaf3ef";
+
+  const brightLight =
+    night
+      ? "#fffafd"
+      : "#fffefa";
+
+  const metalColor =
+    night
+      ? "#c6789f"
+      : "#172226";
 
   /*
-    socket
-  */
+   * 顶部连接扣。
+   */
+  const topHook = [
+    [-1, -10],
+    [0, -10],
 
-  for (
-    let x = -4;
-    x <= 2;
-    x += 2
-  ) {
+    [-2, -9],
+    [-1, -9],
+    [0, -9],
+    [1, -9],
 
-    bulbPixel(
-      cx + x,
-      cy - 13,
-      night
-      ?
-      "#9b978c"
-      :
-      "#6e716b"
-    );
-
-    bulbPixel(
-      cx + x,
-      cy - 11,
-      night
-      ?
-      "#9b978c"
-      :
-      "#6e716b"
-    );
-
-  }
-
-
-  /*
-    glass
-  */
-
-  const rows = [
-
-    [-4,4],
-
-    [-6,6],
-
-    [-8,8],
-
-    [-8,8],
-
-    [-8,8],
-
-    [-6,6],
-
-    [-6,6],
-
-    [-4,4],
-
-    [-4,4]
-
+    [-2, -8],
+    [-1, -8],
+    [0, -8],
+    [1, -8]
   ];
 
-
-  rows.forEach(
-    (
-      row,
-      index
-    ) => {
-
-      const y =
-        cy -
-        7 +
-        index *
-        2;
-
-
-      for (
-        let x = row[0];
-        x <= row[1];
-        x += 2
-      ) {
-
-        bulbPixel(
-
-          cx + x,
-
-          y,
-
-          night
-          ?
-          (
-            index < 4
-            ?
-            "#ffe8a1"
-            :
-            "#fff2c5"
-          )
-          :
-          (
-            index < 4
-            ?
-            "#aaa99f"
-            :
-            "#c4c3ba"
-          )
-
-        );
-
-      }
-
-    }
-  );
-
-
-  bulbPixel(
-    cx - 2,
-    cy + 1,
-    night
-    ?
-    "#fffce3"
-    :
-    "#74756e"
-  );
-
-
-  bulbPixel(
+  drawLotusPixels(
     cx,
-    cy + 3,
-    night
-    ?
-    "#fffce3"
-    :
-    "#74756e"
+    cy,
+    topHook,
+    metalColor
   );
 
+  /*
+   * 莲花外侧上层花瓣。
+   */
+  const upperOuterPetals = [
+    [-7, -2],
+    [-6, -3],
+    [-5, -4],
+    [-4, -3],
 
-  bulbPixel(
-    cx + 2,
-    cy + 1,
-    night
-    ?
-    "#fffce3"
-    :
-    "#74756e"
+    [7, -2],
+    [6, -3],
+    [5, -4],
+    [4, -3],
+
+    [-6, -1],
+    [-5, -2],
+    [-4, -2],
+
+    [6, -1],
+    [5, -2],
+    [4, -2]
+  ];
+
+  drawLotusPixels(
+    cx,
+    cy,
+    upperOuterPetals,
+    outerPetal,
+    night ? breathe : 1
   );
 
+  /*
+   * 中间竖起的花瓣。
+   */
+  const upperMiddlePetals = [
+    [-4, -2],
+    [-3, -4],
+    [-2, -5],
+    [-1, -3],
+
+    [4, -2],
+    [3, -4],
+    [2, -5],
+    [1, -3],
+
+    [-1, -5],
+    [0, -7],
+    [1, -5]
+  ];
+
+  drawLotusPixels(
+    cx,
+    cy,
+    upperMiddlePetals,
+    middlePetal,
+    night ? breathe : 1
+  );
+
+  /*
+   * 莲花中央主体。
+   */
+  const lampCenter = [
+    [-3, -2],
+    [-2, -3],
+    [-1, -3],
+    [0, -4],
+    [1, -3],
+    [2, -3],
+    [3, -2],
+
+    [-4, -1],
+    [-3, -1],
+    [-2, -1],
+    [-1, -1],
+    [0, -1],
+    [1, -1],
+    [2, -1],
+    [3, -1],
+    [4, -1],
+
+    [-4, 0],
+    [-3, 0],
+    [-2, 0],
+    [-1, 0],
+    [0, 0],
+    [1, 0],
+    [2, 0],
+    [3, 0],
+    [4, 0],
+
+    [-3, 1],
+    [-2, 1],
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    [2, 1],
+    [3, 1]
+  ];
+
+  drawLotusPixels(
+    cx,
+    cy,
+    lampCenter,
+    innerPetal,
+    night ? breathe : 1
+  );
+
+  /*
+   * 中央发光莲心。
+   */
+  const lightCore = [
+    [-1, -2],
+    [0, -3],
+    [1, -2],
+
+    [-2, -1],
+    [-1, -1],
+    [0, -1],
+    [1, -1],
+    [2, -1],
+
+    [-2, 0],
+    [-1, 0],
+    [0, 0],
+    [1, 0],
+    [2, 0],
+
+    [-1, 1],
+    [0, 1],
+    [1, 1]
+  ];
+
+  drawLotusPixels(
+    cx,
+    cy,
+    lightCore,
+    warmLight,
+    night ? breathe : 1
+  );
+
+  /*
+   * 最亮的白色中心。
+   */
+  drawLotusPixels(
+    cx,
+    cy,
+    [
+      [0, -2],
+
+      [-1, -1],
+      [0, -1],
+      [1, -1],
+
+      [0, 0]
+    ],
+    brightLight,
+    night ? 0.98 : 1
+  );
+
+  /*
+   * 下方中层花瓣。
+   */
+  const lowerMiddlePetals = [
+    [-7, 1],
+    [-6, 2],
+    [-5, 3],
+    [-4, 3],
+
+    [7, 1],
+    [6, 2],
+    [5, 3],
+    [4, 3],
+
+    [-4, 2],
+    [-3, 3],
+    [-2, 4],
+    [-1, 3],
+
+    [4, 2],
+    [3, 3],
+    [2, 4],
+    [1, 3]
+  ];
+
+  drawLotusPixels(
+    cx,
+    cy,
+    lowerMiddlePetals,
+    middlePetal,
+    night ? breathe : 1
+  );
+
+  /*
+   * 最外层向下展开的花瓣。
+   */
+  const lowerOuterPetals = [
+    [-8, 1],
+    [-7, 2],
+    [-6, 3],
+    [-5, 4],
+    [-4, 4],
+
+    [8, 1],
+    [7, 2],
+    [6, 3],
+    [5, 4],
+    [4, 4],
+
+    [-4, 4],
+    [-3, 5],
+    [-2, 5],
+
+    [4, 4],
+    [3, 5],
+    [2, 5],
+
+    [-1, 4],
+    [0, 6],
+    [1, 4]
+  ];
+
+  drawLotusPixels(
+    cx,
+    cy,
+    lowerOuterPetals,
+    outerPetal,
+    night ? breathe : 1
+  );
+
+  /*
+   * 深色像素轮廓。
+   */
+  const outline = [
+    [-1, -11],
+    [0, -11],
+
+    [-3, -9],
+    [2, -9],
+
+    [0, -8],
+
+    [-8, -3],
+    [8, -3],
+
+    [-9, 0],
+    [9, 0],
+
+    [-8, 3],
+    [8, 3],
+
+    [-6, 5],
+    [6, 5],
+
+    [-3, 6],
+    [3, 6],
+
+    [0, 7]
+  ];
+
+  drawLotusPixels(
+    cx,
+    cy,
+    outline,
+    darkOutline,
+    night ? 0.9 : 1
+  );
+
+  /*
+   * 灯底小坠饰。
+   */
+  const tassel = [
+    [0, 8],
+    [0, 9],
+
+    [-1, 10],
+    [0, 10],
+    [1, 10],
+
+    [0, 11]
+  ];
+
+  drawLotusPixels(
+    cx,
+    cy,
+    tassel,
+    metalColor
+  );
+
+  bctx.globalAlpha = 1;
 }
-
-
 
 /* =====================================================
    PULL SWITCH
