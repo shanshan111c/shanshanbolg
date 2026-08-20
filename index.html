@@ -2,52 +2,32 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>雅蘭亭拾遺</title>
 
-
   <style>
-
     * {
       box-sizing: border-box;
     }
-
 
     html {
       scroll-behavior: smooth;
     }
 
-
     body {
-
       margin: 0;
-
       background: #f5f4ef;
-
       color: #222;
-
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+      font-family: Arial, Helvetica, sans-serif;
     }
 
-
-
-    /* ==========================================
+    /* =====================================
        HEADER
-    ========================================== */
+    ====================================== */
 
     header {
-
       position: fixed;
 
       top: 0;
@@ -59,37 +39,23 @@
       padding: 0 34px;
 
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
 
       z-index: 100;
 
-
-      background:
-        rgba(1, 5, 15, 0.68);
-
+      background: rgba(1, 5, 15, 0.66);
 
       border-bottom:
-        1px solid
-        rgba(255,255,255,0.05);
+        1px solid rgba(255,255,255,0.05);
 
-
-      backdrop-filter:
-        blur(4px);
-
+      backdrop-filter: blur(4px);
     }
 
-
-
     .site-name {
-
       margin: 0;
 
-
-      color: #ffffff;
-
+      color: white;
 
       font-family:
         "Songti TC",
@@ -97,325 +63,179 @@
         "PingFang TC",
         serif;
 
-
       font-size: 17px;
-
       font-weight: 400;
 
       letter-spacing: 5px;
 
       white-space: nowrap;
-
     }
 
-
-
     nav a {
-
       margin-left: 26px;
 
-
-      color:
-        rgba(255,255,255,0.68);
-
+      color: rgba(255,255,255,0.68);
 
       text-decoration: none;
-
 
       font-family:
         "Courier New",
         monospace;
 
-
       font-size: 12px;
-
       letter-spacing: 1.5px;
-
     }
-
-
 
     nav a:hover {
-
-      color: #ffffff;
-
+      color: white;
     }
 
-
-
-    /* ==========================================
+    /* =====================================
        HERO
-    ========================================== */
+    ====================================== */
 
     .hero {
-
       position: relative;
 
-
       width: 100%;
-
       height: 100vh;
 
       min-height: 650px;
 
-
       overflow: hidden;
 
-
-      background:
-        #01040b;
-
+      background: #01040b;
     }
-
-
 
     #scene {
-
       position: absolute;
 
-
       left: 50%;
-
       top: 50%;
 
+      transform: translate(-50%, -50%);
 
-      transform:
-        translate(-50%, -50%);
-
-
-      image-rendering:
-        pixelated;
-
-
-      image-rendering:
-        crisp-edges;
-
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
     }
 
-
-
     .scroll {
-
       position: absolute;
 
-
       left: 50%;
-
       bottom: 20px;
 
+      transform: translateX(-50%);
 
-      transform:
-        translateX(-50%);
-
-
-      color:
-        rgba(255,255,255,0.20);
-
+      color: rgba(255,255,255,0.18);
 
       font-family:
         "Courier New",
         monospace;
 
-
       font-size: 9px;
 
       letter-spacing: 4px;
-
     }
 
-
-
-    /* ==========================================
+    /* =====================================
        CONTENT
-    ========================================== */
+    ====================================== */
 
     .content {
-
       max-width: 850px;
 
       margin: auto;
 
       padding: 90px 24px;
-
     }
-
-
 
     .content section {
-
       margin-bottom: 100px;
-
     }
 
-
-
     .content h2 {
-
       font-size: 28px;
 
       margin-bottom: 24px;
-
     }
 
-
-
     .content p {
-
       color: #444;
-
-      line-height: 1.9;
 
       font-size: 16px;
 
+      line-height: 1.9;
     }
-
-
 
     .blog-card {
-
       padding: 25px 0;
 
-      border-bottom:
-        1px solid #ddd;
-
+      border-bottom: 1px solid #ddd;
     }
-
-
-
-    .blog-card h3 {
-
-      margin-bottom: 8px;
-
-    }
-
-
 
     .blog-card a {
-
       color: #222;
 
       text-decoration: none;
-
     }
-
-
 
     .blog-card a:hover {
-
       text-decoration: underline;
-
     }
 
-
-
     footer {
-
       padding: 40px;
-
 
       text-align: center;
 
-
       color: #999;
 
-
       font-size: 13px;
-
     }
 
-
-
-    /* ==========================================
-       MOBILE
-    ========================================== */
-
     @media (max-width: 650px) {
-
       header {
-
         height: 54px;
 
         padding: 0 15px;
-
       }
 
-
       .site-name {
-
         font-size: 13px;
 
         letter-spacing: 2px;
-
       }
 
-
       nav a {
-
         margin-left: 10px;
 
         font-size: 10px;
-
       }
-
     }
-
-
   </style>
-
 </head>
-
 
 
 <body>
 
 
-
-<!-- ==========================================
-     HEADER
-========================================== -->
-
 <header>
 
-
   <h1 class="site-name">
-
     雅蘭亭拾遺
-
   </h1>
 
-
-
   <nav>
-
-    <a href="#home">
-      Home
-    </a>
-
-    <a href="#about">
-      About
-    </a>
-
-    <a href="#blog">
-      Blog
-    </a>
-
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#blog">Blog</a>
   </nav>
-
 
 </header>
 
 
-
-
-<!-- ==========================================
-     PIXEL HERO
-========================================== -->
-
-<section
-  class="hero"
-  id="home"
->
-
+<section class="hero" id="home">
 
   <canvas
     id="scene"
@@ -423,117 +243,64 @@
     height="180"
   ></canvas>
 
-
   <div class="scroll">
-
     SCROLL ↓
-
   </div>
-
 
 </section>
 
 
-
-
-<!-- ==========================================
-     CONTENT
-========================================== -->
-
 <main class="content">
-
-
 
   <section id="about">
 
-
-    <h2>
-
-      About Me
-
-    </h2>
-
+    <h2>About Me</h2>
 
     <p>
-
       Hi! I'm 山山田.
-
     </p>
 
-
     <p>
-
       Welcome to my personal blog.
       This is where I keep thoughts,
       memories, experiences,
       and things I find interesting.
-
     </p>
 
-
   </section>
-
-
 
 
   <section id="blog">
 
-
-    <h2>
-
-      Blog
-
-    </h2>
-
-
+    <h2>Blog</h2>
 
     <div class="blog-card">
 
-
       <h3>
-
         <a href="#">
-
           My First Blog Post
-
         </a>
-
       </h3>
 
-
       <p>
-
         August 20, 2026
-
       </p>
 
-
       <p>
-
         Welcome to my little corner
         of the internet.
-
       </p>
-
 
     </div>
 
-
   </section>
-
 
 </main>
 
 
-
-
 <footer>
-
   © 2026 雅蘭亭拾遺
-
 </footer>
-
-
 
 
 
@@ -542,14 +309,11 @@
 /* =====================================================
    SETUP
 
-   整个画面的最小基础像素：
-   2 × 2
+   所有 Canvas 最小颗粒 = 2 × 2
 ===================================================== */
-
 
 const canvas =
   document.getElementById("scene");
-
 
 const ctx =
   canvas.getContext("2d");
@@ -559,52 +323,38 @@ ctx.imageSmoothingEnabled =
   false;
 
 
-
 const W =
   320;
 
-
 const H =
   180;
-
 
 const PX =
   2;
 
 
-
-
 /* =====================================================
-   SCALE
+   CANVAS SCALE
 ===================================================== */
-
 
 function fitCanvas() {
 
-
   const scale =
     Math.max(
-
       window.innerWidth / W,
-
       window.innerHeight / H
-
     );
-
 
   canvas.style.width =
     Math.ceil(
       W * scale
     ) + "px";
 
-
   canvas.style.height =
     Math.ceil(
       H * scale
     ) + "px";
-
 }
-
 
 
 window.addEventListener(
@@ -616,19 +366,13 @@ window.addEventListener(
 fitCanvas();
 
 
-
-
 /* =====================================================
    COLORS
 ===================================================== */
 
-
 const C = {
 
-
-  /* ----------------
-     SKY
-  ---------------- */
+  /* SKY */
 
   sky0:
     [1, 4, 11],
@@ -652,10 +396,7 @@ const C = {
     [14, 69, 128],
 
 
-
-  /* ----------------
-     CLOUD
-  ---------------- */
+  /* CLOUD */
 
   cloud0:
     "#061833",
@@ -667,10 +408,7 @@ const C = {
     "#0b2e59",
 
 
-
-  /* ----------------
-     WATER
-  ---------------- */
+  /* WATER */
 
   water0:
     [5, 21, 31],
@@ -695,89 +433,75 @@ const C = {
     "#144656",
 
 
-
-  /* ----------------
-     WILLOW
-  ---------------- */
+  /* WILLOW */
 
   willowDark:
-    "#08352d",
+    "#07332c",
 
   willow:
     "#0b493d",
 
   willowLight:
-    "#135a49",
+    "#135c4a",
 
 
+  /* MOON */
 
-  /* ----------------
-     MOON
-  ---------------- */
+  moonDark:
+    "#b9b19c",
 
-  halo:
-    "#777777",
+  moonEdge:
+    "#cbc5b4",
 
-  moonEdge0:
-    "#a9a9a9",
+  moonMid:
+    "#ded9ca",
 
-  moonEdge1:
-    "#b9b9b9",
-
-  moonMid0:
-    "#c6c6c6",
-
-  moonMid1:
-    "#d1d1d1",
-
-  moonLite:
-    "#dddddd",
+  moonLight:
+    "#eeeade",
 
   moonCore:
-    "#ececec",
+    "#fffdf1",
 
 
+  /* WATER LIGHT */
 
-  /* ----------------
-     REFLECTION
-  ---------------- */
+  reflection0:
+    "#beb598",
 
-  shine0:
-    "#c6bc9c",
+  reflection1:
+    "#ddd2ab",
 
-  shine1:
-    "#efe3bb",
+  reflection2:
+    "#f3e8c3",
 
   sparkle0:
-    "#d7d0b8",
+    "#d8d1ba",
 
   sparkle1:
-    "#f6f0d7",
+    "#f7f2dd",
 
 
   white:
     "#ffffff"
-
 };
 
 
-
-
 /* =====================================================
-   BASIC 2 × 2 PIXEL
+   BASIC PIXEL
 ===================================================== */
-
 
 function px(
   x,
   y,
-  color
+  color,
+  alpha = 1
 ) {
 
+  ctx.globalAlpha =
+    alpha;
 
   ctx.fillStyle =
     color;
-
 
   ctx.fillRect(
 
@@ -790,30 +514,27 @@ function px(
     ) * PX,
 
     PX,
-
     PX
 
   );
 
+  ctx.globalAlpha =
+    1;
 }
 
 
-
-
-/*
-  用 2 × 2 基础像素
-  组合成较大的形状
-*/
-
+/* =====================================================
+   LARGE SHAPE MADE OF 2×2
+===================================================== */
 
 function rect2(
   x,
   y,
   width,
   height,
-  color
+  color,
+  alpha = 1
 ) {
-
 
   for (
     let yy = y;
@@ -821,34 +542,28 @@ function rect2(
     yy += PX
   ) {
 
-
     for (
       let xx = x;
       xx < x + width;
       xx += PX
     ) {
 
-
       px(
         xx,
         yy,
-        color
+        color,
+        alpha
       );
-
 
     }
 
   }
-
 }
-
-
 
 
 /* =====================================================
    RGB MIX
 ===================================================== */
-
 
 function mix(
   a,
@@ -856,45 +571,35 @@ function mix(
   t
 ) {
 
-
   const r =
     Math.round(
-
       a[0] +
       (
         b[0] -
         a[0]
       ) *
       t
-
     );
-
 
   const g =
     Math.round(
-
       a[1] +
       (
         b[1] -
         a[1]
       ) *
       t
-
     );
-
 
   const blue =
     Math.round(
-
       a[2] +
       (
         b[2] -
         a[2]
       ) *
       t
-
     );
-
 
   return (
     "rgb(" +
@@ -905,30 +610,22 @@ function mix(
     blue +
     ")"
   );
-
 }
-
-
 
 
 /* =====================================================
    SKY
 ===================================================== */
 
-
 const horizon =
   136;
 
 
-
-
 function skyColor(y) {
-
 
   const t =
     y /
     horizon;
-
 
 
   if (
@@ -937,18 +634,12 @@ function skyColor(y) {
   ) {
 
     return mix(
-
       C.sky0,
-
       C.sky1,
-
-      t /
-      0.18
-
+      t / 0.18
     );
 
   }
-
 
 
   if (
@@ -957,22 +648,17 @@ function skyColor(y) {
   ) {
 
     return mix(
-
       C.sky1,
-
       C.sky2,
-
       (
         t -
         0.18
       )
       /
       0.20
-
     );
 
   }
-
 
 
   if (
@@ -981,22 +667,17 @@ function skyColor(y) {
   ) {
 
     return mix(
-
       C.sky2,
-
       C.sky3,
-
       (
         t -
         0.38
       )
       /
       0.22
-
     );
 
   }
-
 
 
   if (
@@ -1005,22 +686,17 @@ function skyColor(y) {
   ) {
 
     return mix(
-
       C.sky3,
-
       C.sky4,
-
       (
         t -
         0.60
       )
       /
       0.20
-
     );
 
   }
-
 
 
   if (
@@ -1029,53 +705,39 @@ function skyColor(y) {
   ) {
 
     return mix(
-
       C.sky4,
-
       C.sky5,
-
       (
         t -
         0.80
       )
       /
       0.13
-
     );
 
   }
 
 
-
   return mix(
-
     C.sky5,
-
     C.sky6,
-
     (
       t -
       0.93
     )
     /
     0.07
-
   );
-
 }
 
 
-
-
 function drawSky() {
-
 
   for (
     let y = 0;
     y < horizon;
     y += PX
   ) {
-
 
     const color =
       skyColor(y);
@@ -1087,7 +749,6 @@ function drawSky() {
       x += PX
     ) {
 
-
       px(
         x,
         y,
@@ -1097,22 +758,14 @@ function drawSky() {
     }
 
   }
-
 }
-
-
 
 
 /* =====================================================
    CLOUDS
-
-   成片云
-   很慢地往右移动
 ===================================================== */
 
-
 const clouds = [
-
 
   {
 
@@ -1125,69 +778,25 @@ const clouds = [
     speed:
       0.55,
 
-
     pieces: [
 
-      [
-        0,
-        10,
-        60,
-        10,
-        C.cloud0
-      ],
+      [0,10,60,10,C.cloud0],
 
-      [
-        20,
-        6,
-        76,
-        14,
-        C.cloud0
-      ],
+      [20,6,76,14,C.cloud0],
 
-      [
-        48,
-        2,
-        78,
-        16,
-        C.cloud1
-      ],
+      [48,2,78,16,C.cloud1],
 
-      [
-        82,
-        6,
-        76,
-        14,
-        C.cloud1
-      ],
+      [82,6,76,14,C.cloud1],
 
-      [
-        116,
-        10,
-        60,
-        10,
-        C.cloud0
-      ],
+      [116,10,60,10,C.cloud0],
 
-      [
-        28,
-        18,
-        108,
-        12,
-        C.cloud0
-      ],
+      [28,18,108,12,C.cloud0],
 
-      [
-        62,
-        24,
-        72,
-        8,
-        C.cloud0
-      ]
+      [62,24,72,8,C.cloud0]
 
     ]
 
   },
-
 
 
   {
@@ -1199,71 +808,27 @@ const clouds = [
       58,
 
     speed:
-      0.38,
-
+      0.36,
 
     pieces: [
 
-      [
-        0,
-        10,
-        58,
-        10,
-        C.cloud0
-      ],
+      [0,10,58,10,C.cloud0],
 
-      [
-        18,
-        6,
-        84,
-        14,
-        C.cloud0
-      ],
+      [18,6,84,14,C.cloud0],
 
-      [
-        48,
-        2,
-        88,
-        16,
-        C.cloud1
-      ],
+      [48,2,88,16,C.cloud1],
 
-      [
-        86,
-        6,
-        84,
-        14,
-        C.cloud1
-      ],
+      [86,6,84,14,C.cloud1],
 
-      [
-        130,
-        10,
-        58,
-        10,
-        C.cloud0
-      ],
+      [130,10,58,10,C.cloud0],
 
-      [
-        30,
-        18,
-        118,
-        12,
-        C.cloud0
-      ],
+      [30,18,118,12,C.cloud0],
 
-      [
-        70,
-        24,
-        72,
-        8,
-        C.cloud0
-      ]
+      [70,24,72,8,C.cloud0]
 
     ]
 
   },
-
 
 
   {
@@ -1275,58 +840,21 @@ const clouds = [
       36,
 
     speed:
-      0.47,
-
+      0.46,
 
     pieces: [
 
-      [
-        0,
-        10,
-        56,
-        10,
-        C.cloud0
-      ],
+      [0,10,56,10,C.cloud0],
 
-      [
-        18,
-        6,
-        82,
-        14,
-        C.cloud0
-      ],
+      [18,6,82,14,C.cloud0],
 
-      [
-        48,
-        2,
-        80,
-        16,
-        C.cloud1
-      ],
+      [48,2,80,16,C.cloud1],
 
-      [
-        82,
-        6,
-        78,
-        14,
-        C.cloud1
-      ],
+      [82,6,78,14,C.cloud1],
 
-      [
-        122,
-        10,
-        56,
-        10,
-        C.cloud0
-      ],
+      [122,10,56,10,C.cloud0],
 
-      [
-        28,
-        18,
-        110,
-        12,
-        C.cloud0
-      ]
+      [28,18,110,12,C.cloud0]
 
     ]
 
@@ -1335,14 +863,11 @@ const clouds = [
 ];
 
 
-
-
 function drawCloudMass(
   baseX,
   baseY,
   pieces
 ) {
-
 
   pieces.forEach(
     (
@@ -1355,14 +880,11 @@ function drawCloudMass(
       ]
     ) => {
 
-
       rect2(
 
-        baseX +
-        x,
+        baseX + x,
 
-        baseY +
-        y,
+        baseY + y,
 
         width,
 
@@ -1374,22 +896,16 @@ function drawCloudMass(
 
     }
   );
-
 }
-
-
 
 
 function drawClouds(state) {
 
-
   clouds.forEach(
     cloud => {
 
-
       const wrap =
-        W +
-        220;
+        W + 220;
 
 
       let x =
@@ -1398,11 +914,9 @@ function drawClouds(state) {
         cloud.speed;
 
 
-
       while (
         x >
-        W +
-        100
+        W + 100
       ) {
 
         x -=
@@ -1411,56 +925,38 @@ function drawClouds(state) {
       }
 
 
-
       drawCloudMass(
-
         x,
-
         cloud.y,
-
         cloud.pieces
-
       );
-
 
 
       drawCloudMass(
-
-        x -
-        wrap,
-
+        x - wrap,
         cloud.y,
-
         cloud.pieces
-
       );
-
 
     }
   );
-
 }
-
-
 
 
 /* =====================================================
    MOON
-
-   类似你发的参考：
-   像素圆 + 斜向明暗层次
 ===================================================== */
 
-
 const moonX =
-  226;
-
+  228;
 
 const moonY =
-  110;
+  116;
 
 
-
+/*
+  像素圆
+*/
 
 const moonPattern = [
 
@@ -1505,147 +1001,72 @@ const moonPattern = [
 ];
 
 
+/* =====================================================
+   PIXEL SELF-GLOW
 
+   不是一圈。
+   从月亮向外逐渐衰减。
+===================================================== */
 
-function moonShade(
-  row,
-  column
-) {
+function drawMoonGlow() {
 
+  const maxRadius =
+    34;
 
-  /*
-    斜向灰阶
-  */
-
-
-  const band =
-    Math.floor(
-
-      (
-        row +
-        column *
-        0.55
-      )
-      /
-      3
-
-    );
-
-
-
-  if (
-    band <= 1
-  ) {
-
-    return C.moonEdge0;
-
-  }
-
-
-  if (
-    band <= 3
-  ) {
-
-    return C.moonEdge1;
-
-  }
-
-
-  if (
-    band <= 5
-  ) {
-
-    return C.moonMid0;
-
-  }
-
-
-  if (
-    band <= 7
-  ) {
-
-    return C.moonMid1;
-
-  }
-
-
-  if (
-    band <= 9
-  ) {
-
-    return C.moonLite;
-
-  }
-
-
-  return C.moonCore;
-
-}
-
-
-
-
-function drawMoon() {
-
-
-  /*
-    简单的一圈像素光晕
-  */
+  const moonRadius =
+    18;
 
 
   for (
-    let y = -24;
-    y <= 24;
+    let y = -maxRadius;
+    y <= maxRadius;
     y += PX
   ) {
 
-
     for (
-      let x = -24;
-      x <= 24;
+      let x = -maxRadius;
+      x <= maxRadius;
       x += PX
     ) {
 
-
-      const dx =
-        x /
-        PX;
-
-
-      const dy =
-        y /
-        PX;
-
-
-      const distance =
+      const d =
         Math.sqrt(
-
-          dx * dx +
-
-          dy * dy
-
+          x * x +
+          y * y
         );
 
 
-
       if (
-        distance >
-        11.5 &&
-        distance <
-        12.6
+        d >
+        moonRadius &&
+        d <
+        maxRadius
       ) {
+
+        const normalized =
+          1 -
+          (
+            d -
+            moonRadius
+          )
+          /
+          (
+            maxRadius -
+            moonRadius
+          );
+
+
+        const alpha =
+          normalized *
+          normalized *
+          0.12;
 
 
         px(
-
-          moonX +
-          x,
-
-          moonY +
-          y,
-
-          C.halo
-
+          moonX + x,
+          moonY + y,
+          "#fff1ba",
+          alpha
         );
 
       }
@@ -1653,23 +1074,82 @@ function drawMoon() {
     }
 
   }
+}
 
 
+function moonShade(
+  row,
+  column
+) {
 
   /*
-    月亮主体
+    轻微斜向明暗
   */
+
+  const level =
+    row +
+    column *
+    0.5;
+
+
+  if (
+    level <
+    7
+  ) {
+
+    return C.moonDark;
+
+  }
+
+
+  if (
+    level <
+    12
+  ) {
+
+    return C.moonEdge;
+
+  }
+
+
+  if (
+    level <
+    17
+  ) {
+
+    return C.moonMid;
+
+  }
+
+
+  if (
+    level <
+    22
+  ) {
+
+    return C.moonLight;
+
+  }
+
+
+  return C.moonCore;
+}
+
+
+function drawMoon() {
+
+  /*
+    先画发光
+  */
+
+  drawMoonGlow();
 
 
   const startX =
-    moonX -
-    20;
-
+    moonX - 20;
 
   const startY =
-    moonY -
-    18;
-
+    moonY - 18;
 
 
   moonPattern.forEach(
@@ -1678,19 +1158,16 @@ function drawMoon() {
       rowIndex
     ) => {
 
-
       [...row].forEach(
         (
           value,
           columnIndex
         ) => {
 
-
           if (
             value ===
             "1"
           ) {
-
 
             px(
 
@@ -1716,49 +1193,32 @@ function drawMoon() {
 
     }
   );
-
 }
-
-
 
 
 /* =====================================================
    HORIZON
 ===================================================== */
 
-
 function drawHorizon() {
 
-
   rect2(
-
     0,
-
     horizon,
-
     W,
-
     2,
-
     "#071923"
-
   );
-
 }
 
 
-
-
 /* =====================================================
-   WATER BASE
+   WATER
 ===================================================== */
-
 
 function waterColor(y) {
 
-
   const t =
-
     (
       y -
       horizon
@@ -1770,26 +1230,18 @@ function waterColor(y) {
     );
 
 
-
   if (
     t <
     0.35
   ) {
 
-
     return mix(
-
       C.water0,
-
       C.water1,
-
-      t /
-      0.35
-
+      t / 0.35
     );
 
   }
-
 
 
   if (
@@ -1797,59 +1249,41 @@ function waterColor(y) {
     0.70
   ) {
 
-
     return mix(
-
       C.water1,
-
       C.water2,
-
       (
         t -
         0.35
       )
       /
       0.35
-
     );
 
   }
 
 
-
   return mix(
-
     C.water2,
-
     C.water3,
-
     (
       t -
       0.70
     )
     /
     0.30
-
   );
-
 }
-
-
 
 
 function drawWaterBase() {
 
-
   for (
     let y =
-      horizon +
-      2;
-
+      horizon + 2;
     y < H;
-
     y += PX
   ) {
-
 
     const color =
       waterColor(y);
@@ -1857,12 +1291,9 @@ function drawWaterBase() {
 
     for (
       let x = 0;
-
       x < W;
-
       x += PX
     ) {
-
 
       px(
         x,
@@ -1873,18 +1304,12 @@ function drawWaterBase() {
     }
 
   }
-
 }
 
 
-
-
 /* =====================================================
-   WHOLE WAVES
-
-   每一条都是完整波
+   FULL WAVE
 ===================================================== */
-
 
 function fullWave(
   baseY,
@@ -1894,51 +1319,35 @@ function fullWave(
   color
 ) {
 
-
-  let lastY =
+  let previousY =
     baseY;
-
 
 
   for (
     let x = 0;
-
     x < W;
-
     x += PX
   ) {
 
-
     const rawY =
-
       baseY +
-
       Math.sin(
-
         (
           x -
           shift
         )
         /
         wavelength
-
-      )
-      *
+      ) *
       amplitude;
 
 
-
     const y =
-
       Math.round(
-
         rawY /
         PX
-
-      )
-      *
+      ) *
       PX;
-
 
 
     px(
@@ -1948,682 +1357,671 @@ function fullWave(
     );
 
 
-
     if (
       y !==
-      lastY
+      previousY
     ) {
 
-
       px(
-
         x,
-
         Math.min(
           y,
-          lastY
+          previousY
         ),
-
         color
-
       );
 
     }
 
 
-    lastY =
+    previousY =
       y;
 
   }
-
 }
-
-
 
 
 /* =====================================================
-   WATER SPARKLES
+   SPARKLES
 
-   小闪光
-   波光粼粼
+   数量明显减少
 ===================================================== */
 
+const sparkleData = [
 
-const sparkles =
-  [];
+  [18,148,0.2],
+  [47,165,1.1],
+  [75,153,2.7],
+
+  [102,174,4.3],
+
+  [130,145,5.2],
+  [149,162,6.7],
+
+  [177,151,8.0],
+
+  [197,171,9.4],
+
+  [219,145,10.6],
+  [238,159,11.9],
+
+  [261,174,13.0],
+
+  [281,150,14.7],
+
+  [302,166,16.2],
+
+  [35,176,18.4],
+
+  [91,160,20.0],
+
+  [168,176,21.5],
+
+  [250,149,23.0],
+
+  [311,156,25.0]
+
+];
 
 
-
-for (
-  let i = 0;
-  i < 42;
-  i++
+function drawSparkles(
+  state
 ) {
 
+  sparkleData.forEach(
+    (
+      [
+        baseX,
+        baseY,
+        phase
+      ],
+      index
+    ) => {
 
-  sparkles.push({
+      /*
+        出现窗口很窄
+      */
 
-    x:
-      8 +
-      (
-        i *
-        19
-      )
-      %
-      300,
-
-    y:
-      142 +
-      (
-        i *
-        7
-      )
-      %
-      34,
-
-    phase:
-      i *
-      0.73,
-
-    speed:
-      0.0018 +
-      (
-        i %
-        5
-      )
-      *
-      0.00023,
-
-    drift:
-      0.10 +
-      (
-        i %
-        4
-      )
-      *
-      0.05,
-
-    size:
-      i %
-      4 ===
-      0
-      ?
-      4
-      :
-      2
-
-  });
-
-}
-
-
-
-
-function drawSparkles(state) {
-
-
-  sparkles.forEach(
-    sparkle => {
-
-
-      const flicker =
-
+      const light =
         0.5 +
-
         0.5 *
-
         Math.sin(
-
           state.time *
-          sparkle.speed +
-
-          sparkle.phase
-
+          0.00115 +
+          phase
         );
 
 
-
-      /*
-        不是一直亮
-        只有部分时间出现
-      */
-
       if (
-        flicker >
-        0.78
+        light >
+        0.93
       ) {
 
-
         const driftX =
-
           Math.round(
-
             Math.sin(
-
               state.time *
-              0.00045 +
-
-              sparkle.phase
-
-            )
-            *
-            (
-              2 +
-              sparkle.drift *
-              8
-            )
-            /
+              0.00037 +
+              phase
+            ) *
+            2 /
             PX
-
-          )
-          *
+          ) *
           PX;
-
 
 
         const driftY =
-
           Math.round(
-
             Math.sin(
-
               state.time *
-              0.00062 +
-
-              sparkle.phase *
-              1.7
-
-            )
-            /
+              0.00049 +
+              phase *
+              1.3
+            ) *
+            1 /
             PX
-
-          )
-          *
+          ) *
           PX;
 
 
-
         const color =
-
-          flicker >
-          0.92
-
+          light >
+          0.975
           ?
-
           C.sparkle1
-
           :
-
           C.sparkle0;
 
 
+        /*
+          大部分是一个 2×2 点
+        */
 
-        rect2(
-
-          sparkle.x +
+        px(
+          baseX +
           driftX,
-
-          sparkle.y +
+          baseY +
           driftY,
-
-          sparkle.size,
-
-          2,
-
           color
-
         );
+
+
+        /*
+          极少数会短暂形成两个像素
+        */
+
+        if (
+          index % 5 === 0 &&
+          light > 0.98
+        ) {
+
+          px(
+            baseX +
+            driftX +
+            2,
+            baseY +
+            driftY,
+            color
+          );
+
+        }
 
       }
 
     }
   );
-
 }
-
-
 
 
 /* =====================================================
    RIVER
 ===================================================== */
 
-
-function drawRiver(state) {
-
-
-  /*
-    整体往右移动
-    速度慢
-  */
-
+function drawRiver(
+  state
+) {
 
   fullWave(
-
     144,
-
     1.1,
-
     40,
-
-    state.flow *
-    20,
-
+    state.flow * 18,
     C.wave0
-
   );
 
 
-
   fullWave(
-
     154,
-
-    1.3,
-
-    52,
-
-    state.flow *
-    18 +
-    18,
-
-    C.wave1
-
-  );
-
-
-
-  fullWave(
-
-    165,
-
-    1.5,
-
-    64,
-
-    state.flow *
-    22 +
-    36,
-
-    C.wave1
-
-  );
-
-
-
-  fullWave(
-
-    176,
-
     1.2,
-
-    74,
-
-    state.flow *
-    17 +
-    12,
-
-    C.wave2
-
+    54,
+    state.flow * 16 + 18,
+    C.wave1
   );
 
+
+  fullWave(
+    165,
+    1.4,
+    66,
+    state.flow * 20 + 36,
+    C.wave1
+  );
+
+
+  fullWave(
+    176,
+    1.2,
+    76,
+    state.flow * 15 + 12,
+    C.wave2
+  );
 
 
   /*
     月光倒影
   */
 
-
   const shimmer =
-
     Math.round(
-
       Math.sin(
-
         state.time *
-        0.0012
-
-      )
-      *
-      2
-      /
+        0.0009
+      ) *
+      2 /
       PX
-
-    )
-    *
+    ) *
     PX;
 
 
-
   rect2(
-
-    moonX -
-    8 +
-    shimmer,
-
+    moonX - 8 + shimmer,
     140,
-
     16,
-
     2,
-
-    C.shine1
-
+    C.reflection2
   );
 
 
-
   rect2(
-
-    moonX -
-    4 -
-    shimmer,
-
+    moonX - 4 - shimmer,
     148,
-
     8,
-
     2,
-
-    C.shine0
-
+    C.reflection0
   );
 
 
-
   rect2(
-
-    moonX -
-    10 +
-    shimmer,
-
+    moonX - 10 + shimmer,
     158,
-
     20,
-
     2,
-
-    C.shine1
-
+    C.reflection1
   );
 
 
-
   rect2(
-
-    moonX -
-    6,
-
+    moonX - 6,
     168,
-
     12,
-
     2,
-
-    C.shine0
-
+    C.reflection0
   );
-
 
 
   rect2(
-
-    moonX -
-    8 -
-    shimmer,
-
+    moonX - 8 - shimmer,
     178,
-
     16,
-
     2,
-
-    C.shine1
-
+    C.reflection1
   );
-
-
-
-  /*
-    小闪光
-  */
 
 
   drawSparkles(
     state
   );
-
 }
-
-
 
 
 /* =====================================================
    WILLOWS
 
-   疏密、长短、距离都不规则
+   右边明显增加
+   但故意不均匀排列
 ===================================================== */
 
-
-const willows = [
-
+const willowConfigs = [
 
   /* LEFT */
 
   {
+    root: 8,
+    length: 68,
+    phase: 0.2,
+    density: 0.24,
+    curve: 0.8
+  },
 
-    root:
-      8,
+  {
+    root: 19,
+    length: 126,
+    phase: 0.9,
+    density: 0.70,
+    curve: 1.1
+  },
 
-    length:
-      66,
+  {
+    root: 47,
+    length: 88,
+    phase: 1.7,
+    density: 0.34,
+    curve: 0.8
+  },
 
-    bend:
-      6,
+  {
+    root: 70,
+    length: 142,
+    phase: 2.5,
+    density: 0.61,
+    curve: 1.25
+  },
 
-    phase:
-      0.1,
+  {
+    root: 108,
+    length: 60,
+    phase: 3.3,
+    density: 0.18,
+    curve: 0.6
+  },
 
-    density:
-      0.22
 
+  /* RIGHT — MORE BRANCHES */
+
+  {
+    root: 202,
+    length: 66,
+    phase: 0.4,
+    density: 0.26,
+    curve: 0.7
+  },
+
+  {
+    root: 214,
+    length: 119,
+    phase: 0.8,
+    density: 0.68,
+    curve: 1.05
+  },
+
+
+  /* small gap */
+
+
+  {
+    root: 238,
+    length: 86,
+    phase: 1.4,
+    density: 0.38,
+    curve: 0.8
+  },
+
+  {
+    root: 247,
+    length: 149,
+    phase: 2.0,
+    density: 0.72,
+    curve: 1.28
+  },
+
+
+  /* bigger gap */
+
+
+  {
+    root: 270,
+    length: 73,
+    phase: 2.7,
+    density: 0.22,
+    curve: 0.65
+  },
+
+  {
+    root: 282,
+    length: 134,
+    phase: 3.2,
+    density: 0.63,
+    curve: 1.18
+  },
+
+  {
+    root: 291,
+    length: 94,
+    phase: 3.8,
+    density: 0.43,
+    curve: 0.88
   },
 
 
   {
-
-    root:
-      18,
-
-    length:
-      124,
-
-    bend:
-      11,
-
-    phase:
-      0.7,
-
-    density:
-      0.76
-
-  },
-
-
-  {
-
-    root:
-      43,
-
-    length:
-      88,
-
-    bend:
-      7,
-
-    phase:
-      1.4,
-
-    density:
-      0.38
-
-  },
-
-
-  {
-
-    root:
-      68,
-
-    length:
-      140,
-
-    bend:
-      13,
-
-    phase:
-      2.2,
-
-    density:
-      0.64
-
-  },
-
-
-  {
-
-    root:
-      104,
-
-    length:
-      58,
-
-    bend:
-      5,
-
-    phase:
-      3.0,
-
-    density:
-      0.18
-
-  },
-
-
-
-  /* RIGHT */
-
-  {
-
-    root:
-      228,
-
-    length:
-      76,
-
-    bend:
-      7,
-
-    phase:
-      0.4,
-
-    density:
-      0.30
-
-  },
-
-
-  {
-
-    root:
-      242,
-
-    length:
-      138,
-
-    bend:
-      12,
-
-    phase:
-      1.1,
-
-    density:
-      0.72
-
-  },
-
-
-  {
-
-    root:
-      271,
-
-    length:
-      96,
-
-    bend:
-      8,
-
-    phase:
-      2.0,
-
-    density:
-      0.42
-
-  },
-
-
-  {
-
-    root:
-      289,
-
-    length:
-      62,
-
-    bend:
-      5,
-
-    phase:
-      2.7,
-
-    density:
-      0.16
-
-  },
-
-
-  {
-
-    root:
-      306,
-
-    length:
-      144,
-
-    bend:
-      13,
-
-    phase:
-      3.4,
-
-    density:
-      0.68
-
+    root: 314,
+    length: 145,
+    phase: 4.5,
+    density: 0.68,
+    curve: 1.30
   }
 
 ];
 
 
+/* =====================================================
+   CREATE 4-PART PHYSICS
+===================================================== */
+
+const willowPhysics =
+  willowConfigs.map(
+    config => {
+
+      return {
+
+        config: config,
+
+        angle: [
+          0,
+          0,
+          0,
+          0
+        ],
+
+        velocity: [
+          0,
+          0,
+          0,
+          0
+        ]
+
+      };
+
+    }
+  );
+
+
+/*
+  每个物理段：
+  1 → 最稳
+  4 → 最柔
+*/
+
+const segmentSpring = [
+  12.0,
+  10.0,
+  8.0,
+  6.0
+];
+
+
+const segmentDamping = [
+  8.5,
+  7.7,
+  7.0,
+  6.2
+];
+
+
+/* =====================================================
+   UPDATE WILLOW PHYSICS
+
+   风始终 LEFT → RIGHT
+===================================================== */
+
+function updateWillowPhysics(
+  state,
+  dt
+) {
+
+  willowPhysics.forEach(
+    (
+      branch,
+      branchIndex
+    ) => {
+
+      const config =
+        branch.config;
+
+
+      /*
+        永久存在的向右风
+      */
+
+      const baseWind =
+        0.075;
+
+
+      /*
+        很慢的阵风变化
+        只改变强度，不改变方向
+      */
+
+      const gust =
+        0.018 +
+        Math.sin(
+          state.time *
+          0.00023 +
+          config.phase
+        ) *
+        0.012 +
+        Math.sin(
+          state.time *
+          0.00041 +
+          config.phase *
+          1.7
+        ) *
+        0.006;
+
+
+      const wind =
+        Math.max(
+          0.045,
+          baseWind +
+          gust
+        );
+
+
+      /*
+        四段拥有完全独立目标角度
+      */
+
+      const targets = [
+
+        0.025 +
+        wind *
+        0.55 *
+        config.curve +
+        Math.sin(
+          state.time *
+          0.00028 +
+          config.phase
+        ) *
+        0.004,
+
+
+        0.040 +
+        wind *
+        0.82 *
+        config.curve +
+        Math.sin(
+          state.time *
+          0.00036 +
+          config.phase +
+          0.6
+        ) *
+        0.008,
+
+
+        0.058 +
+        wind *
+        1.12 *
+        config.curve +
+        Math.sin(
+          state.time *
+          0.00045 +
+          config.phase +
+          1.2
+        ) *
+        0.013,
+
+
+        0.078 +
+        wind *
+        1.42 *
+        config.curve +
+        Math.sin(
+          state.time *
+          0.00056 +
+          config.phase +
+          1.9
+        ) *
+        0.019
+
+      ];
+
+
+      /*
+        每段独立 Spring-Damper
+      */
+
+      for (
+        let segment = 0;
+        segment < 4;
+        segment++
+      ) {
+
+        const angle =
+          branch.angle[
+            segment
+          ];
+
+
+        const velocity =
+          branch.velocity[
+            segment
+          ];
+
+
+        const acceleration =
+          (
+            targets[
+              segment
+            ] -
+            angle
+          ) *
+          segmentSpring[
+            segment
+          ];
+
+
+        let newVelocity =
+          velocity +
+          acceleration *
+          dt;
+
+
+        /*
+          连续阻尼
+        */
+
+        newVelocity *=
+          Math.exp(
+            -
+            segmentDamping[
+              segment
+            ] *
+            dt
+          );
+
+
+        branch.velocity[
+          segment
+        ] =
+          newVelocity;
+
+
+        branch.angle[
+          segment
+        ] +=
+          newVelocity *
+          dt;
+
+      }
+
+    }
+  );
+}
 
 
 /* =====================================================
    STEM LINE
-
-   全部柳枝：
-   2 × 2 粗
 ===================================================== */
-
 
 function stemLine(
   x0,
@@ -2633,45 +2031,30 @@ function stemLine(
   color
 ) {
 
-
   const dx =
     x1 -
     x0;
-
 
   const dy =
     y1 -
     y0;
 
 
-
   const distance =
-
     Math.max(
-
       Math.abs(dx),
-
       Math.abs(dy)
-
     );
-
 
 
   const steps =
-
     Math.max(
-
       1,
-
       Math.ceil(
-
         distance /
         PX
-
       )
-
     );
-
 
 
   for (
@@ -2680,11 +2063,9 @@ function stemLine(
     i++
   ) {
 
-
     const t =
       i /
       steps;
-
 
 
     px(
@@ -2702,539 +2083,392 @@ function stemLine(
     );
 
   }
-
 }
-
-
 
 
 /* =====================================================
-   DRAW ONE WILLOW
+   DETERMINISTIC LEAF SEED
 ===================================================== */
 
-
-function drawOneWillow(
-  willow,
-  index,
-  state
+function leafSeed(
+  branchIndex,
+  section,
+  index
 ) {
 
-
-  /*
-    恒定向右的轻风
-  */
-
-
-  const wind =
-    3.4;
-
-
-
-  /*
-    上半段：
-    摆动非常轻
-  */
-
-
-  const upperSway =
-
-    Math.sin(
-
-      state.time *
-      0.00055 +
-
-      willow.phase
-
-    )
-    *
-    0.65;
-
-
-
-  /*
-    下半段：
-    稍微柔一点
-  */
-
-
-  const lowerSway =
-
-    Math.sin(
-
-      state.time *
-      0.00082 +
-
-      willow.phase *
-      1.4
-
-    )
-    *
-    1.35;
-
-
-
-  const segments =
-
-    Math.max(
-
-      8,
-
-      Math.round(
-
-        willow.length /
-        7
-
-      )
-
-    );
-
-
-
-  let previousX =
-    willow.root;
-
-
-  let previousY =
-    -4;
-
-
-
-  for (
-    let i = 1;
-    i <= segments;
-    i++
-  ) {
-
-
-    const p =
-      i /
-      segments;
-
-
-
-    /*
-      基础自然弧线
-    */
-
-
-    let x =
-
-      willow.root +
-
-      willow.bend *
-
-      p *
-
-      p;
-
-
-
-    /*
-      风向右
-    */
-
-
-    x +=
-      wind *
-      p;
-
-
-
-    /*
-      上下两段分别运动
-    */
-
-
-    if (
-      p <
-      0.52
-    ) {
-
-
-      x +=
-        upperSway *
-        p;
-
-    }
-
-
-    else {
-
-
-      const lowerProgress =
-
-        (
-          p -
-          0.52
-        )
-        /
-        0.48;
-
-
-
-      x +=
-
-        upperSway *
-        0.52 +
-
-        lowerSway *
-        lowerProgress;
-
-    }
-
-
-
-    const y =
-
-      -4 +
-
-      willow.length *
-      p;
-
-
-
-    /*
-      锁定 2×2 网格
-    */
-
-
-    const gridX =
-
-      Math.round(
-        x /
-        PX
-      )
-      *
-      PX;
-
-
-    const gridY =
-
-      Math.round(
-        y /
-        PX
-      )
-      *
-      PX;
-
-
-
-    stemLine(
-
-      previousX,
-
-      previousY,
-
-      gridX,
-
-      gridY,
-
-      C.willow
-
-    );
-
-
-
-    /*
-      柳叶
-    */
-
-
-    const seed =
-
-      (
-        index *
-        41 +
-
-        i *
-        29
-      )
-      %
-      100;
-
-
-
-    if (
-      seed <
-      willow.density *
-      100
-    ) {
-
-
-      if (
-        i %
-        3 ===
-        0
-      ) {
-
-
-        px(
-
-          gridX +
-          2,
-
-          gridY,
-
-          C.willowLight
-
-        );
-
-
-        px(
-
-          gridX +
-          4,
-
-          gridY,
-
-          C.willowLight
-
-        );
-
-      }
-
-
-      else if (
-        i %
-        3 ===
-        1
-      ) {
-
-
-        px(
-
-          gridX -
-          2,
-
-          gridY +
-          2,
-
-          C.willowDark
-
-        );
-
-
-        px(
-
-          gridX -
-          4,
-
-          gridY +
-          2,
-
-          C.willowDark
-
-        );
-
-      }
-
-
-      else {
-
-
-        px(
-
-          gridX +
-          2,
-
-          gridY +
-          2,
-
-          C.willowLight
-
-        );
-
-      }
-
-    }
-
-
-
-    previousX =
-      gridX;
-
-
-    previousY =
-      gridY;
-
-  }
-
+  return (
+    branchIndex *
+    53 +
+    section *
+    31 +
+    index *
+    29
+  )
+  %
+  100;
 }
 
 
+/* =====================================================
+   DRAW 4-PART WILLOW
+===================================================== */
+
+function drawOneWillow(
+  branch,
+  branchIndex
+) {
+
+  const config =
+    branch.config;
 
 
-function drawWillows(state) {
+  /*
+    四段长度不完全一样
+    末段稍长
+  */
+
+  const proportions = [
+    0.22,
+    0.24,
+    0.25,
+    0.29
+  ];
 
 
-  willows.forEach(
+  let currentX =
+    config.root;
+
+  let currentY =
+    -4;
+
+
+  for (
+    let section = 0;
+    section < 4;
+    section++
+  ) {
+
+    const length =
+      config.length *
+      proportions[
+        section
+      ];
+
+
+    const angle =
+      branch.angle[
+        section
+      ];
+
+
+    /*
+      angle = 0 表示垂直下落
+      正角度 = 向右吹
+    */
+
+    const endX =
+      currentX +
+      Math.sin(
+        angle
+      ) *
+      length;
+
+
+    const endY =
+      currentY +
+      Math.cos(
+        angle
+      ) *
+      length;
+
+
+    /*
+      每个物理段内部再细分，
+      画面不会是僵硬折线
+    */
+
+    const visualSteps =
+      Math.max(
+        3,
+        Math.round(
+          length /
+          8
+        )
+      );
+
+
+    let lastX =
+      currentX;
+
+    let lastY =
+      currentY;
+
+
+    for (
+      let i = 1;
+      i <= visualSteps;
+      i++
+    ) {
+
+      const t =
+        i /
+        visualSteps;
+
+
+      /*
+        轻微二次弧度
+      */
+
+      const bend =
+        Math.sin(
+          t *
+          Math.PI
+        ) *
+        angle *
+        length *
+        0.10;
+
+
+      const x =
+        currentX +
+        (
+          endX -
+          currentX
+        ) *
+        t +
+        bend;
+
+
+      const y =
+        currentY +
+        (
+          endY -
+          currentY
+        ) *
+        t;
+
+
+      const gridX =
+        Math.round(
+          x /
+          PX
+        ) *
+        PX;
+
+
+      const gridY =
+        Math.round(
+          y /
+          PX
+        ) *
+        PX;
+
+
+      stemLine(
+        lastX,
+        lastY,
+        gridX,
+        gridY,
+        C.willow
+      );
+
+
+      /*
+        叶片疏密由每根柳枝自身控制
+      */
+
+      const seed =
+        leafSeed(
+          branchIndex,
+          section,
+          i
+        );
+
+
+      if (
+        seed <
+        config.density *
+        100
+      ) {
+
+        if (
+          seed %
+          3 ===
+          0
+        ) {
+
+          px(
+            gridX +
+            2,
+            gridY,
+            C.willowLight
+          );
+
+
+          px(
+            gridX +
+            4,
+            gridY,
+            C.willowLight
+          );
+
+        }
+
+
+        else if (
+          seed %
+          3 ===
+          1
+        ) {
+
+          px(
+            gridX -
+            2,
+            gridY +
+            2,
+            C.willowDark
+          );
+
+
+          px(
+            gridX -
+            4,
+            gridY +
+            2,
+            C.willowDark
+          );
+
+        }
+
+
+        else {
+
+          px(
+            gridX +
+            2,
+            gridY +
+            2,
+            C.willowLight
+          );
+
+        }
+
+      }
+
+
+      lastX =
+        gridX;
+
+      lastY =
+        gridY;
+
+    }
+
+
+    currentX =
+      endX;
+
+    currentY =
+      endY;
+
+  }
+}
+
+
+function drawWillows() {
+
+  willowPhysics.forEach(
     (
-      willow,
+      branch,
       index
     ) => {
 
-
       drawOneWillow(
-
-        willow,
-
-        index,
-
-        state
-
+        branch,
+        index
       );
 
     }
   );
-
 }
 
 
-
-
 /* =====================================================
-   PURE PIXEL FONT
+   PIXEL FONT
 ===================================================== */
-
 
 const EN = {
 
-
   h: [
-
     "10001",
-
     "10001",
-
     "10001",
-
     "11111",
-
     "10001",
-
     "10001",
-
     "10001"
-
   ],
-
-
 
   i: [
-
     "00100",
-
     "00000",
-
     "01100",
-
     "00100",
-
     "00100",
-
     "00100",
-
     "01110"
-
   ],
-
-
 
   "'": [
-
     "00100",
-
     "00100",
-
     "01000",
-
     "00000",
-
     "00000",
-
     "00000",
-
     "00000"
-
   ],
 
-
-
   m: [
-
     "00000",
-
     "00000",
-
     "11011",
-
     "10101",
-
     "10101",
-
     "10101",
-
     "10101"
-
   ]
 
 };
-
-
 
 
 const CN = {
 
-
   "山": [
-
     "001000100",
-
     "001000100",
-
     "001000100",
-
     "001000100",
-
     "101000101",
-
     "101000101",
-
     "101000101",
-
     "111111111",
-
     "000000000"
-
   ],
 
-
-
   "田": [
-
     "111111111",
-
     "100010001",
-
     "100010001",
-
     "100010001",
-
     "111111111",
-
     "100010001",
-
     "100010001",
-
     "100010001",
-
     "111111111"
-
   ]
 
 };
-
-
 
 
 function drawMatrix(
@@ -3243,13 +2477,11 @@ function drawMatrix(
   y
 ) {
 
-
   matrix.forEach(
     (
       row,
       rowIndex
     ) => {
-
 
       [...row].forEach(
         (
@@ -3257,12 +2489,10 @@ function drawMatrix(
           columnIndex
         ) => {
 
-
           if (
             value ===
             "1"
           ) {
-
 
             px(
 
@@ -3285,22 +2515,16 @@ function drawMatrix(
 
     }
   );
-
 }
-
-
 
 
 /* =====================================================
    TITLE
 ===================================================== */
 
-
 function drawTitle() {
 
-
   const english =
-
     [
       "h",
       "i",
@@ -3311,87 +2535,61 @@ function drawTitle() {
     ];
 
 
-
   const widths = {
 
-    h:
-      5,
-
-    i:
-      5,
-
-    "'":
-      5,
-
-    m:
-      5,
-
-    " ":
-      3
+    h: 5,
+    i: 5,
+    "'": 5,
+    m: 5,
+    " ": 3
 
   };
-
 
 
   const letterGap =
     4;
 
 
-
   let englishWidth =
     0;
-
 
 
   english.forEach(
     char => {
 
-
       englishWidth +=
-
-        widths[char] *
+        widths[
+          char
+        ] *
         PX +
-
         letterGap;
 
     }
   );
 
 
-
   const chineseGap =
     6;
 
 
-
   const chineseWidth =
-
     3 *
     (
       9 *
       PX
-    )
-    +
-
+    ) +
     2 *
     chineseGap;
 
 
-
   const totalWidth =
-
     englishWidth +
-
     10 +
-
     chineseWidth;
 
 
-
   let x =
-
     Math.round(
-
       (
         (
           W -
@@ -3402,58 +2600,46 @@ function drawTitle() {
       )
       /
       PX
-
-    )
-    *
+    ) *
     PX;
-
 
 
   const y =
     88;
 
 
-
   english.forEach(
     char => {
-
 
       if (
         char !==
         " "
       ) {
 
-
         drawMatrix(
-
-          EN[char],
-
+          EN[
+            char
+          ],
           x,
-
-          y +
-          2
-
+          y + 2
         );
 
       }
 
 
-
       x +=
-
-        widths[char] *
+        widths[
+          char
+        ] *
         PX +
-
         letterGap;
 
     }
   );
 
 
-
   x +=
     6;
-
 
 
   [
@@ -3466,17 +2652,13 @@ function drawTitle() {
       index
     ) => {
 
-
       drawMatrix(
-
-        CN[char],
-
+        CN[
+          char
+        ],
         x,
-
         y
-
       );
-
 
 
       x +=
@@ -3484,12 +2666,10 @@ function drawTitle() {
         PX;
 
 
-
       if (
         index <
         2
       ) {
-
 
         x +=
           chineseGap;
@@ -3498,93 +2678,73 @@ function drawTitle() {
 
     }
   );
-
 }
 
 
-
-
 /* =====================================================
-   TIME-BASED ANIMATION
-
-   高帧率 ≠ 高速度
+   ANIMATION STATE
 ===================================================== */
 
-
 const state = {
-
 
   time:
     0,
 
-
   flow:
     0,
-
 
   cloudShift:
     0,
 
-
-  lastStamp:
+  last:
     0
 
 };
 
 
-
-
 /* =====================================================
-   RENDER
+   MAIN LOOP
+
+   不限制 FPS。
+   浏览器能 60Hz 就 60，
+   120Hz 就 120。
 ===================================================== */
 
-
-function render(stamp) {
-
+function render(
+  stamp
+) {
 
   if (
-    !state.lastStamp
+    !state.last
   ) {
 
-
-    state.lastStamp =
+    state.last =
       stamp;
 
   }
 
 
-
   let dt =
-
     (
       stamp -
-      state.lastStamp
+      state.last
     )
     /
     1000;
 
 
-
   /*
-    切换标签页回来后
-    避免突然跳跃
+    防止切后台后物理爆掉
   */
 
-
-  if (
-    dt >
-    0.04
-  ) {
-
-
-    dt =
-      0.04;
-
-  }
+  dt =
+    Math.min(
+      dt,
+      0.033
+    );
 
 
-
-  state.lastStamp =
+  state.last =
     stamp;
 
 
@@ -3592,27 +2752,32 @@ function render(stamp) {
     stamp;
 
 
-
   /*
-    水非常慢地向右
+    江水很慢
   */
-
 
   state.flow +=
     dt *
-    1.3;
-
+    1.05;
 
 
   /*
-    云甚至更慢
+    云更慢
   */
-
 
   state.cloudShift +=
     dt *
-    1.0;
+    0.65;
 
+
+  /*
+    更新四段柳枝物理
+  */
+
+  updateWillowPhysics(
+    state,
+    dt
+  );
 
 
   ctx.clearRect(
@@ -3623,6 +2788,9 @@ function render(stamp) {
   );
 
 
+  /*
+    BACK → FRONT
+  */
 
   drawSky();
 
@@ -3646,38 +2814,29 @@ function render(stamp) {
   );
 
 
-  drawWillows(
-    state
-  );
+  drawWillows();
 
 
   /*
-    文字最后画
-    保证纯白清晰
+    标题最后，
+    永远保持纯白
   */
 
-
   drawTitle();
-
 
 
   requestAnimationFrame(
     render
   );
-
 }
-
-
 
 
 requestAnimationFrame(
   render
 );
 
-
 </script>
 
 
 </body>
-
 </html>
