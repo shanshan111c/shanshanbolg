@@ -8,6 +8,7 @@
   <title>雅蘭亭拾遺</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -23,56 +24,41 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
+
     /* =========================
-       Navigation
-    ========================== */
+       NAVIGATION
+    ========================= */
 
     header {
+      position: fixed;
+
+      top: 0;
+      left: 0;
+      right: 0;
+
       height: 60px;
-      padding: 0 36px;
+
+      z-index: 100;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
 
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      padding: 0 36px;
 
-      z-index: 100;
+      background: rgba(4, 12, 29, 0.58);
 
-      background: rgba(7, 13, 31, 0.68);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-bottom:
+        1px solid rgba(255,255,255,0.05);
 
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(6px);
     }
 
-    nav {
-      display: flex;
-      align-items: center;
-    }
-
-    nav a {
-      margin-right: 28px;
-
-      color: rgba(255,255,255,0.72);
-
-      text-decoration: none;
-
-      font-family: "Courier New", monospace;
-      font-size: 12px;
-      letter-spacing: 1.5px;
-    }
-
-    nav a:hover {
-      color: #fff;
-    }
 
     .site-name {
       margin: 0;
 
-      color: rgba(255,255,255,0.94);
+      color: rgba(255,255,255,0.95);
 
       font-family:
         "Songti TC",
@@ -81,148 +67,210 @@
         "Noto Serif TC",
         serif;
 
-      font-size: 17px;
       font-weight: 400;
+
+      font-size: 17px;
+
       letter-spacing: 5px;
 
       white-space: nowrap;
     }
 
+
+    nav a {
+      margin-left: 27px;
+
+      color: rgba(255,255,255,0.72);
+
+      text-decoration: none;
+
+      font-family:
+        "Courier New",
+        monospace;
+
+      font-size: 12px;
+
+      letter-spacing: 1.5px;
+    }
+
+
+    nav a:hover {
+      color: white;
+    }
+
+
+
     /* =========================
-       Hero
-    ========================== */
+       HERO
+    ========================= */
 
     .hero {
       position: relative;
 
       width: 100%;
+
       height: 100vh;
+
       min-height: 650px;
 
       overflow: hidden;
 
-      background: #101a35;
+      background: #07152f;
     }
 
-    #pixelCanvas {
+
+    #scene {
       position: absolute;
 
       left: 50%;
       top: 50%;
 
-      transform: translate(-50%, -50%);
+      transform:
+        translate(-50%, -50%);
 
       image-rendering: pixelated;
+
       image-rendering: crisp-edges;
     }
+
 
     .scroll-hint {
       position: absolute;
 
       left: 50%;
+
       bottom: 22px;
 
-      transform: translateX(-50%);
+      transform:
+        translateX(-50%);
 
       z-index: 20;
 
-      color: rgba(255,255,255,0.26);
+      color:
+        rgba(255,255,255,0.25);
 
-      font-family: "Courier New", monospace;
+      font-family:
+        "Courier New",
+        monospace;
+
       font-size: 9px;
+
       letter-spacing: 4px;
-
-      animation: blink 2.4s steps(2) infinite;
     }
 
-    @keyframes blink {
-      0%,100% {
-        opacity: .18;
-      }
 
-      50% {
-        opacity: .6;
-      }
-    }
 
     /* =========================
-       Content
-    ========================== */
+       CONTENT
+    ========================= */
 
     .content {
       max-width: 850px;
+
       margin: auto;
+
       padding: 90px 25px;
     }
+
 
     .content section {
       margin-bottom: 100px;
     }
 
+
     .content h2 {
       font-size: 28px;
+
       margin-bottom: 25px;
     }
 
+
     .content p {
-      line-height: 1.9;
       color: #444;
+
       font-size: 16px;
+
+      line-height: 1.9;
     }
+
 
     .blog-card {
       padding: 25px 0;
-      border-bottom: 1px solid #ddd;
+
+      border-bottom:
+        1px solid #ddd;
     }
+
 
     .blog-card h3 {
       margin: 0 0 8px;
     }
 
+
     .blog-card a {
       color: #222;
+
       text-decoration: none;
     }
+
 
     .blog-card a:hover {
       text-decoration: underline;
     }
 
+
     .date {
       color: #999 !important;
+
       font-size: 13px !important;
     }
 
+
     footer {
       padding: 40px;
+
       text-align: center;
+
       color: #999;
+
       font-size: 13px;
     }
 
+
     @media (max-width: 650px) {
+
       header {
         height: 56px;
-        padding: 0 16px;
-      }
 
-      nav a {
-        margin-right: 12px;
-        font-size: 10px;
+        padding: 0 16px;
       }
 
       .site-name {
         font-size: 13px;
+
         letter-spacing: 2px;
       }
+
+      nav a {
+        margin-left: 12px;
+
+        font-size: 10px;
+      }
+
     }
+
   </style>
 </head>
 
 
 <body>
 
+
 <header>
+
+  <h1 class="site-name">
+    雅蘭亭拾遺
+  </h1>
 
   <nav>
     <a href="#home">Home</a>
@@ -230,17 +278,19 @@
     <a href="#blog">Blog</a>
   </nav>
 
-  <h1 class="site-name">雅蘭亭拾遺</h1>
-
 </header>
 
 
-<section class="hero" id="home">
+
+<section
+  class="hero"
+  id="home"
+>
 
   <canvas
-    id="pixelCanvas"
-    width="480"
-    height="270"
+    id="scene"
+    width="320"
+    height="180"
   ></canvas>
 
   <div class="scroll-hint">
@@ -250,11 +300,15 @@
 </section>
 
 
+
 <main class="content">
+
 
   <section id="about">
 
-    <h2>About Me</h2>
+    <h2>
+      About Me
+    </h2>
 
     <p>
       Hi! I'm 山山田.
@@ -263,20 +317,27 @@
     <p>
       Welcome to my personal blog.
       This is a place where I keep thoughts,
-      memories, experiences, and things I find interesting.
+      memories, experiences,
+      and things I find interesting.
     </p>
 
   </section>
 
 
+
   <section id="blog">
 
-    <h2>Blog</h2>
+    <h2>
+      Blog
+    </h2>
+
 
     <div class="blog-card">
 
       <h3>
-        <a href="#">My First Blog Post</a>
+        <a href="#">
+          My First Blog Post
+        </a>
       </h3>
 
       <p class="date">
@@ -284,7 +345,8 @@
       </p>
 
       <p>
-        Welcome to my little corner of the internet.
+        Welcome to my little corner
+        of the internet.
       </p>
 
     </div>
@@ -293,7 +355,9 @@
     <div class="blog-card">
 
       <h3>
-        <a href="#">Why I Built This Website</a>
+        <a href="#">
+          Why I Built This Website
+        </a>
       </h3>
 
       <p class="date">
@@ -301,19 +365,23 @@
       </p>
 
       <p>
-        A place for things that are worth remembering.
+        A place for things
+        that are worth remembering.
       </p>
 
     </div>
 
   </section>
 
+
 </main>
+
 
 
 <footer>
   © 2026 雅蘭亭拾遺
 </footer>
+
 
 
 <script>
@@ -323,98 +391,170 @@
 ========================================================= */
 
 const canvas =
-  document.getElementById("pixelCanvas");
+  document.getElementById("scene");
 
 const ctx =
   canvas.getContext("2d");
 
-const W = 480;
-const H = 270;
+const W = 320;
+const H = 180;
 
 ctx.imageSmoothingEnabled = false;
 
 
-function fitCanvas() {
 
-  const scale = Math.max(
-    window.innerWidth / W,
-    window.innerHeight / H
-  );
+function resizeCanvas() {
+
+  const scale =
+    Math.max(
+      window.innerWidth / W,
+      window.innerHeight / H
+    );
 
   canvas.style.width =
     Math.ceil(W * scale) + "px";
 
   canvas.style.height =
     Math.ceil(H * scale) + "px";
+
 }
+
 
 window.addEventListener(
   "resize",
-  fitCanvas
+  resizeCanvas
 );
 
-fitCanvas();
+resizeCanvas();
 
 
 
 /* =========================================================
-   BLUE-HOUR PALETTE
+   COLORS
+
+   Higher saturation,
+   lower brightness.
+
+   Blue-hour rather than night-black.
 ========================================================= */
 
-const C = {
+const COLOR = {
 
-  /* sky */
+  skyTop:
+    [5, 18, 46],
 
-  sky0: "#10172b",
-  sky1: "#14203a",
-  sky2: "#192946",
-  sky3: "#203453",
-  sky4: "#283e5d",
-  sky5: "#304966",
-  sky6: "#38536e",
-  sky7: "#405d76",
+  skyMiddle:
+    [7, 39, 79],
 
-  /* horizon */
+  skyLower:
+    [10, 55, 103],
 
-  bank: "#0b1b28",
+  skyHorizon:
+    [16, 69, 118],
 
-  /* water */
 
-  water0: "#0b1c29",
-  water1: "#0e2432",
-  water2: "#112c3a",
-  water3: "#153443",
-  water4: "#193d4b",
+  waterTop:
+    [7, 30, 45],
 
-  wave1: "#214958",
-  wave2: "#2b5664",
-  wave3: "#386675",
-  wave4: "#507b88",
+  waterBottom:
+    [7, 43, 57],
 
-  /* willow */
 
-  willow0: "#0c322c",
-  willow1: "#15483c",
-  willow2: "#205d4a",
-  willow3: "#2d7258",
+  willowDark:
+    "#082f2a",
 
-  /* moon */
+  willow:
+    "#0d493e",
 
-  moonGlow1: "#716f68",
-  moonGlow2: "#4f5360",
+  willowLight:
+    "#17624e",
 
-  moonEdge: "#e9daa4",
-  moonMid: "#fff2c5",
-  moonCore: "#fffff2",
 
-  /* reflection */
+  moonOuter:
+    "#c7b878",
 
-  reflection1: "#fff6d3",
-  reflection2: "#e6d9a9",
-  reflection3: "#bcb391",
+  moonMiddle:
+    "#f0dda0",
 
-  white: "#ffffff"
+  moon:
+    "#fff8d3",
+
+  moonCore:
+    "#fffff4",
+
+
+  white:
+    "#ffffff"
+
 };
+
+
+
+/* =========================================================
+   COLOR FUNCTIONS
+========================================================= */
+
+function lerp(
+  a,
+  b,
+  amount
+) {
+
+  return (
+    a +
+    (b - a) *
+    amount
+  );
+
+}
+
+
+
+function mixRGB(
+  a,
+  b,
+  amount
+) {
+
+  const r =
+    Math.round(
+      lerp(
+        a[0],
+        b[0],
+        amount
+      )
+    );
+
+
+  const g =
+    Math.round(
+      lerp(
+        a[1],
+        b[1],
+        amount
+      )
+    );
+
+
+  const blue =
+    Math.round(
+      lerp(
+        a[2],
+        b[2],
+        amount
+      )
+    );
+
+
+  return (
+    "rgb(" +
+    r + "," +
+    g + "," +
+    blue +
+    ")"
+  );
+
+}
 
 
 
@@ -425,19 +565,1244 @@ const C = {
 function pixel(
   x,
   y,
-  w,
-  h,
+  width,
+  height,
   color
 ) {
 
-  ctx.fillStyle = color;
+  ctx.fillStyle =
+    color;
+
 
   ctx.fillRect(
     Math.round(x),
     Math.round(y),
-    w,
-    h
+    width,
+    height
   );
+
+}
+
+
+
+/* =========================================================
+   SKY
+
+   No noise field.
+
+   Every block belongs to the actual
+   color transition itself.
+========================================================= */
+
+const horizon =
+  130;
+
+
+
+function getSkyColor(
+  y,
+  x
+) {
+
+  const t =
+    y / horizon;
+
+
+  let result;
+
+
+  /*
+    Dark blue upper sky
+  */
+
+  if (
+    t < 0.38
+  ) {
+
+    result =
+      mixRGB(
+        COLOR.skyTop,
+        COLOR.skyMiddle,
+        t / 0.38
+      );
+
+  }
+
+
+  /*
+    saturated middle blue
+  */
+
+  else if (
+    t < 0.72
+  ) {
+
+    result =
+      mixRGB(
+        COLOR.skyMiddle,
+        COLOR.skyLower,
+        (
+          t - 0.38
+        )
+        /
+        0.34
+      );
+
+  }
+
+
+  /*
+    restrained brighter horizon
+  */
+
+  else {
+
+    result =
+      mixRGB(
+        COLOR.skyLower,
+        COLOR.skyHorizon,
+        (
+          t - 0.72
+        )
+        /
+        0.28
+      );
+
+  }
+
+
+  return result;
+
+}
+
+
+
+function drawSky(
+  time
+) {
+
+  /*
+    2 × 2 blocks.
+
+    No random dots.
+
+    Slight horizontal variation means
+    neighboring blocks transition naturally.
+  */
+
+
+  for (
+    let y = 0;
+    y < horizon;
+    y += 2
+  ) {
+
+    for (
+      let x = 0;
+      x < W;
+      x += 2
+    ) {
+
+      let base =
+        getSkyColor(
+          y,
+          x
+        );
+
+
+      /*
+        Extremely subtle large-scale variation.
+
+        Not noise.
+        It creates a soft pixel color field.
+      */
+
+      const variation =
+        Math.sin(
+          x * 0.025 +
+          y * 0.015
+        );
+
+
+      if (
+        variation >
+        0.7
+      ) {
+
+        const t =
+          Math.min(
+            1,
+            y / horizon
+          );
+
+
+        const alt =
+          mixRGB(
+            COLOR.skyMiddle,
+            COLOR.skyHorizon,
+            t
+          );
+
+
+        base =
+          alt;
+
+      }
+
+
+      pixel(
+        x,
+        y,
+        2,
+        2,
+        base
+      );
+
+    }
+
+  }
+
+}
+
+
+
+/* =========================================================
+   MOON
+
+   Larger
+   lower
+   narrow pixel halo
+========================================================= */
+
+const moonX =
+  237;
+
+const moonY =
+  108;
+
+
+function drawMoon() {
+
+  /*
+    Simple square pixel halo.
+
+    Only one narrow ring.
+  */
+
+
+  for (
+    let y = -16;
+    y <= 16;
+    y++
+  ) {
+
+    for (
+      let x = -16;
+      x <= 16;
+      x++
+    ) {
+
+      const edge =
+        Math.max(
+          Math.abs(x),
+          Math.abs(y)
+        );
+
+
+      if (
+        edge === 15
+      ) {
+
+        if (
+          (
+            x +
+            y
+          )
+          %
+          2 === 0
+        ) {
+
+          pixel(
+            moonX + x,
+            moonY + y,
+            1,
+            1,
+            "#6c674f"
+          );
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+
+  /*
+    Main square moon
+  */
+
+  pixel(
+    moonX - 12,
+    moonY - 12,
+    24,
+    24,
+    COLOR.moonOuter
+  );
+
+
+  pixel(
+    moonX - 10,
+    moonY - 10,
+    20,
+    20,
+    COLOR.moonMiddle
+  );
+
+
+  pixel(
+    moonX - 8,
+    moonY - 8,
+    16,
+    16,
+    COLOR.moon
+  );
+
+
+  pixel(
+    moonX - 6,
+    moonY - 7,
+    13,
+    13,
+    COLOR.moonCore
+  );
+
+
+
+  /*
+    Minimal surface texture
+  */
+
+  pixel(
+    moonX - 5,
+    moonY - 3,
+    3,
+    2,
+    "#eee3b9"
+  );
+
+
+  pixel(
+    moonX + 3,
+    moonY + 4,
+    2,
+    2,
+    "#e9dbae"
+  );
+
+}
+
+
+
+/* =========================================================
+   HORIZON
+========================================================= */
+
+function drawHorizon() {
+
+  /*
+    Almost perfectly flat
+  */
+
+  pixel(
+    0,
+    horizon - 1,
+    W,
+    1,
+    "#123b52"
+  );
+
+
+  pixel(
+    0,
+    horizon,
+    W,
+    2,
+    "#071d28"
+  );
+
+}
+
+
+
+/* =========================================================
+   WATER BASE
+========================================================= */
+
+function getWaterColor(
+  y
+) {
+
+  const t =
+    (
+      y -
+      horizon
+    )
+    /
+    (
+      H -
+      horizon
+    );
+
+
+  return mixRGB(
+    COLOR.waterTop,
+    COLOR.waterBottom,
+    t
+  );
+
+}
+
+
+
+function drawWaterBase() {
+
+  for (
+    let y = horizon + 2;
+    y < H;
+    y += 2
+  ) {
+
+    const c =
+      getWaterColor(y);
+
+
+    pixel(
+      0,
+      y,
+      W,
+      2,
+      c
+    );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   WATER WAVES
+
+   Entire waves move to the RIGHT.
+========================================================= */
+
+function drawWave(
+  baseY,
+  amplitude,
+  wavelength,
+  shift,
+  color
+) {
+
+  let previousY =
+    baseY;
+
+
+  for (
+    let x = 0;
+    x < W;
+    x++
+  ) {
+
+    /*
+      x - shift means the pattern
+      physically travels right.
+    */
+
+    const y =
+      baseY +
+      Math.round(
+        Math.sin(
+          (
+            x -
+            shift
+          )
+          /
+          wavelength
+        )
+        *
+        amplitude
+      );
+
+
+    pixel(
+      x,
+      y,
+      1,
+      1,
+      color
+    );
+
+
+    /*
+      Fill tiny gaps,
+      keeping the wave continuous.
+    */
+
+    if (
+      y !==
+      previousY
+    ) {
+
+      pixel(
+        x,
+        Math.min(
+          y,
+          previousY
+        ),
+        1,
+        2,
+        color
+      );
+
+    }
+
+
+    previousY =
+      y;
+
+  }
+
+}
+
+
+
+/* =========================================================
+   RIVER MOVEMENT
+========================================================= */
+
+function drawRiver(
+  frame
+) {
+
+  /*
+    Direction → right
+  */
+
+  const flow =
+    frame * 0.62;
+
+
+
+  /*
+    Distant waves:
+    extremely flat
+  */
+
+  drawWave(
+    136,
+    1,
+    21,
+    flow,
+    "#174354"
+  );
+
+
+  drawWave(
+    142,
+    1,
+    27,
+    flow * 0.92 + 12,
+    "#1d4c5c"
+  );
+
+
+  drawWave(
+    149,
+    1,
+    31,
+    flow * 1.05 + 28,
+    "#285868"
+  );
+
+
+  /*
+    Middle river
+  */
+
+  drawWave(
+    157,
+    1,
+    24,
+    flow * 1.1 + 17,
+    "#346878"
+  );
+
+
+  drawWave(
+    164,
+    2,
+    34,
+    flow * 0.88 + 40,
+    "#3f7080"
+  );
+
+
+  /*
+    Foreground
+  */
+
+  drawWave(
+    172,
+    2,
+    39,
+    flow * 1.16 + 5,
+    "#507f8c"
+  );
+
+
+  drawWave(
+    178,
+    1,
+    29,
+    flow + 30,
+    "#628c96"
+  );
+
+}
+
+
+
+/* =========================================================
+   MOON REFLECTION
+========================================================= */
+
+function drawReflection(
+  frame
+) {
+
+  const lines = [
+
+    [134, 12],
+    [139, 8],
+    [145, 14],
+    [151, 9],
+    [158, 16],
+    [165, 11],
+    [173, 18]
+
+  ];
+
+
+  lines.forEach(
+    ([y,width],i) => {
+
+      const offset =
+        Math.round(
+          Math.sin(
+            frame * 0.13 +
+            i * 0.8
+          )
+          *
+          3
+        );
+
+
+      const colors = [
+
+        "#fff7d7",
+
+        "#e8dcae",
+
+        "#c7bb90"
+
+      ];
+
+
+      pixel(
+        moonX -
+        Math.floor(
+          width / 2
+        )
+        +
+        offset,
+        y,
+        width,
+        1,
+        colors[
+          i %
+          colors.length
+        ]
+      );
+
+    }
+  );
+
+}
+
+
+
+/* =========================================================
+   SOFT WILLOW PHYSICS
+========================================================= */
+
+/*
+  A branch is treated like a hanging rope.
+
+  Root:
+  almost fixed.
+
+  Tail:
+  much softer.
+
+  Constant wind pushes everything RIGHT.
+*/
+
+
+const branchSettings = [
+
+  /*
+    LEFT SIDE
+  */
+
+  {x: 6,   segments:13, length:8, phase:.2, leaves:.35},
+
+  {x: 17,  segments:18, length:8, phase:.7, leaves:.70},
+
+  {x: 32,  segments:14, length:8, phase:1.4, leaves:.45},
+
+  {x: 48,  segments:19, length:8, phase:2.1, leaves:.75},
+
+  {x: 68,  segments:12, length:8, phase:2.7, leaves:.30},
+
+  {x: 88,  segments:17, length:8, phase:3.5, leaves:.58},
+
+
+  /*
+    RIGHT SIDE
+
+    Irregular spacing.
+  */
+
+  {x:205, segments:12, length:8, phase:.5, leaves:.35},
+
+  {x:217, segments:18, length:8, phase:1.0, leaves:.76},
+
+  {x:234, segments:15, length:8, phase:1.7, leaves:.42},
+
+  {x:250, segments:20, length:8, phase:2.4, leaves:.78},
+
+  {x:269, segments:13, length:8, phase:3.1, leaves:.35},
+
+  {x:282, segments:19, length:8, phase:3.7, leaves:.70},
+
+  {x:301, segments:16, length:8, phase:4.5, leaves:.48},
+
+  {x:316, segments:20, length:8, phase:5.2, leaves:.75}
+
+];
+
+
+
+const branches =
+  [];
+
+
+
+function createBranches() {
+
+  branchSettings.forEach(
+    (
+      settings,
+      branchIndex
+    ) => {
+
+      const points =
+        [];
+
+
+      /*
+        Initial shape already hangs
+        slightly toward the right.
+      */
+
+      for (
+        let i = 0;
+        i <=
+        settings.segments;
+        i++
+      ) {
+
+        const x =
+          settings.x +
+          i * 0.28;
+
+
+        const y =
+          -3 +
+          i *
+          settings.length;
+
+
+        points.push({
+
+          x: x,
+
+          y: y,
+
+          oldX: x,
+
+          oldY: y
+
+        });
+
+      }
+
+
+      branches.push({
+
+        settings:
+          settings,
+
+        points:
+          points,
+
+        index:
+          branchIndex
+
+      });
+
+    }
+  );
+
+}
+
+
+createBranches();
+
+
+
+/* =========================================================
+   PHYSICS UPDATE
+========================================================= */
+
+function updateBranches(
+  time
+) {
+
+  branches.forEach(
+    branch => {
+
+      const s =
+        branch.settings;
+
+
+      const pts =
+        branch.points;
+
+
+      /*
+        Root position.
+      */
+
+      pts[0].x =
+        s.x;
+
+      pts[0].y =
+        -3;
+
+
+
+      /*
+        Verlet integration.
+      */
+
+      for (
+        let i = 1;
+        i < pts.length;
+        i++
+      ) {
+
+        const p =
+          pts[i];
+
+
+        const progress =
+          i /
+          (
+            pts.length -
+            1
+          );
+
+
+        const velocityX =
+          (
+            p.x -
+            p.oldX
+          )
+          *
+          0.92;
+
+
+        const velocityY =
+          (
+            p.y -
+            p.oldY
+          )
+          *
+          0.92;
+
+
+        p.oldX =
+          p.x;
+
+        p.oldY =
+          p.y;
+
+
+
+        /*
+          Constant wind to the RIGHT.
+
+          Tail receives much more wind
+          than the upper branch.
+        */
+
+        const windBase =
+          0.025;
+
+
+        const windWave =
+          Math.sin(
+            time *
+            0.0011 +
+            s.phase +
+            i *
+            0.27
+          )
+          *
+          0.018;
+
+
+        const wind =
+          (
+            windBase +
+            windWave
+          )
+          *
+          (
+            0.25 +
+            progress *
+            progress *
+            2.2
+          );
+
+
+        p.x +=
+          velocityX +
+          wind;
+
+
+        /*
+          Slight gravity.
+        */
+
+        p.y +=
+          velocityY +
+          0.035;
+
+      }
+
+
+
+      /*
+        Rope constraints.
+
+        Several passes create
+        soft but stable willow branches.
+      */
+
+      for (
+        let iteration = 0;
+        iteration < 6;
+        iteration++
+      ) {
+
+        pts[0].x =
+          s.x;
+
+        pts[0].y =
+          -3;
+
+
+        for (
+          let i = 1;
+          i < pts.length;
+          i++
+        ) {
+
+          const a =
+            pts[i - 1];
+
+          const b =
+            pts[i];
+
+
+          const dx =
+            b.x -
+            a.x;
+
+
+          const dy =
+            b.y -
+            a.y;
+
+
+          const distance =
+            Math.sqrt(
+              dx * dx +
+              dy * dy
+            )
+            ||
+            0.001;
+
+
+          const difference =
+            (
+              distance -
+              s.length
+            )
+            /
+            distance;
+
+
+          /*
+            Root half is more resistant.
+            Tail half is softer.
+          */
+
+          const progress =
+            i /
+            (
+              pts.length -
+              1
+            );
+
+
+          const softness =
+            0.42 +
+            progress *
+            0.35;
+
+
+          const moveX =
+            dx *
+            difference *
+            softness;
+
+
+          const moveY =
+            dy *
+            difference *
+            softness;
+
+
+          if (
+            i !== 1
+          ) {
+
+            a.x +=
+              moveX *
+              0.45;
+
+
+            a.y +=
+              moveY *
+              0.45;
+
+          }
+
+
+          b.x -=
+            moveX;
+
+
+          b.y -=
+            moveY;
+
+        }
+
+      }
+
+    }
+  );
+
+}
+
+
+
+/* =========================================================
+   DRAW WILLOW
+========================================================= */
+
+function drawBranches() {
+
+  branches.forEach(
+    branch => {
+
+      const pts =
+        branch.points;
+
+
+      const settings =
+        branch.settings;
+
+
+
+      /*
+        Main stems.
+      */
+
+      for (
+        let i = 1;
+        i < pts.length;
+        i++
+      ) {
+
+        const a =
+          pts[i - 1];
+
+
+        const b =
+          pts[i];
+
+
+        const progress =
+          i /
+          (
+            pts.length -
+            1
+          );
+
+
+        const color =
+
+          progress < 0.3
+
+          ? COLOR.willowDark
+
+          : progress < 0.7
+
+          ? COLOR.willow
+
+          : COLOR.willowLight;
+
+
+
+        /*
+          Slightly thicker near top.
+        */
+
+        const thickness =
+
+          progress <
+          0.42
+
+          ? 2
+
+          : 1;
+
+
+
+        drawPixelLine(
+
+          Math.round(a.x),
+
+          Math.round(a.y),
+
+          Math.round(b.x),
+
+          Math.round(b.y),
+
+          color,
+
+          thickness
+
+        );
+
+
+
+        /*
+          Irregular leaves.
+        */
+
+        const seed =
+          (
+            i *
+            17 +
+            branch.index *
+            23
+          )
+          %
+          100;
+
+
+        if (
+          seed <
+          settings.leaves *
+          100
+        ) {
+
+          const px =
+            Math.round(
+              b.x
+            );
+
+
+          const py =
+            Math.round(
+              b.y
+            );
+
+
+          /*
+            Wind pushes leaves right too.
+          */
+
+          pixel(
+            px + 1,
+            py + 1,
+            4,
+            1,
+            COLOR.willowLight
+          );
+
+
+          if (
+            i %
+            3 === 0
+          ) {
+
+            pixel(
+              px - 3,
+              py + 4,
+              4,
+              1,
+              COLOR.willow
+            );
+
+          }
+
+        }
+
+      }
+
+    }
+  );
+
 }
 
 
@@ -446,37 +1811,46 @@ function pixel(
    PIXEL LINE
 ========================================================= */
 
-function pixelLine(
+function drawPixelLine(
   x0,
   y0,
   x1,
   y1,
   color,
-  thickness = 1
+  thickness
 ) {
 
-  x0 = Math.round(x0);
-  y0 = Math.round(y0);
-
-  x1 = Math.round(x1);
-  y1 = Math.round(y1);
-
-
-  const dx =
-    Math.abs(x1 - x0);
-
-  const sx =
-    x0 < x1 ? 1 : -1;
-
-  const dy =
-    -Math.abs(y1 - y0);
-
-  const sy =
-    y0 < y1 ? 1 : -1;
+  let dx =
+    Math.abs(
+      x1 -
+      x0
+    );
 
 
-  let err =
-    dx + dy;
+  let sx =
+    x0 <
+    x1
+    ? 1
+    : -1;
+
+
+  let dy =
+    -Math.abs(
+      y1 -
+      y0
+    );
+
+
+  let sy =
+    y0 <
+    y1
+    ? 1
+    : -1;
+
+
+  let error =
+    dx +
+    dy;
 
 
   while (true) {
@@ -494,999 +1868,41 @@ function pixelLine(
       x0 === x1 &&
       y0 === y1
     ) {
+
       break;
+
     }
 
 
     const e2 =
-      err * 2;
-
-
-    if (e2 >= dy) {
-
-      err += dy;
-      x0 += sx;
-
-    }
-
-
-    if (e2 <= dx) {
-
-      err += dx;
-      y0 += sy;
-
-    }
-
-  }
-}
-
-
-
-/* =========================================================
-   ORDERED DITHER
-
-   used to blend pure colors without
-   creating normal gradients
-========================================================= */
-
-const bayer4 = [
-
-  [0, 8, 2,10],
-
-  [12,4,14,6],
-
-  [3,11,1,9],
-
-  [15,7,13,5]
-
-];
-
-
-
-/* =========================================================
-   BLUE-HOUR SKY
-========================================================= */
-
-function drawSky() {
-
-  const palettes = [
-
-    C.sky0,
-    C.sky1,
-    C.sky2,
-    C.sky3,
-    C.sky4,
-    C.sky5,
-    C.sky6,
-    C.sky7
-
-  ];
-
-
-  /*
-    Sky now occupies almost 70%
-    of the whole composition.
-  */
-
-  const skyBottom =
-    184;
-
-
-  for (
-    let y = 0;
-    y < skyBottom;
-    y++
-  ) {
-
-    /*
-      Makes the transition slower near
-      the top and slightly brighter
-      toward the horizon.
-    */
-
-    const normalized =
-      y / skyBottom;
-
-
-    const curved =
-      Math.pow(
-        normalized,
-        0.88
-      );
-
-
-    const pos =
-      curved *
-      (palettes.length - 1);
-
-
-    const low =
-      Math.floor(pos);
-
-
-    const high =
-      Math.min(
-        palettes.length - 1,
-        low + 1
-      );
-
-
-    const mix =
-      pos - low;
-
-
-    for (
-      let x = 0;
-      x < W;
-      x++
-    ) {
-
-      const threshold =
-        bayer4[y % 4][x % 4] / 16;
-
-
-      const color =
-        threshold < mix
-        ? palettes[high]
-        : palettes[low];
-
-
-      pixel(
-        x,
-        y,
-        1,
-        1,
-        color
-      );
-
-    }
-
-  }
-
-
-
-  /*
-    Very sparse atmospheric pixels.
-
-    No stars.
-    Blue hour should still feel
-    slightly luminous.
-  */
-
-  for (
-    let i = 0;
-    i < 40;
-    i++
-  ) {
-
-    const x =
-      (
-        i * 79 +
-        31
-      ) % W;
-
-
-    const y =
-      (
-        i * 43 +
-        17
-      ) % 158;
+      2 *
+      error;
 
 
     if (
-      i % 3 === 0
+      e2 >= dy
     ) {
 
-      pixel(
-        x,
-        y,
-        1,
-        1,
-        "#485e7b"
-      );
+      error +=
+        dy;
 
-    }
 
-  }
-
-}
-
-
-
-/* =========================================================
-   SQUARE MOON
-========================================================= */
-
-const moonX =
-  337;
-
-const moonY =
-  91;
-
-
-function drawMoon() {
-
-  /*
-    Narrow pixel glow
-  */
-
-  for (
-    let y = -15;
-    y <= 15;
-    y++
-  ) {
-
-    for (
-      let x = -15;
-      x <= 15;
-      x++
-    ) {
-
-      const distance =
-        Math.max(
-          Math.abs(x),
-          Math.abs(y)
-        );
-
-
-      if (
-        distance >= 11 &&
-        distance <= 14
-      ) {
-
-        if (
-          (
-            x +
-            y
-          ) %
-          3 ===
-          0
-        ) {
-
-          pixel(
-            moonX + x,
-            moonY + y,
-            1,
-            1,
-            distance < 13
-            ? C.moonGlow1
-            : C.moonGlow2
-          );
-
-        }
-
-      }
-
-    }
-
-  }
-
-
-  /*
-    Square moon
-  */
-
-  pixel(
-    moonX - 10,
-    moonY - 10,
-    20,
-    20,
-    C.moonEdge
-  );
-
-
-  pixel(
-    moonX - 8,
-    moonY - 8,
-    16,
-    16,
-    C.moonMid
-  );
-
-
-  pixel(
-    moonX - 6,
-    moonY - 7,
-    13,
-    13,
-    C.moonCore
-  );
-
-
-  /*
-    restrained texture
-  */
-
-  pixel(
-    moonX - 4,
-    moonY - 3,
-    3,
-    2,
-    "#ece1bb"
-  );
-
-
-  pixel(
-    moonX + 3,
-    moonY + 3,
-    2,
-    2,
-    "#e8d9a9"
-  );
-
-}
-
-
-
-/* =========================================================
-   HORIZON
-
-   lower than before
-========================================================= */
-
-const horizon =
-  184;
-
-
-function drawHorizon() {
-
-  pixel(
-    0,
-    horizon - 2,
-    W,
-    2,
-    "#102533"
-  );
-
-
-  pixel(
-    0,
-    horizon,
-    W,
-    2,
-    C.bank
-  );
-
-
-  /*
-    almost invisible distant variations
-  */
-
-  pixel(
-    66,
-    horizon - 3,
-    57,
-    1,
-    "#112633"
-  );
-
-
-  pixel(
-    300,
-    horizon - 3,
-    71,
-    1,
-    "#112633"
-  );
-
-}
-
-
-
-/* =========================================================
-   WATER BASE
-========================================================= */
-
-function drawWaterBase() {
-
-  pixel(
-    0,
-    horizon + 2,
-    W,
-    16,
-    C.water0
-  );
-
-
-  pixel(
-    0,
-    horizon + 18,
-    W,
-    18,
-    C.water1
-  );
-
-
-  pixel(
-    0,
-    horizon + 36,
-    W,
-    18,
-    C.water2
-  );
-
-
-  pixel(
-    0,
-    horizon + 54,
-    W,
-    18,
-    C.water3
-  );
-
-
-  pixel(
-    0,
-    horizon + 72,
-    W,
-    H - horizon - 72,
-    C.water4
-  );
-
-}
-
-
-
-/* =========================================================
-   FULL-WIDTH WAVE
-========================================================= */
-
-function drawWave(
-  baseY,
-  amplitude,
-  wavelength,
-  phase,
-  color
-) {
-
-  let lastX =
-    0;
-
-
-  let lastY =
-    baseY +
-    Math.round(
-      Math.sin(phase) *
-      amplitude
-    );
-
-
-  for (
-    let x = 2;
-    x < W;
-    x += 2
-  ) {
-
-    const y =
-      baseY +
-      Math.round(
-        Math.sin(
-          x / wavelength +
-          phase
-        ) *
-        amplitude
-      );
-
-
-    pixelLine(
-      lastX,
-      lastY,
-      x,
-      y,
-      color,
-      1
-    );
-
-
-    lastX =
-      x;
-
-    lastY =
-      y;
-
-  }
-
-}
-
-
-
-/* =========================================================
-   RIVER
-========================================================= */
-
-function drawWater(frame) {
-
-  const move =
-    frame * 0.042;
-
-
-  drawWave(
-    horizon + 8,
-    1,
-    34,
-    move,
-    "#1c3d4a"
-  );
-
-
-  drawWave(
-    horizon + 15,
-    1,
-    43,
-    move + 1.1,
-    "#224855"
-  );
-
-
-  drawWave(
-    horizon + 23,
-    1,
-    51,
-    move + 2.2,
-    C.wave1
-  );
-
-
-  drawWave(
-    horizon + 32,
-    1,
-    39,
-    move * 1.05,
-    C.wave2
-  );
-
-
-  drawWave(
-    horizon + 42,
-    1,
-    48,
-    move + 2.8,
-    C.wave2
-  );
-
-
-  drawWave(
-    horizon + 52,
-    1,
-    57,
-    move * .9 + 1.2,
-    C.wave3
-  );
-
-
-  drawWave(
-    horizon + 63,
-    2,
-    52,
-    move + 4,
-    C.wave3
-  );
-
-
-  drawWave(
-    horizon + 75,
-    1,
-    39,
-    move * 1.1,
-    C.wave2
-  );
-
-
-  drawWave(
-    horizon + 83,
-    2,
-    61,
-    move * .84 + 1.6,
-    C.wave4
-  );
-
-}
-
-
-
-/* =========================================================
-   MOON REFLECTION
-========================================================= */
-
-function drawReflection(frame) {
-
-  const rows = [
-
-    [190, 7],
-    [196, 5],
-    [202, 9],
-    [209, 6],
-    [217,11],
-    [226, 7],
-    [236,12],
-    [247, 8],
-    [258,13],
-    [267, 9]
-
-  ];
-
-
-  rows.forEach(
-    ([y,w],i) => {
-
-      const shift =
-        Math.round(
-          Math.sin(
-            frame * .16 +
-            i * .88
-          ) *
-          3
-        );
-
-
-      const colors = [
-
-        C.reflection1,
-
-        C.reflection2,
-
-        C.reflection3
-
-      ];
-
-
-      pixel(
-        moonX -
-        Math.floor(w / 2) +
-        shift,
-        y,
-        w,
-        1,
-        colors[i % 3]
-      );
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   WILLOW CONFIG
-========================================================= */
-
-const willow = [
-
-  {x:11,  length:140, phase:.2, a:1.3, b:3.0, dense:3},
-
-  {x:29,  length:192, phase:.9, a:1.7, b:4.5, dense:5},
-
-  {x:51,  length:157, phase:1.8, a:1.1, b:3.1, dense:3},
-
-  {x:76,  length:207, phase:2.6, a:1.6, b:4.8, dense:5},
-
-  {x:99,  length:125, phase:3.0, a:1.0, b:2.7, dense:2},
-
-  {x:126, length:175, phase:3.8, a:1.5, b:4.2, dense:4},
-
-
-  {x:264, length:148, phase:.5, a:1.2, b:3.3, dense:3},
-
-  {x:282, length:200, phase:1.1, a:1.8, b:5.0, dense:5},
-
-  {x:302, length:166, phase:1.7, a:1.0, b:3.3, dense:3},
-
-  {x:320, length:219, phase:2.3, a:1.9, b:5.4, dense:5},
-
-  {x:340, length:181, phase:3.0, a:1.3, b:4.4, dense:4},
-
-  {x:362, length:229, phase:3.7, a:1.9, b:5.6, dense:5},
-
-  {x:384, length:155, phase:4.2, a:1.0, b:3.0, dense:2},
-
-  {x:405, length:210, phase:4.9, a:1.7, b:5.0, dense:5},
-
-  {x:431, length:168, phase:5.4, a:1.2, b:3.7, dense:3},
-
-  {x:455, length:219, phase:6.1, a:1.8, b:5.4, dense:5}
-
-];
-
-
-
-/* =========================================================
-   BUILD BRANCH
-========================================================= */
-
-function makeBranch(
-  branch,
-  index
-) {
-
-  const points =
-    [];
-
-
-  let x =
-    0;
-
-  let y =
-    -4;
-
-
-  points.push(
-    [x,y]
-  );
-
-
-  const segment =
-    17 +
-    index % 5;
-
-
-  while (
-    y <
-    branch.length
-  ) {
-
-    y +=
-      segment +
-      (
-        points.length %
-        3
-      );
-
-
-    const change = [
-
-      0,
-      1,
-      -1,
-      2,
-      0,
-      -2,
-      1
-
-    ][
-      (
-        points.length +
-        index
-      ) % 7
-    ];
-
-
-    x +=
-      change;
-
-
-    points.push([
-
-      x,
-
-      Math.min(
-        y,
-        branch.length
-      )
-
-    ]);
-
-  }
-
-
-  return points;
-
-}
-
-
-
-/* =========================================================
-   DRAW WILLOW
-
-   upper/lower movement separated
-========================================================= */
-
-function drawBranch(
-  b,
-  index,
-  frame
-) {
-
-  const pts =
-    makeBranch(
-      b,
-      index
-    );
-
-
-  const split =
-    Math.floor(
-      pts.length * .46
-    );
-
-
-  const topMotion =
-    Math.round(
-      Math.sin(
-        frame * .055 +
-        b.phase
-      ) *
-      b.a
-    );
-
-
-  const lowerMotion =
-    Math.round(
-      Math.sin(
-        frame * .082 +
-        b.phase * 1.7
-      ) *
-      b.b
-    );
-
-
-  function bx(i) {
-
-    let movement =
-      topMotion;
-
-
-    if (
-      i >
-      split
-    ) {
-
-      const progress =
-        (
-          i -
-          split
-        )
-        /
-        Math.max(
-          1,
-          pts.length -
-          split -
-          1
-        );
-
-
-      movement +=
-        Math.round(
-          lowerMotion *
-          progress *
-          progress
-        );
-
-    }
-
-
-    return (
-      b.x +
-      pts[i][0] +
-      movement
-    );
-
-  }
-
-
-  function by(i) {
-
-    return pts[i][1];
-
-  }
-
-
-
-  for (
-    let i = 0;
-    i < pts.length - 1;
-    i++
-  ) {
-
-    const color =
-
-      i < 2
-      ? C.willow0
-      : i < split
-      ? C.willow1
-      : C.willow2;
-
-
-    pixelLine(
-      bx(i),
-      by(i),
-      bx(i + 1),
-      by(i + 1),
-      color,
-      2
-    );
-
-  }
-
-
-
-  for (
-    let i = 1;
-    i < pts.length;
-    i++
-  ) {
-
-    const x =
-      bx(i);
-
-    const y =
-      by(i);
-
-
-    if (
-      (
-        i +
-        index
-      )
-      %
-      Math.max(
-        1,
-        6 -
-        b.dense
-      )
-      !==
-      0
-    ) {
-
-      continue;
-
-    }
-
-
-    pixel(
-      x - 5,
-      y + 2,
-      5,
-      1,
-      C.willow2
-    );
-
-
-    pixel(
-      x - 4,
-      y + 3,
-      4,
-      1,
-      C.willow3
-    );
-
-
-    if (
-      i % 2 === 0
-    ) {
-
-      pixel(
-        x + 2,
-        y + 5,
-        5,
-        1,
-        C.willow2
-      );
-
-
-      pixel(
-        x + 3,
-        y + 6,
-        3,
-        1,
-        C.willow3
-      );
+      x0 +=
+        sx;
 
     }
 
 
     if (
-      b.dense >= 5 &&
-      i > split
+      e2 <= dx
     ) {
 
-      pixel(
-        x - 7,
-        y + 6,
-        4,
-        1,
-        C.willow1
-      );
+      error +=
+        dx;
+
+
+      y0 +=
+        sy;
 
     }
 
@@ -1496,31 +1912,11 @@ function drawBranch(
 
 
 
-function drawWillow(
-  frame
-) {
-
-  willow.forEach(
-    (branch,index) => {
-
-      drawBranch(
-        branch,
-        index,
-        frame
-      );
-
-    }
-  );
-
-}
-
-
-
 /* =========================================================
-   PURE PIXEL FONT
+   PURE WHITE PIXEL FONT
 ========================================================= */
 
-const font = {
+const englishFont = {
 
   h: [
     "10001",
@@ -1532,6 +1928,7 @@ const font = {
     "10001"
   ],
 
+
   i: [
     "00100",
     "00000",
@@ -1542,6 +1939,7 @@ const font = {
     "01110"
   ],
 
+
   "'": [
     "00100",
     "00100",
@@ -1551,6 +1949,7 @@ const font = {
     "00000",
     "00000"
   ],
+
 
   m: [
     "00000",
@@ -1566,9 +1965,10 @@ const font = {
 
 
 
-const chinese = {
+const chineseFont = {
 
   "山": [
+
     "001000100",
     "001000100",
     "001000100",
@@ -1578,9 +1978,12 @@ const chinese = {
     "101000101",
     "111111111",
     "000000000"
+
   ],
 
+
   "田": [
+
     "111111111",
     "100010001",
     "100010001",
@@ -1590,6 +1993,7 @@ const chinese = {
     "100010001",
     "100010001",
     "111111111"
+
   ]
 
 };
@@ -1598,27 +2002,43 @@ const chinese = {
 
 function drawMatrix(
   matrix,
-  x,
-  y,
+  startX,
+  startY,
   scale
 ) {
 
   matrix.forEach(
-    (row,ry) => {
+    (
+      row,
+      rowIndex
+    ) => {
 
       [...row].forEach(
-        (value,rx) => {
+        (
+          value,
+          columnIndex
+        ) => {
 
           if (
-            value === "1"
+            value ===
+            "1"
           ) {
 
             pixel(
-              x + rx * scale,
-              y + ry * scale,
+
+              startX +
+              columnIndex *
+              scale,
+
+              startY +
+              rowIndex *
+              scale,
+
               scale,
               scale,
-              C.white
+
+              COLOR.white
+
             );
 
           }
@@ -1634,26 +2054,37 @@ function drawMatrix(
 
 
 /* =========================================================
-   TITLE
+   CENTRAL TITLE
 ========================================================= */
 
 function drawTitle() {
 
   const scale =
-    3;
+    2;
 
 
   const english =
-    ["h","i"," ","i","'","m"];
+    [
+      "h",
+      "i",
+      " ",
+      "i",
+      "'",
+      "m"
+    ];
 
 
   const widths = {
 
-    h: 5,
-    i: 5,
-    "'": 5,
-    m: 5,
-    " ": 3
+    h:5,
+
+    i:5,
+
+    "'":5,
+
+    m:5,
+
+    " ":3
 
   };
 
@@ -1668,25 +2099,28 @@ function drawTitle() {
       englishWidth +=
         widths[char] *
         scale +
-        scale * 2;
+        4;
 
     }
   );
 
 
+
   const chineseScale =
-    3;
+    2;
 
 
   const chineseWidth =
-    9 *
-    chineseScale *
-    3 +
-    10 *
-    chineseScale;
+    (
+      9 *
+      chineseScale +
+      8
+    )
+    *
+    3;
 
 
-  const totalWidth =
+  const fullWidth =
     englishWidth +
     chineseWidth;
 
@@ -1695,32 +2129,34 @@ function drawTitle() {
     Math.floor(
       (
         W -
-        totalWidth
-      ) /
+        fullWidth
+      )
+      /
       2
     );
 
 
   /*
-    slightly lower in the
-    larger sky composition
+    Upper-middle sky.
   */
 
   const y =
-    126;
+    78;
+
 
 
   english.forEach(
     char => {
 
       if (
-        char !== " "
+        char !==
+        " "
       ) {
 
         drawMatrix(
-          font[char],
+          englishFont[char],
           x,
-          y + 3,
+          y + 2,
           scale
         );
 
@@ -1730,17 +2166,22 @@ function drawTitle() {
       x +=
         widths[char] *
         scale +
-        scale * 2;
+        4;
 
     }
   );
 
 
-  ["山","山","田"].forEach(
+
+  [
+    "山",
+    "山",
+    "田"
+  ].forEach(
     char => {
 
       drawMatrix(
-        chinese[char],
+        chineseFont[char],
         x,
         y,
         chineseScale
@@ -1750,7 +2191,7 @@ function drawTitle() {
       x +=
         9 *
         chineseScale +
-        chineseScale * 5;
+        8;
 
     }
   );
@@ -1766,24 +2207,42 @@ function drawTitle() {
 let frame =
   0;
 
-let previous =
+
+let previousFrameTime =
   0;
 
 
-function render(time) {
+
+function render(
+  time
+) {
+
+  /*
+    Around 30fps.
+
+    Smooth enough for the willow physics,
+    while the image remains pixel art.
+  */
 
   if (
     time -
-    previous >
-    83
+    previousFrameTime >
+    33
   ) {
 
     frame++;
 
-    previous =
+
+    previousFrameTime =
       time;
 
+
+    updateBranches(
+      time
+    );
+
   }
+
 
 
   ctx.clearRect(
@@ -1794,25 +2253,42 @@ function render(time) {
   );
 
 
-  drawSky();
+  /*
+    Painter order
+  */
+
+  drawSky(
+    time
+  );
+
 
   drawMoon();
 
+
   drawHorizon();
+
 
   drawWaterBase();
 
-  drawWater(
+
+  drawRiver(
     frame
   );
+
 
   drawReflection(
     frame
   );
 
-  drawWillow(
-    frame
-  );
+
+  drawBranches();
+
+
+  /*
+    Title is always clean,
+    pure white,
+    and placed above scenery.
+  */
 
   drawTitle();
 
@@ -1830,5 +2306,7 @@ requestAnimationFrame(
 
 </script>
 
+
 </body>
+
 </html>
