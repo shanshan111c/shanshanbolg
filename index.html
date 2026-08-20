@@ -8,6 +8,7 @@
   <title>雅蘭亭拾遺</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -23,9 +24,9 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
-    /* ===============================
-       TOP BAR
-    =============================== */
+    /* ==========================================
+       NAVIGATION
+    ========================================== */
 
     header {
       position: fixed;
@@ -33,24 +34,25 @@
       left: 0;
       right: 0;
 
-      height: 60px;
+      height: 58px;
       padding: 0 34px;
 
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
 
       z-index: 100;
 
-      background: rgba(2, 6, 18, 0.62);
+      background: rgba(1, 5, 15, 0.72);
       border-bottom: 1px solid rgba(255,255,255,0.05);
-      backdrop-filter: blur(5px);
+
+      backdrop-filter: blur(4px);
     }
 
     .site-name {
       margin: 0;
 
-      color: white;
+      color: #ffffff;
 
       font-family:
         "Songti TC",
@@ -58,44 +60,50 @@
         "PingFang TC",
         serif;
 
-      font-weight: 400;
       font-size: 17px;
+      font-weight: 400;
+
       letter-spacing: 5px;
+
+      white-space: nowrap;
     }
 
     nav a {
-      margin-left: 25px;
+      margin-left: 26px;
 
-      color: rgba(255,255,255,0.72);
+      color: rgba(255,255,255,0.70);
 
       text-decoration: none;
 
       font-family: "Courier New", monospace;
+
       font-size: 12px;
-      letter-spacing: 1px;
+
+      letter-spacing: 1.5px;
     }
 
     nav a:hover {
-      color: white;
+      color: #ffffff;
     }
 
-    /* ===============================
+    /* ==========================================
        HERO
-    =============================== */
+    ========================================== */
 
     .hero {
       position: relative;
 
       width: 100%;
       height: 100vh;
+
       min-height: 650px;
 
       overflow: hidden;
 
-      background: #020611;
+      background: #01040b;
     }
 
-    canvas {
+    #scene {
       position: absolute;
 
       left: 50%;
@@ -115,20 +123,24 @@
 
       transform: translateX(-50%);
 
-      color: rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.23);
 
-      font-family: monospace;
+      font-family: "Courier New", monospace;
+
       font-size: 9px;
+
       letter-spacing: 4px;
     }
 
-    /* ===============================
-       BELOW
-    =============================== */
+    /* ==========================================
+       PAGE CONTENT
+    ========================================== */
 
     .content {
       max-width: 850px;
+
       margin: auto;
+
       padding: 90px 24px;
     }
 
@@ -142,29 +154,43 @@
     }
 
     .content p {
-      line-height: 1.9;
       color: #444;
+
+      font-size: 16px;
+
+      line-height: 1.9;
     }
 
     .blog-card {
       padding: 25px 0;
+
       border-bottom: 1px solid #ddd;
     }
 
     .blog-card a {
       color: #222;
+
       text-decoration: none;
     }
 
+    .blog-card a:hover {
+      text-decoration: underline;
+    }
+
     footer {
-      text-align: center;
       padding: 40px;
+
+      text-align: center;
+
       color: #999;
+
       font-size: 13px;
     }
 
     @media (max-width: 650px) {
+
       header {
+        height: 54px;
         padding: 0 15px;
       }
 
@@ -174,10 +200,12 @@
       }
 
       nav a {
-        margin-left: 10px;
+        margin-left: 11px;
         font-size: 10px;
       }
+
     }
+
   </style>
 </head>
 
@@ -200,12 +228,11 @@
 </header>
 
 
-
 <section class="hero" id="home">
 
   <!--
-    Very low-resolution world.
-    This is what gives us the large chunky pixel look.
+    The whole visual world is only 240 × 135 pixels.
+    The browser enlarges it without smoothing.
   -->
 
   <canvas
@@ -219,7 +246,6 @@
   </div>
 
 </section>
-
 
 
 <main class="content">
@@ -247,15 +273,21 @@
     <h2>Blog</h2>
 
     <div class="blog-card">
+
       <h3>
-        <a href="#">My First Blog Post</a>
+        <a href="#">
+          My First Blog Post
+        </a>
       </h3>
 
-      <p>August 20, 2026</p>
+      <p>
+        August 20, 2026
+      </p>
 
       <p>
         Welcome to my little corner of the internet.
       </p>
+
     </div>
 
   </section>
@@ -271,176 +303,120 @@
 
 <script>
 
-/* =========================================================
-   SETUP
-========================================================= */
+/* ==========================================================
+   BASIC SETUP
+========================================================== */
 
-const canvas =
-  document.getElementById("scene");
+const canvas = document.getElementById("scene");
 
-const ctx =
-  canvas.getContext("2d");
-
-ctx.imageSmoothingEnabled = false;
+const ctx = canvas.getContext("2d");
 
 const W = 240;
 const H = 135;
 
-
 /*
-  Fundamental visual unit.
-
-  Almost all objects are aligned to this grid.
+  Fundamental pixel unit.
 */
 
 const P = 2;
 
+ctx.imageSmoothingEnabled = false;
 
+
+
+/* ==========================================================
+   SCALE CANVAS
+========================================================== */
 
 function fitCanvas() {
 
-  const scale =
-    Math.max(
-      window.innerWidth / W,
-      window.innerHeight / H
-    );
+  const scale = Math.max(
+    window.innerWidth / W,
+    window.innerHeight / H
+  );
 
   canvas.style.width =
     Math.ceil(W * scale) + "px";
 
   canvas.style.height =
     Math.ceil(H * scale) + "px";
+
 }
 
-window.addEventListener(
-  "resize",
-  fitCanvas
-);
+window.addEventListener("resize", fitCanvas);
 
 fitCanvas();
 
 
 
-/* =========================================================
-   PALETTE
-
-   Dark black-blue top,
-   saturated blue below.
-========================================================= */
+/* ==========================================================
+   COLOR PALETTE
+========================================================== */
 
 const C = {
 
-  black:
-    "#01040b",
+  /* BLUE-HOUR SKY */
 
-  sky0:
-    "#030817",
+  sky0: [1, 4, 11],
+  sky1: [2, 9, 24],
+  sky2: [4, 18, 43],
+  sky3: [6, 31, 67],
+  sky4: [8, 45, 91],
+  sky5: [12, 60, 115],
+  sky6: [19, 76, 139],
 
-  sky1:
-    "#07152c",
+  /* CLOUDS */
 
-  sky2:
-    "#0b2450",
+  cloudDark: "#09244c",
+  cloudMid:  "#10366e",
+  cloudBlue: "#174a93",
+  cloudLite: "#225db0",
 
-  sky3:
-    "#103776",
+  /* HORIZON */
 
-  sky4:
-    "#174b9b",
+  bankDark: "#06131c",
+  bankMid:  "#09202b",
 
-  sky5:
-    "#235eb9",
+  /* WATER */
 
+  water0: "#071d2b",
+  water1: "#0b2b3c",
+  water2: "#10394d",
+  water3: "#17495d",
 
-  cloudDark:
-    "#173974",
+  wave1: "#20586c",
+  wave2: "#2c6b7e",
+  wave3: "#438497",
 
-  cloudMid:
-    "#2453a4",
+  /* WILLOW */
 
-  cloudLight:
-    "#316bd0",
+  willowDark: "#07362f",
+  willow:     "#0d5143",
+  willowLite: "#176854",
 
+  /* MOON */
 
-  bank0:
-    "#06131c",
+  halo:      "#756c50",
+  moonEdge:  "#d8c58c",
+  moonMid:   "#f2dea0",
+  moon:      "#fff2bd",
+  moonCore:  "#fffbe6",
 
-  bank1:
-    "#09202b",
+  /* REFLECTION */
 
-  bank2:
-    "#103142",
+  shine1: "#fff1ba",
+  shine2: "#dbc995",
 
-
-  water0:
-    "#0a263b",
-
-  water1:
-    "#103850",
-
-  water2:
-    "#174962",
-
-  water3:
-    "#236079",
-
-
-  wave0:
-    "#2c6c87",
-
-  wave1:
-    "#3c829b",
-
-  wave2:
-    "#5a9daf",
-
-
-  willow0:
-    "#0a3a31",
-
-  willow1:
-    "#0f5545",
-
-  willow2:
-    "#17705a",
-
-
-  moonGlow:
-    "#7b7357",
-
-  moonEdge:
-    "#d8c58c",
-
-  moon:
-    "#fff1bd",
-
-  moonCore:
-    "#fffbe4",
-
-
-  shine:
-    "#ffeab3",
-
-  shine2:
-    "#d7c891",
-
-  white:
-    "#ffffff"
+  white: "#ffffff"
 };
 
 
 
-/* =========================================================
+/* ==========================================================
    BASIC BLOCK
-========================================================= */
+========================================================== */
 
-function block(
-  x,
-  y,
-  w,
-  h,
-  color
-) {
+function block(x, y, w, h, color) {
 
   ctx.fillStyle = color;
 
@@ -455,125 +431,197 @@ function block(
 
 
 
-/* =========================================================
+/* ==========================================================
+   COLOR MIX
+========================================================== */
+
+function mix(a, b, amount) {
+
+  const r = Math.round(
+    a[0] + (b[0] - a[0]) * amount
+  );
+
+  const g = Math.round(
+    a[1] + (b[1] - a[1]) * amount
+  );
+
+  const blue = Math.round(
+    a[2] + (b[2] - a[2]) * amount
+  );
+
+  return `rgb(${r},${g},${blue})`;
+
+}
+
+
+
+/* ==========================================================
    SKY
 
-   Large chunky fields only.
-========================================================= */
+   No random noise.
+   The whole sky is made from 2 × 2 color blocks.
+========================================================== */
+
+const horizon = 101;
+
+
+
+function getSkyColor(y) {
+
+  const t = y / horizon;
+
+  if (t < 0.16) {
+
+    return mix(
+      C.sky0,
+      C.sky1,
+      t / 0.16
+    );
+
+  }
+
+  if (t < 0.34) {
+
+    return mix(
+      C.sky1,
+      C.sky2,
+      (t - 0.16) / 0.18
+    );
+
+  }
+
+  if (t < 0.56) {
+
+    return mix(
+      C.sky2,
+      C.sky3,
+      (t - 0.34) / 0.22
+    );
+
+  }
+
+  if (t < 0.78) {
+
+    return mix(
+      C.sky3,
+      C.sky4,
+      (t - 0.56) / 0.22
+    );
+
+  }
+
+  if (t < 0.92) {
+
+    return mix(
+      C.sky4,
+      C.sky5,
+      (t - 0.78) / 0.14
+    );
+
+  }
+
+  return mix(
+    C.sky5,
+    C.sky6,
+    (t - 0.92) / 0.08
+  );
+
+}
+
+
 
 function drawSky() {
 
   /*
-    Top absolutely dark.
+    Every sky piece = same 2 × 2 pixel unit.
   */
 
-  block(
-    0,
-    0,
-    W,
-    16,
-    C.black
-  );
+  for (
+    let y = 0;
+    y < horizon;
+    y += P
+  ) {
+
+    const color =
+      getSkyColor(y);
 
 
-  block(
-    0,
-    16,
-    W,
-    15,
-    C.sky0
-  );
+    for (
+      let x = 0;
+      x < W;
+      x += P
+    ) {
 
+      block(
+        x,
+        y,
+        P,
+        P,
+        color
+      );
 
-  block(
-    0,
-    31,
-    W,
-    18,
-    C.sky1
-  );
+    }
 
+  }
 
-  block(
-    0,
-    49,
-    W,
-    18,
-    C.sky2
-  );
-
-
-  block(
-    0,
-    67,
-    W,
-    17,
-    C.sky3
-  );
-
-
-  block(
-    0,
-    84,
-    W,
-    16,
-    C.sky4
-  );
 
 
   /*
-    Chunky blue-hour cloud fields.
+    Large chunky clouds.
 
-    No tiny speckles.
+    No thin lines.
+    No vertical artifacts.
   */
 
   const clouds = [
 
-    [0, 35, 28, 8, C.cloudDark],
+    /*
+      upper-left
+    */
 
-    [19, 32, 36, 7, C.cloudMid],
+    [0, 34, 30, 4, C.cloudDark],
+    [14, 32, 25, 4, C.cloudMid],
+    [27, 36, 31, 4, C.cloudBlue],
 
-    [44, 36, 20, 5, C.cloudLight],
-
-    [68, 31, 41, 9, C.cloudDark],
-
-    [100, 34, 31, 6, C.cloudMid],
-
-    [127, 30, 36, 7, C.cloudLight],
-
-    [157, 34, 38, 9, C.cloudMid],
-
-    [191, 31, 49, 8, C.cloudLight],
+    [5, 40, 37, 4, C.cloudMid],
+    [29, 42, 25, 4, C.cloudBlue],
 
 
-    [0, 46, 38, 7, C.cloudMid],
+    /*
+      upper-center
+    */
 
-    [30, 49, 35, 8, C.cloudLight],
-
-    [58, 45, 44, 7, C.cloudDark],
-
-    [94, 50, 38, 8, C.cloudMid],
-
-    [126, 46, 30, 7, C.cloudLight],
-
-    [153, 48, 39, 8, C.cloudDark],
-
-    [185, 45, 55, 9, C.cloudMid],
+    [63, 31, 39, 4, C.cloudDark],
+    [78, 35, 43, 5, C.cloudMid],
+    [98, 39, 32, 4, C.cloudBlue],
 
 
-    [0, 63, 43, 9, C.sky4],
+    /*
+      upper-right
+    */
 
-    [32, 60, 44, 8, C.cloudLight],
+    [139, 30, 30, 4, C.cloudBlue],
+    [155, 33, 42, 5, C.cloudMid],
+    [183, 36, 57, 5, C.cloudBlue],
 
-    [70, 63, 37, 9, C.cloudMid],
+    [176, 42, 34, 4, C.cloudDark],
+    [202, 44, 38, 5, C.cloudMid],
 
-    [103, 59, 42, 8, C.cloudLight],
 
-    [137, 63, 36, 8, C.cloudMid],
+    /*
+      lower atmosphere
+    */
 
-    [168, 60, 43, 9, C.cloudLight],
+    [0, 58, 45, 5, C.cloudBlue],
+    [28, 62, 42, 4, C.cloudLite],
 
-    [204, 64, 36, 8, C.sky5]
+    [64, 57, 44, 5, C.cloudMid],
+    [92, 61, 40, 5, C.cloudBlue],
+
+    [129, 57, 40, 5, C.cloudLite],
+    [158, 61, 45, 5, C.cloudBlue],
+
+    [196, 58, 44, 5, C.cloudLite]
 
   ];
 
@@ -593,215 +641,244 @@ function drawSky() {
   );
 
 
+
   /*
-    A few stepped pieces make the
-    cloud boundaries feel pixel-painted.
+    Stepped cloud edges.
   */
 
-  block(21, 39, 18, 4, C.cloudLight);
-  block(47, 43, 23, 4, C.cloudMid);
+  block(
+    18,
+    38,
+    18,
+    3,
+    C.cloudBlue
+  );
 
-  block(111, 40, 22, 4, C.cloudLight);
-  block(136, 37, 19, 4, C.cloudMid);
+  block(
+    43,
+    45,
+    17,
+    3,
+    C.cloudMid
+  );
 
-  block(184, 40, 29, 4, C.cloudDark);
+  block(
+    89,
+    42,
+    22,
+    3,
+    C.cloudBlue
+  );
+
+  block(
+    151,
+    39,
+    20,
+    3,
+    C.cloudLite
+  );
 
 }
 
 
 
-/* =========================================================
-   PIXEL MOON
+/* ==========================================================
+   MOON
 
-   Stair-step circle, not smooth.
-========================================================= */
+   Larger + lower.
+========================================================== */
 
-const moonX = 153;
-const moonY = 79;
+const moonX = 159;
+const moonY = 82;
 
 
 
 function drawMoon() {
 
   /*
-    One narrow square halo.
+    One simple pixel halo ring.
   */
 
-  block(
-    moonX - 12,
-    moonY - 12,
-    24,
-    24,
-    C.moonGlow
-  );
+  for (
+    let y = -13;
+    y <= 13;
+    y += P
+  ) {
+
+    for (
+      let x = -13;
+      x <= 13;
+      x += P
+    ) {
+
+      const distance =
+        Math.max(
+          Math.abs(x),
+          Math.abs(y)
+        );
+
+
+      if (
+        distance >= 11 &&
+        distance <= 13
+      ) {
+
+        block(
+          moonX + x,
+          moonY + y,
+          P,
+          P,
+          C.halo
+        );
+
+      }
+
+    }
+
+  }
+
 
 
   /*
-    Cut corners back to sky color.
-
-    Creates a simple pixel halo ring.
-  */
-
-  const behind =
-    C.sky3;
-
-
-  block(
-    moonX - 12,
-    moonY - 12,
-    5,
-    5,
-    behind
-  );
-
-  block(
-    moonX + 7,
-    moonY - 12,
-    5,
-    5,
-    behind
-  );
-
-  block(
-    moonX - 12,
-    moonY + 7,
-    5,
-    5,
-    behind
-  );
-
-  block(
-    moonX + 7,
-    moonY + 7,
-    5,
-    5,
-    behind
-  );
-
-
-  /*
-    Main moon: large chunky stepped circle.
+    Stepped pixel moon.
   */
 
   block(
     moonX - 7,
-    moonY - 9,
+    moonY - 10,
     14,
-    18,
+    20,
     C.moonEdge
   );
 
 
   block(
-    moonX - 9,
-    moonY - 6,
-    18,
-    12,
-    C.moonEdge
-  );
-
-
-  block(
-    moonX - 6,
+    moonX - 10,
     moonY - 7,
-    12,
+    20,
     14,
+    C.moonEdge
+  );
+
+
+  block(
+    moonX - 7,
+    moonY - 8,
+    14,
+    16,
+    C.moonMid
+  );
+
+
+  block(
+    moonX - 8,
+    moonY - 5,
+    16,
+    10,
+    C.moonMid
+  );
+
+
+  block(
+    moonX - 5,
+    moonY - 6,
+    11,
+    12,
     C.moon
   );
 
 
   block(
-    moonX - 5,
-    moonY - 5,
-    10,
-    10,
+    moonX - 4,
+    moonY - 4,
+    8,
+    8,
     C.moonCore
   );
 
 
   /*
-    A few large lunar pixels.
+    Moon texture.
   */
 
   block(
     moonX - 5,
-    moonY - 2,
+    moonY - 1,
     3,
     3,
-    "#ead69c"
+    "#e6d19a"
   );
 
 
   block(
     moonX + 2,
-    moonY + 2,
+    moonY + 3,
     2,
     2,
-    "#e5cf91"
+    "#e1cc91"
   );
 
 }
 
 
 
-/* =========================================================
+/* ==========================================================
    DISTANT BANK
-
-   Large silhouette blocks.
-========================================================= */
-
-const horizon = 101;
-
+========================================================== */
 
 function drawBank() {
+
+  /*
+    Horizon itself stays almost completely flat.
+  */
 
   block(
     0,
     horizon,
     W,
-    3,
-    C.bank0
+    2,
+    C.bankDark
   );
 
 
-  const shapes = [
+  const bank = [
 
-    [0,   95, 22, 8],
+    [0,   96, 22, 5],
 
-    [15,  92, 26, 11],
+    [17,  94, 25, 7],
 
-    [35,  94, 24, 9],
+    [37,  96, 27, 5],
 
-    [53,  91, 28, 12],
+    [60,  93, 30, 8],
 
-    [75,  94, 30, 9],
+    [86,  96, 26, 5],
 
-    [98,  92, 26, 11],
+    [108, 94, 27, 7],
 
-    [119, 95, 28, 8],
+    [131, 96, 25, 5],
 
-    [141, 91, 27, 12],
+    [151, 93, 29, 8],
 
-    [161, 94, 31, 9],
+    [176, 96, 28, 5],
 
-    [187, 92, 26, 11],
+    [200, 94, 26, 7],
 
-    [206, 95, 34, 8]
+    [221, 96, 19, 5]
 
   ];
 
 
-  shapes.forEach(
-    ([x,y,w,h],i) => {
+  bank.forEach(
+    ([x,y,w,h], index) => {
 
       block(
         x,
         y,
         w,
         h,
-        i % 3 === 0
-          ? C.bank1
-          : C.bank0
+        index % 3 === 0
+          ? C.bankMid
+          : C.bankDark
       );
 
     }
@@ -811,51 +888,59 @@ function drawBank() {
 
 
 
-/* =========================================================
-   WATER BASE
-========================================================= */
+/* ==========================================================
+   WATER BACKGROUND
+========================================================== */
 
 function drawWaterBase() {
 
   block(
     0,
-    104,
+    103,
     W,
-    11,
+    10,
     C.water0
   );
 
 
   block(
     0,
-    115,
+    113,
     W,
-    10,
+    9,
     C.water1
   );
 
 
   block(
     0,
-    125,
+    122,
     W,
-    10,
+    8,
     C.water2
+  );
+
+
+  block(
+    0,
+    130,
+    W,
+    5,
+    C.water3
   );
 
 }
 
 
 
-/* =========================================================
-   FULL RIVER WAVES
+/* ==========================================================
+   WHOLE WAVE
 
-   Whole waves, very low amplitude.
-   Travel right very slowly.
-========================================================= */
+   Continuous wave moving RIGHT.
+========================================================== */
 
-function wave(
-  y,
+function drawWave(
+  baseY,
   amplitude,
   wavelength,
   shift,
@@ -865,11 +950,11 @@ function wave(
   for (
     let x = 0;
     x < W;
-    x += 2
+    x += P
   ) {
 
-    const py =
-      y +
+    const y =
+      baseY +
       Math.round(
         Math.sin(
           (x - shift)
@@ -883,9 +968,9 @@ function wave(
 
     block(
       x,
-      py,
-      2,
-      2,
+      y,
+      P,
+      P,
       color
     );
 
@@ -895,78 +980,98 @@ function wave(
 
 
 
-function drawWater(
-  time
-) {
+/* ==========================================================
+   RIVER
+
+   High FPS.
+   Very slow movement.
+========================================================== */
+
+function drawRiver(time) {
 
   /*
-    High FPS,
-    extremely slow travel.
+    About 0.7 pixel per second.
+
+    Very slow,
+    while requestAnimationFrame remains smooth.
   */
 
   const flow =
-    time * 0.004;
+    time * 0.0007;
 
 
-  wave(
-    108,
+  drawWave(
+    107,
     1,
     19,
     flow,
-    C.wave0
-  );
-
-
-  wave(
-    114,
-    1,
-    24,
-    flow * 0.9 + 13,
     C.wave1
   );
 
 
-  wave(
-    121,
+  drawWave(
+    113,
     1,
-    28,
-    flow * 1.05 + 24,
-    C.wave0
-  );
-
-
-  wave(
-    128,
-    2,
-    34,
-    flow * 0.92 + 7,
+    23,
+    flow * 0.9 + 12,
     C.wave2
   );
 
 
+  drawWave(
+    120,
+    1,
+    27,
+    flow * 1.05 + 25,
+    C.wave1
+  );
+
+
+  drawWave(
+    127,
+    1,
+    31,
+    flow * 0.92 + 7,
+    C.wave3
+  );
+
+
+  drawWave(
+    133,
+    1,
+    35,
+    flow + 19,
+    C.wave2
+  );
+
+
+
   /*
-    Large restrained reflection patches.
+    Slow broken moon reflection.
   */
 
   const shimmer =
     Math.round(
-      Math.sin(time * 0.002) *
+      Math.sin(
+        time * 0.0009
+      )
+      *
       2
     );
 
 
   block(
     moonX - 6 + shimmer,
-    105,
+    104,
     12,
     2,
-    C.shine
+    C.shine1
   );
 
 
   block(
     moonX - 4 - shimmer,
-    111,
+    110,
     8,
     2,
     C.shine2
@@ -975,16 +1080,16 @@ function drawWater(
 
   block(
     moonX - 7 + shimmer,
-    118,
+    117,
     14,
     2,
-    C.shine
+    C.shine1
   );
 
 
   block(
     moonX - 4,
-    126,
+    124,
     8,
     2,
     C.shine2
@@ -993,152 +1098,250 @@ function drawWater(
 
   block(
     moonX - 6 - shimmer,
-    132,
+    131,
     12,
     2,
-    C.shine
+    C.shine1
   );
 
 }
 
 
 
-/* =========================================================
-   WILLOW
+/* ==========================================================
+   WILLOW CONFIGURATION
 
-   Chunky staircase stems.
-
-   Soft motion, but controlled.
-========================================================= */
+   Irregular spacing + height + density.
+========================================================== */
 
 const willows = [
 
-  /* left */
+  /* LEFT */
 
   {
-    root: 11,
-    length: 66,
-    bend: 11,
-    phase: 0.3,
-    density: 0.55
-  },
-
-  {
-    root: 28,
-    length: 89,
-    bend: 15,
-    phase: 1.0,
-    density: 0.80
-  },
-
-  {
-    root: 45,
-    length: 59,
-    bend: 10,
-    phase: 1.8,
+    root: 8,
+    length: 58,
+    bend: 8,
+    phase: 0.2,
     density: 0.45
   },
 
   {
-    root: 67,
-    length: 99,
-    bend: 18,
+    root: 22,
+    length: 82,
+    bend: 11,
+    phase: 0.9,
+    density: 0.80
+  },
+
+  {
+    root: 40,
+    length: 65,
+    bend: 9,
+    phase: 1.7,
+    density: 0.55
+  },
+
+  {
+    root: 59,
+    length: 96,
+    bend: 14,
     phase: 2.4,
-    density: 0.78
+    density: 0.75
+  },
+
+  {
+    root: 77,
+    length: 54,
+    bend: 7,
+    phase: 3.1,
+    density: 0.35
   },
 
 
-  /* right */
+  /* RIGHT */
 
   {
-    root: 176,
-    length: 65,
-    bend: 13,
+    root: 177,
+    length: 63,
+    bend: 9,
     phase: 0.7,
     density: 0.45
   },
 
   {
-    root: 189,
-    length: 91,
-    bend: 17,
+    root: 191,
+    length: 87,
+    bend: 12,
     phase: 1.3,
-    density: 0.80
+    density: 0.82
   },
 
   {
-    root: 207,
-    length: 73,
-    bend: 13,
+    root: 208,
+    length: 70,
+    bend: 9,
     phase: 2.0,
     density: 0.55
   },
 
   {
-    root: 223,
-    length: 101,
-    bend: 20,
+    root: 222,
+    length: 98,
+    bend: 15,
     phase: 2.8,
-    density: 0.85
-  ]
+    density: 0.78
+  }
 
 ];
 
 
 
-/* =========================================================
-   DRAW ONE WILLOW
+/* ==========================================================
+   THICK PIXEL LINE
 
-   Upper and lower portions have
-   separate restrained movement.
-========================================================= */
+   Every stem has the SAME thickness.
+========================================================== */
 
-function drawWillow(
-  b,
+function thickPixelLine(
+  x0,
+  y0,
+  x1,
+  y1,
+  color
+) {
+
+  const dx =
+    x1 - x0;
+
+
+  const dy =
+    y1 - y0;
+
+
+  const distance =
+    Math.max(
+      Math.abs(dx),
+      Math.abs(dy)
+    );
+
+
+  const steps =
+    Math.max(
+      1,
+      Math.ceil(
+        distance / P
+      )
+    );
+
+
+  for (
+    let i = 0;
+    i <= steps;
+    i++
+  ) {
+
+    const t =
+      i / steps;
+
+
+    const x =
+      Math.round(
+        x0 +
+        dx * t
+      );
+
+
+    const y =
+      Math.round(
+        y0 +
+        dy * t
+      );
+
+
+    /*
+      Uniform 4 × 4 chunky stem.
+    */
+
+    block(
+      x,
+      y,
+      4,
+      4,
+      color
+    );
+
+  }
+
+}
+
+
+
+/* ==========================================================
+   WILLOW
+
+   Upper and lower parts move differently,
+   but movement is restrained.
+========================================================== */
+
+function drawOneWillow(
+  willow,
   index,
   time
 ) {
 
   /*
-    Constant breeze to the right.
+    Constant breeze pushes right.
   */
 
-  const upper =
-    3 +
-    Math.round(
-      Math.sin(
-        time * 0.00065 +
-        b.phase
-      )
-      *
-      1.5
-    );
+  const windBias =
+    4;
 
 
-  const lower =
-    5 +
-    Math.round(
-      Math.sin(
-        time * 0.0009 +
-        b.phase * 1.35
-      )
-      *
-      2.5
-    );
+  /*
+    Upper branch:
+    almost stable.
+  */
+
+  const upperMove =
+    Math.sin(
+      time * 0.00038 +
+      willow.phase
+    )
+    *
+    1.2;
+
+
+  /*
+    Lower branch:
+    slightly more responsive,
+    but still controlled.
+  */
+
+  const lowerMove =
+    Math.sin(
+      time * 0.00052 +
+      willow.phase * 1.4
+    )
+    *
+    2.2;
 
 
   const segments =
-    Math.floor(
-      b.length / 7
+    Math.max(
+      6,
+      Math.round(
+        willow.length / 8
+      )
     );
 
 
-  let previousX =
-    b.root;
+  let lastX =
+    willow.root;
 
 
-  let previousY =
-    -2;
+  let lastY =
+    -4;
 
 
   for (
@@ -1152,79 +1355,86 @@ function drawWillow(
 
 
     /*
-      Gradual rightward curve.
+      Main static rightward curve.
+  */
 
-      Lower half receives more wind,
-      but not enough to look like rope.
-    */
-
-    let bend =
-      b.bend *
+    let x =
+      willow.root +
+      willow.bend *
       progress *
       progress;
 
 
+    /*
+      Wind direction always points right.
+    */
+
+    x +=
+      windBias *
+      progress;
+
+
+    /*
+      Upper/lower movement separated.
+    */
+
     if (
-      progress < 0.45
+      progress < 0.48
     ) {
 
-      bend +=
-        upper *
+      x +=
+        upperMove *
         progress;
 
     }
 
     else {
 
-      bend +=
-        upper * 0.45 +
-        lower *
+      const lowerProgress =
         (
           progress -
-          0.45
-        );
+          0.48
+        )
+        /
+        0.52;
+
+
+      x +=
+        upperMove * 0.48 +
+        lowerMove *
+        lowerProgress;
 
     }
 
 
-    const x =
-      Math.round(
-        b.root +
-        bend
-      );
-
-
     const y =
-      Math.round(
-        -2 +
-        progress *
-        b.length
-      );
+      -4 +
+      progress *
+      willow.length;
 
 
     /*
-      Thick staircase stem.
-
-      Every part stays thick.
+      All stems equally thick.
     */
 
-    drawChunkLine(
-      previousX,
-      previousY,
+    thickPixelLine(
+      lastX,
+      lastY,
       x,
       y,
-      C.willow1
+      C.willow
     );
 
 
     /*
-      Leaves as chunky horizontal blocks.
+      Leaves:
+      chunky and irregular.
     */
 
     const seed =
       (
-        index * 19 +
-        i * 31
+        i * 31 +
+        index * 23
       )
       %
       100;
@@ -1232,7 +1442,7 @@ function drawWillow(
 
     if (
       seed <
-      b.density * 100
+      willow.density * 100
     ) {
 
       if (
@@ -1240,11 +1450,20 @@ function drawWillow(
       ) {
 
         block(
-          x + 2,
-          y,
-          6,
+          x + 3,
+          y + 1,
+          7,
           2,
-          C.willow2
+          C.willowLite
+        );
+
+
+        block(
+          x + 5,
+          y + 3,
+          5,
+          2,
+          C.willow
         );
 
       }
@@ -1253,10 +1472,10 @@ function drawWillow(
 
         block(
           x - 5,
-          y + 1,
-          5,
+          y + 2,
+          6,
           2,
-          C.willow0
+          C.willowDark
         );
 
       }
@@ -1264,10 +1483,10 @@ function drawWillow(
     }
 
 
-    previousX =
+    lastX =
       x;
 
-    previousY =
+    lastY =
       y;
 
   }
@@ -1276,88 +1495,14 @@ function drawWillow(
 
 
 
-/* =========================================================
-   CHUNK LINE
-
-   Thick and intentionally stair-stepped.
-========================================================= */
-
-function drawChunkLine(
-  x0,
-  y0,
-  x1,
-  y1,
-  color
-) {
-
-  const steps =
-    Math.max(
-      Math.abs(x1 - x0),
-      Math.abs(y1 - y0)
-    );
-
-
-  if (
-    steps === 0
-  ) {
-    return;
-  }
-
-
-  for (
-    let i = 0;
-    i <= steps;
-    i += 2
-  ) {
-
-    const t =
-      i / steps;
-
-
-    const x =
-      Math.round(
-        x0 +
-        (x1 - x0) *
-        t
-      );
-
-
-    const y =
-      Math.round(
-        y0 +
-        (y1 - y0) *
-        t
-      );
-
-
-    /*
-      Uniform chunky thickness.
-    */
-
-    block(
-      x,
-      y,
-      3,
-      4,
-      color
-    );
-
-  }
-
-}
-
-
-
-function drawWillows(
-  time
-) {
+function drawWillows(time) {
 
   willows.forEach(
-    (b,i) => {
+    (willow,index) => {
 
-      drawWillow(
-        b,
-        i,
+      drawOneWillow(
+        willow,
+        index,
         time
       );
 
@@ -1368,11 +1513,9 @@ function drawWillows(
 
 
 
-/* =========================================================
-   PURE PIXEL TITLE
-
-   No font rendering.
-========================================================= */
+/* ==========================================================
+   PURE WHITE PIXEL FONT
+========================================================== */
 
 const EN = {
 
@@ -1423,7 +1566,6 @@ const EN = {
 const CN = {
 
   "山": [
-
     "001000100",
     "001000100",
     "001000100",
@@ -1433,12 +1575,9 @@ const CN = {
     "101000101",
     "111111111",
     "000000000"
-
   ],
 
-
   "田": [
-
     "111111111",
     "100010001",
     "100010001",
@@ -1448,7 +1587,6 @@ const CN = {
     "100010001",
     "100010001",
     "111111111"
-
   ]
 
 };
@@ -1459,24 +1597,31 @@ function matrix(
   data,
   x,
   y,
-  size
+  scale
 ) {
 
   data.forEach(
-    (row,ry) => {
+    (row, rowIndex) => {
 
       [...row].forEach(
-        (v,rx) => {
+        (value, columnIndex) => {
 
           if (
-            v === "1"
+            value === "1"
           ) {
 
             block(
-              x + rx * size,
-              y + ry * size,
-              size,
-              size,
+              x +
+              columnIndex *
+              scale,
+
+              y +
+              rowIndex *
+              scale,
+
+              scale,
+              scale,
+
               C.white
             );
 
@@ -1492,125 +1637,119 @@ function matrix(
 
 
 
-/* =========================================================
+/* ==========================================================
    TITLE
-========================================================= */
+========================================================== */
 
 function drawTitle() {
 
-  const s =
+  const scale =
     2;
 
 
-  /*
-    English width calculations.
-  */
-
-  const word =
+  const english =
     ["h","i"," ","i","'","m"];
 
 
   const widths = {
 
-    h:5,
-    i:5,
-    "'":5,
-    m:5,
-    " ":3
+    h: 5,
+    i: 5,
+    "'": 5,
+    m: 5,
+    " ": 3
 
   };
 
 
-  let enWidth =
+  let englishWidth =
     0;
 
 
-  word.forEach(
-    c => {
+  english.forEach(
+    char => {
 
-      enWidth +=
-        widths[c] *
-        s +
+      englishWidth +=
+        widths[char] *
+        scale +
         3;
 
     }
   );
 
 
-  const cnWidth =
+  const chineseWidth =
     (
       9 *
-      s +
+      scale +
       5
     )
     *
     3;
 
 
-  const total =
-    enWidth +
-    cnWidth;
+  const totalWidth =
+    englishWidth +
+    chineseWidth;
 
 
   let x =
     Math.floor(
       (
         W -
-        total
+        totalWidth
       )
       /
       2
     );
 
 
-  /*
-    Plenty of sky around the title.
-  */
-
   const y =
-    65;
+    64;
 
 
-  word.forEach(
-    c => {
+
+  english.forEach(
+    char => {
 
       if (
-        c !== " "
+        char !== " "
       ) {
 
         matrix(
-          EN[c],
+          EN[char],
           x,
           y + 2,
-          s
+          scale
         );
 
       }
 
 
       x +=
-        widths[c] *
-        s +
+        widths[char] *
+        scale +
         3;
 
     }
   );
 
 
+
   ["山","山","田"].forEach(
-    c => {
+    char => {
 
       matrix(
-        CN[c],
+        CN[char],
         x,
         y,
-        s
+        scale
       );
 
 
       x +=
         9 *
-        s +
+        scale +
         5;
 
     }
@@ -1620,9 +1759,9 @@ function drawTitle() {
 
 
 
-/* =========================================================
-   ANIMATION
-========================================================= */
+/* ==========================================================
+   MAIN LOOP
+========================================================== */
 
 function render(time) {
 
@@ -1634,6 +1773,10 @@ function render(time) {
   );
 
 
+  /*
+    Back → front
+  */
+
   drawSky();
 
   drawMoon();
@@ -1642,13 +1785,13 @@ function render(time) {
 
   drawWaterBase();
 
-  drawWater(time);
+  drawRiver(time);
 
   drawWillows(time);
 
   /*
-    Title last:
-    always clean pure white.
+    Always draw text last
+    so it stays pure white.
   */
 
   drawTitle();
@@ -1661,9 +1804,12 @@ function render(time) {
 }
 
 
-requestAnimationFrame(
-  render
-);
+
+/*
+  Start animation.
+*/
+
+requestAnimationFrame(render);
 
 </script>
 
