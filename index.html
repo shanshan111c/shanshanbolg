@@ -59,6 +59,9 @@
       --header-bg:
         rgb(239,236,226);
 
+      --header-hero-bg:
+        rgba(239,236,226,.18);
+
       --header-border:
         rgba(30,25,20,.10);
 
@@ -89,6 +92,9 @@
 
       --header-bg:
         rgb(1,5,14);
+
+      --header-hero-bg:
+        rgba(1,5,14,.58);
 
       --header-border:
         rgba(255,255,255,.055);
@@ -143,7 +149,37 @@
 
       transition:
         background-color .6s ease,
-        border-color .6s ease;
+        border-color .6s ease,
+        backdrop-filter .25s ease;
+    }
+
+
+    /*
+      门帘覆盖像素图时：
+      使用半透明背景并模糊后方画面。
+    */
+    header.over-hero {
+
+      background:
+        var(--header-hero-bg);
+
+      backdrop-filter:
+        blur(9px);
+
+      -webkit-backdrop-filter:
+        blur(9px);
+    }
+
+
+    /* 白天覆盖像素图时，整个门帘统一使用更强的全区域模糊。 */
+    body[data-theme="day"]
+    header.over-hero {
+
+      backdrop-filter:
+        blur(16px);
+
+      -webkit-backdrop-filter:
+        blur(16px);
     }
 
 
@@ -817,6 +853,59 @@ document.body.dataset.theme =
     "blog-theme"
   ) ||
   "night";
+
+
+
+/* =====================================================
+   HEADER BACKDROP
+===================================================== */
+
+const siteHeader =
+  document.querySelector(
+    "header"
+  );
+
+
+const heroSection =
+  document.querySelector(
+    ".hero"
+  );
+
+
+function updateHeaderBackdrop() {
+
+  const overlapsHero =
+    heroSection
+      .getBoundingClientRect()
+      .bottom
+    >
+    siteHeader.offsetHeight;
+
+
+  siteHeader.classList.toggle(
+    "over-hero",
+    overlapsHero
+  );
+
+}
+
+
+window.addEventListener(
+  "scroll",
+  updateHeaderBackdrop,
+  {
+    passive: true
+  }
+);
+
+
+window.addEventListener(
+  "resize",
+  updateHeaderBackdrop
+);
+
+
+updateHeaderBackdrop();
 
 
 
@@ -2914,7 +3003,7 @@ function drawRiver(
 
 /*
   每次打开网页都会重新随机分布。
-  分区随机保证整片江面都有火焰，同时不会全部挤在一边。
+  左侧生成权重更高，右侧仍保留少量火焰。
 */
 const fireWispCount = 8;
 
@@ -2940,7 +3029,10 @@ const fireWisps = Array.from(
     return {
       x:
         12 +
-        ((index + Math.random()) / fireWispCount) * 296,
+        Math.pow(
+          (index + Math.random()) / fireWispCount,
+          1.65
+        ) * 296,
 
       baseY:
         156 + Math.random() * 11,
