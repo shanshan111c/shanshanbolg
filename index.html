@@ -1,2205 +1,660 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<title>山山田's Blog</title>
-
-
-<style>
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-
-  margin: 0;
-
-  background: #f6f5f1;
-
-  color: #222;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-}
-
-
-/* =========================
-   TOP NAVIGATION
-========================= */
-
-header {
-
-  height: 62px;
-
-  padding: 0 34px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  position: fixed;
-
-  top: 0;
-
-  left: 0;
-
-  right: 0;
-
-  z-index: 100;
-
-  background: rgba(7, 9, 29, 0.72);
-
-  border-bottom:
-    1px solid rgba(255,255,255,0.08);
-
-  backdrop-filter: blur(6px);
-}
-
-
-header h1 {
-
-  margin: 0;
-
-  color: white;
-
-  font-size: 18px;
-
-  font-weight: normal;
-
-  letter-spacing: 2px;
-
-  font-family:
-    "Courier New",
-    monospace;
-}
-
-
-nav a {
-
-  margin-left: 24px;
-
-  color: rgba(255,255,255,0.72);
-
-  text-decoration: none;
-
-  font-family:
-    "Courier New",
-    monospace;
-
-  font-size: 13px;
-
-  letter-spacing: 1px;
-}
-
-
-nav a:hover {
-  color: white;
-}
-
-
-/* =========================
-   PIXEL HERO
-========================= */
-
-.hero {
-
-  width: 100%;
-
-  height: 100vh;
-
-  min-height: 620px;
-
-  overflow: hidden;
-
-  position: relative;
-
-  background: #090b27;
-}
-
-
-#pixelCanvas {
-
-  position: absolute;
-
-  left: 50%;
-
-  top: 50%;
-
-  transform: translate(-50%, -50%);
-
-  /*
-    VERY IMPORTANT
-
-    This prevents the browser from
-    smoothing our pixel art.
-  */
-
-  image-rendering: pixelated;
-
-  image-rendering: crisp-edges;
-}
-
-
-/* small scroll hint */
-
-.scroll-hint {
-
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-
-  bottom: 28px;
-
-  transform: translateX(-50%);
-
-  color: rgba(255,255,255,0.45);
-
-  font-family:
-    "Courier New",
-    monospace;
-
-  font-size: 10px;
-
-  letter-spacing: 3px;
-
-  animation: scrollBlink 2s steps(2) infinite;
-}
-
-
-@keyframes scrollBlink {
-
-  0% {
-    opacity: .25;
-  }
-
-  50% {
-    opacity: .8;
-  }
-
-  100% {
-    opacity: .25;
-  }
-}
-
-
-/* =========================
-   CONTENT
-========================= */
-
-.content {
-
-  max-width: 850px;
-
-  margin: 0 auto;
-
-  padding: 90px 25px;
-}
-
-
-.content section {
-  margin-bottom: 100px;
-}
-
-
-.content h2 {
-
-  font-size: 28px;
-
-  margin-bottom: 25px;
-}
-
-
-.content p {
-
-  color: #444;
-
-  font-size: 16px;
-
-  line-height: 1.9;
-}
-
-
-.blog-card {
-
-  padding: 25px 0;
-
-  border-bottom: 1px solid #ddd;
-}
-
-
-.blog-card h3 {
-
-  margin: 0 0 8px;
-}
-
-
-.blog-card a {
-
-  color: #222;
-
-  text-decoration: none;
-}
-
-
-.blog-card a:hover {
-
-  text-decoration: underline;
-}
-
-
-.date {
-
-  color: #999 !important;
-
-  font-size: 13px !important;
-}
-
-
-footer {
-
-  text-align: center;
-
-  padding: 40px;
-
-  color: #999;
-
-  font-size: 13px;
-}
-
-
-/* =========================
-   PHONE
-========================= */
-
-@media (max-width: 650px) {
-
-  header {
-
-    padding: 0 17px;
-
-    height: 56px;
-  }
-
-  header h1 {
-    font-size: 15px;
-  }
-
-  nav a {
-
-    margin-left: 12px;
-
-    font-size: 11px;
-  }
-
-}
-
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>山山田's Blog</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #f6f5f1;
+      color: #222;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* =========================
+       TOP NAV
+    ========================== */
+
+    header {
+      height: 62px;
+      padding: 0 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(7, 9, 29, 0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(6px);
+    }
+
+    header h1 {
+      margin: 0;
+      color: white;
+      font-size: 18px;
+      font-weight: normal;
+      letter-spacing: 2px;
+      font-family: "Courier New", monospace;
+    }
+
+    nav a {
+      margin-left: 24px;
+      color: rgba(255,255,255,0.78);
+      text-decoration: none;
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero {
+      width: 100%;
+      height: 100vh;
+      min-height: 650px;
+      overflow: hidden;
+      position: relative;
+      background: #090b27;
+    }
+
+    #pixelCanvas {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    .hero-text {
+      position: absolute;
+      left: 50%;
+      top: 44%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      width: 92%;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .hero-title {
+      margin: 0;
+      color: #ffffff;
+      font-family:
+        "Courier New",
+        "PingFang SC",
+        "Microsoft YaHei",
+        monospace;
+      font-size: clamp(34px, 6vw, 76px);
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: none;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      z-index: 20;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.38);
+      font-family: "Courier New", monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      animation: blink 2s steps(2) infinite;
+    }
+
+    @keyframes blink {
+      0% { opacity: .25; }
+      50% { opacity: .85; }
+      100% { opacity: .25; }
+    }
+
+    /* =========================
+       CONTENT
+    ========================== */
+
+    .content {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 90px 25px;
+    }
+
+    .content section {
+      margin-bottom: 100px;
+    }
+
+    .content h2 {
+      font-size: 28px;
+      margin-bottom: 25px;
+    }
+
+    .content p {
+      color: #444;
+      font-size: 16px;
+      line-height: 1.9;
+    }
+
+    .blog-card {
+      padding: 25px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .blog-card h3 {
+      margin: 0 0 8px;
+    }
+
+    .blog-card a {
+      color: #222;
+      text-decoration: none;
+    }
+
+    .blog-card a:hover {
+      text-decoration: underline;
+    }
+
+    .date {
+      color: #999 !important;
+      font-size: 13px !important;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: #999;
+      font-size: 13px;
+    }
+
+    @media (max-width: 650px) {
+      header {
+        padding: 0 17px;
+        height: 56px;
+      }
+
+      header h1 {
+        font-size: 15px;
+      }
+
+      nav a {
+        margin-left: 12px;
+        font-size: 11px;
+      }
+
+      .hero-title {
+        font-size: 38px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-
 <header>
-
   <h1>山山田</h1>
-
   <nav>
-
-    <a href="#home">
-      Home
-    </a>
-
-    <a href="#about">
-      About
-    </a>
-
-    <a href="#blog">
-      Blog
-    </a>
-
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#blog">Blog</a>
   </nav>
-
 </header>
 
+<section class="hero" id="home">
+  <canvas id="pixelCanvas" width="400" height="225"></canvas>
 
-
-<!-- =========================
-     PIXEL NIGHT
-========================= -->
-
-<section
-  class="hero"
-  id="home"
->
-
-  <canvas
-    id="pixelCanvas"
-    width="320"
-    height="180"
-  ></canvas>
-
-  <div class="scroll-hint">
-    SCROLL ↓
+  <div class="hero-text">
+    <h2 class="hero-title">hi i'm 山山田</h2>
   </div>
 
+  <div class="scroll-hint">SCROLL ↓</div>
 </section>
-
-
-
-<!-- =========================
-     ABOUT
-========================= -->
 
 <main class="content">
 
-
-<section id="about">
-
-  <h2>
-    About Me
-  </h2>
-
-  <p>
-    Hi! I'm 山山田.
-  </p>
-
-  <p>
-    Welcome to my personal blog.
-    This is a place where I keep thoughts,
-    memories, experiences,
-    and things I find interesting.
-  </p>
-
-</section>
-
-
-
-<!-- =========================
-     BLOG
-========================= -->
-
-<section id="blog">
-
-  <h2>
-    Blog
-  </h2>
-
-
-  <div class="blog-card">
-
-    <h3>
-
-      <a href="#">
-        My First Blog Post
-      </a>
-
-    </h3>
-
-    <p class="date">
-      August 20, 2026
-    </p>
-
+  <section id="about">
+    <h2>About Me</h2>
+    <p>Hi! I'm 山山田.</p>
     <p>
-      Welcome to my little corner
-      of the internet.
+      Welcome to my personal blog.
+      This is a place where I keep thoughts,
+      memories, experiences, and things I find interesting.
     </p>
+  </section>
 
-  </div>
+  <section id="blog">
+    <h2>Blog</h2>
 
+    <div class="blog-card">
+      <h3><a href="#">My First Blog Post</a></h3>
+      <p class="date">August 20, 2026</p>
+      <p>Welcome to my little corner of the internet.</p>
+    </div>
 
-  <div class="blog-card">
-
-    <h3>
-
-      <a href="#">
-        Why I Built This Website
-      </a>
-
-    </h3>
-
-    <p class="date">
-      August 20, 2026
-    </p>
-
-    <p>
-      A place for things
-      that are worth remembering.
-    </p>
-
-  </div>
-
-
-</section>
-
+    <div class="blog-card">
+      <h3><a href="#">Why I Built This Website</a></h3>
+      <p class="date">August 20, 2026</p>
+      <p>A place for things that are worth remembering.</p>
+    </div>
+  </section>
 
 </main>
-
-
 
 <footer>
   © 2026 山山田
 </footer>
 
-
-
 <script>
+  const canvas = document.getElementById("pixelCanvas");
+  const ctx = canvas.getContext("2d");
 
+  const W = 400;
+  const H = 225;
 
-/* ==========================================================
-   PIXEL WORLD
+  ctx.imageSmoothingEnabled = false;
 
-   The entire world is only 320 × 180 pixels.
-
-   The browser enlarges those pixels without smoothing them.
-
-   That is why the entire scene looks like real pixel art.
-========================================================== */
-
-
-const canvas =
-  document.getElementById("pixelCanvas");
-
-
-const ctx =
-  canvas.getContext("2d");
-
-
-const W = 320;
-
-const H = 180;
-
-
-ctx.imageSmoothingEnabled = false;
-
-
-/* ==========================================================
-   FIT PIXEL WORLD TO SCREEN
-
-   Keeps every pixel square.
-========================================================== */
-
-
-function fitCanvas() {
-
-  const scale =
-    Math.max(
+  function fitCanvas() {
+    const scale = Math.max(
       window.innerWidth / W,
       window.innerHeight / H
     );
 
-  canvas.style.width =
-    Math.ceil(W * scale) + "px";
-
-  canvas.style.height =
-    Math.ceil(H * scale) + "px";
-
-}
-
-
-window.addEventListener(
-  "resize",
-  fitCanvas
-);
-
-
-fitCanvas();
-
-
-
-/* ==========================================================
-   COLORS
-========================================================== */
-
-
-const COLORS = {
-
-  sky1: "#0b0d2c",
-
-  sky2: "#111643",
-
-  sky3: "#171f55",
-
-  sky4: "#1e285f",
-
-
-  willowDark: "#0c302c",
-
-  willowMid: "#12453b",
-
-  willowLight: "#1b5b49",
-
-
-  waterDark: "#071b2b",
-
-  water1: "#0b2637",
-
-  water2: "#123447",
-
-  water3: "#19465b",
-
-  waterLight: "#32657a",
-
-
-  moon1: "#fffbe8",
-
-  moon2: "#fff2b9",
-
-  moon3: "#d9c58b",
-
-
-  shine: "#fff9d9",
-
-  white: "#ffffff"
-
-};
-
-
-
-/* ==========================================================
-   PIXEL UTILITIES
-========================================================== */
-
-
-function pixel(
-  x,
-  y,
-  width,
-  height,
-  color
-) {
-
-  ctx.fillStyle = color;
-
-  ctx.fillRect(
-    Math.round(x),
-    Math.round(y),
-    width,
-    height
-  );
-
-}
-
-
-
-/*
-  Pixelated line.
-
-  No curves.
-  Every branch is literally individual pixels.
-*/
-
-
-function pixelLine(
-  x0,
-  y0,
-  x1,
-  y1,
-  color,
-  thickness = 1
-) {
-
-  x0 = Math.round(x0);
-
-  y0 = Math.round(y0);
-
-  x1 = Math.round(x1);
-
-  y1 = Math.round(y1);
-
-
-  let dx =
-    Math.abs(x1 - x0);
-
-
-  let sx =
-    x0 < x1 ? 1 : -1;
-
-
-  let dy =
-    -Math.abs(y1 - y0);
-
-
-  let sy =
-    y0 < y1 ? 1 : -1;
-
-
-  let error =
-    dx + dy;
-
-
-  while (true) {
-
-    pixel(
-      x0,
-      y0,
-      thickness,
-      thickness,
-      color
-    );
-
-
-    if (
-      x0 === x1 &&
-      y0 === y1
-    ) {
-      break;
-    }
-
-
-    const e2 =
-      2 * error;
-
-
-    if (e2 >= dy) {
-
-      error += dy;
-
-      x0 += sx;
-
-    }
-
-
-    if (e2 <= dx) {
-
-      error += dx;
-
-      y0 += sy;
-
-    }
-
+    canvas.style.width = Math.ceil(W * scale) + "px";
+    canvas.style.height = Math.ceil(H * scale) + "px";
   }
 
-}
+  window.addEventListener("resize", fitCanvas);
+  fitCanvas();
 
+  const COLORS = {
+    sky1: "#05081d",
+    sky2: "#0a1030",
+    sky3: "#10183f",
+    sky4: "#172050",
+    sky5: "#1d2760",
+    sky6: "#24306d",
+    sky7: "#283779",
+    sky8: "#2e4183",
 
+    star1: "#5563a8",
+    star2: "#6a78b7",
 
-/* ==========================================================
-   SKY
-========================================================== */
+    moonCore: "#fffdf2",
+    moonMid: "#fff6cf",
+    moonEdge: "#eadba1",
+    moonGlow1: "#7c7ea6",
+    moonGlow2: "#585a87",
 
+    horizonDark: "#06131f",
 
-function drawSky() {
+    water0: "#071728",
+    water1: "#0b2032",
+    water2: "#0f283b",
+    water3: "#123245",
+    water4: "#163a4f",
+    water5: "#1d4458",
+    waterLight: "#4d7183",
+    waterLight2: "#6d8fa0",
 
+    willowTrunk: "#0c3a34",
+    willowMid: "#145146",
+    willowLeaf: "#1f6b57",
+    willowLeaf2: "#2a8066",
 
-  /*
-    Horizontal color bands.
+    reflection1: "#fff6d2",
+    reflection2: "#f6efc7",
+    reflection3: "#d6cc9c",
 
-    No gradients.
-    Keeps the whole sky pixel-art based.
-  */
+    white: "#ffffff"
+  };
 
+  function pixel(x, y, w, h, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(Math.round(x), Math.round(y), w, h);
+  }
 
-  pixel(
-    0,
-    0,
-    W,
-    38,
-    COLORS.sky1
-  );
+  function pixelLine(x0, y0, x1, y1, color, thickness = 1) {
+    x0 = Math.round(x0);
+    y0 = Math.round(y0);
+    x1 = Math.round(x1);
+    y1 = Math.round(y1);
 
+    let dx = Math.abs(x1 - x0);
+    let sx = x0 < x1 ? 1 : -1;
+    let dy = -Math.abs(y1 - y0);
+    let sy = y0 < y1 ? 1 : -1;
+    let err = dx + dy;
 
-  pixel(
-    0,
-    38,
-    W,
-    35,
-    COLORS.sky2
-  );
+    while (true) {
+      pixel(x0, y0, thickness, thickness, color);
 
+      if (x0 === x1 && y0 === y1) break;
 
-  pixel(
-    0,
-    73,
-    W,
-    27,
-    COLORS.sky3
-  );
+      const e2 = 2 * err;
 
+      if (e2 >= dy) {
+        err += dy;
+        x0 += sx;
+      }
 
-  pixel(
-    0,
-    100,
-    W,
-    20,
-    COLORS.sky4
-  );
-
-
-
-  /*
-    Tiny dither pixels
-  */
-
-
-  const dots = [
-
-    [17,30],
-
-    [41,66],
-
-    [72,21],
-
-    [103,48],
-
-    [131,32],
-
-    [159,71],
-
-    [184,27],
-
-    [207,58],
-
-    [268,25],
-
-    [299,63]
-
-  ];
-
-
-  dots.forEach(
-    ([x,y],i) => {
-
-      pixel(
-
-        x,
-
-        y,
-
-        i % 3 === 0 ? 2 : 1,
-
-        1,
-
-        i % 2
-          ? "#303a74"
-          : "#252f67"
-
-      );
-
+      if (e2 <= dx) {
+        err += dx;
+        y0 += sy;
+      }
     }
-  );
+  }
 
-}
+  function drawSky() {
+    const bands = [
+      [0, 18, COLORS.sky1],
+      [18, 18, COLORS.sky2],
+      [36, 20, COLORS.sky3],
+      [56, 18, COLORS.sky4],
+      [74, 18, COLORS.sky5],
+      [92, 16, COLORS.sky6],
+      [108, 14, COLORS.sky7],
+      [122, 10, COLORS.sky8]
+    ];
 
+    bands.forEach(([y, h, c]) => {
+      pixel(0, y, W, h, c);
+    });
 
-
-/* ==========================================================
-   PIXEL MOON
-========================================================== */
-
-
-function pixelMoon(
-  cx,
-  cy
-) {
-
-
-  /*
-    Very subtle pixel glow.
-
-    Still made entirely from blocks.
-  */
-
-
-  for (
-    let y = -17;
-    y <= 17;
-    y++
-  ) {
-
-
-    for (
-      let x = -17;
-      x <= 17;
-      x++
-    ) {
-
-
-      const distance =
-        Math.sqrt(
-          x*x +
-          y*y
-        );
-
-
-      if (
-        distance < 17 &&
-        distance > 11
-      ) {
-
-        if (
-          (x + y) % 2 === 0
-        ) {
-
-          pixel(
-
-            cx + x,
-
-            cy + y,
-
-            1,
-
-            1,
-
-            "#34385f"
-
-          );
-
+    for (let y = 10; y < 124; y += 4) {
+      for (let x = (y * 7) % 13; x < W; x += 13) {
+        if ((x + y) % 5 === 0) {
+          pixel(x, y, 1, 1, y < 70 ? "#182658" : "#334a8e");
         }
-
       }
-
     }
 
+    const stars = [
+      [52, 30, COLORS.star1],
+      [101, 56, COLORS.star2],
+      [163, 24, COLORS.star1],
+      [219, 44, COLORS.star2],
+      [278, 34, COLORS.star1],
+      [325, 62, COLORS.star2],
+      [354, 49, COLORS.star1]
+    ];
+
+    stars.forEach(([x, y, c]) => pixel(x, y, 2, 1, c));
   }
 
+  function drawMoon(cx, cy) {
+    for (let y = -14; y <= 14; y++) {
+      for (let x = -14; x <= 14; x++) {
+        const d = Math.sqrt(x * x + y * y);
 
-
-  /*
-    Main pixel moon
-  */
-
-
-  for (
-    let y = -10;
-    y <= 10;
-    y++
-  ) {
-
-
-    for (
-      let x = -10;
-      x <= 10;
-      x++
-    ) {
-
-
-      const d =
-        Math.sqrt(
-          x*x +
-          y*y
-        );
-
-
-      if (d <= 10) {
-
-
-        let color =
-          COLORS.moon1;
-
-
-        if (
-          x < -4 ||
-          y > 6
-        ) {
-
-          color =
-            COLORS.moon2;
-
+        if (d <= 14 && d > 10) {
+          if ((x + y) % 2 === 0) {
+            pixel(cx + x, cy + y, 1, 1, d < 12 ? COLORS.moonGlow1 : COLORS.moonGlow2);
+          }
         }
+      }
+    }
 
+    for (let y = -10; y <= 10; y++) {
+      for (let x = -10; x <= 10; x++) {
+        const d = Math.sqrt(x * x + y * y);
 
-        if (
-          x < -7 &&
-          y > 0
-        ) {
+        if (d <= 10) {
+          let c = COLORS.moonCore;
 
-          color =
-            COLORS.moon3;
+          if (x < -4 || y > 5) c = COLORS.moonMid;
+          if (x < -7 && y > 0) c = COLORS.moonEdge;
 
+          pixel(cx + x, cy + y, 1, 1, c);
         }
-
-
-        pixel(
-
-          cx + x,
-
-          cy + y,
-
-          1,
-
-          1,
-
-          color
-
-        );
-
       }
-
     }
 
+    pixel(cx - 4, cy - 4, 2, 1, "#eee5c3");
+    pixel(cx + 3, cy + 2, 2, 1, "#f6edcd");
+    pixel(cx - 1, cy + 5, 1, 1, "#dccb9c");
   }
 
+  const horizonY = 132;
 
-
-  /*
-    Tiny moon texture
-  */
-
-
-  pixel(
-    cx - 4,
-    cy - 4,
-    2,
-    1,
-    "#eee5c3"
-  );
-
-
-  pixel(
-    cx + 3,
-    cy + 2,
-    2,
-    1,
-    "#f3e9ca"
-  );
-
-
-  pixel(
-    cx - 2,
-    cy + 5,
-    1,
-    1,
-    "#dfd2ad"
-  );
-
-}
-
-
-
-/* ==========================================================
-   DISTANT SHORE
-========================================================== */
-
-
-function drawHorizon() {
-
-
-  /*
-    Low pixel silhouettes.
-
-    Very subtle so the picture stays
-    quiet and "spring river moon night".
-  */
-
-
-  const skyline = [
-
-    114,112,113,111,112,
-
-    110,111,108,110,109,
-
-    112,110,109,111,108,
-
-    110,112,109,110,111
-
-  ];
-
-
-  const width =
-    W / skyline.length;
-
-
-  skyline.forEach(
-    (height,i) => {
-
-      pixel(
-
-        Math.floor(i * width),
-
-        height,
-
-        Math.ceil(width),
-
-        120 - height,
-
-        "#091c2b"
-
-      );
-
+  function drawHorizon() {
+    for (let x = 0; x < W; x += 20) {
+      const y = horizonY + ((x / 20) % 3 === 0 ? 0 : ((x / 20) % 5 === 0 ? 1 : 0));
+      pixel(x, y, 20, 3, COLORS.horizonDark);
     }
-  );
-
-}
-
-
-
-/* ==========================================================
-   RIVER
-========================================================== */
-
-
-const waterStart = 118;
-
-
-
-function drawWater(frame) {
-
-
-  /*
-    River itself.
-
-    Every column is made from pixel blocks.
-
-    Slight movement makes the surface breathe.
-  */
-
-
-  for (
-    let x = 0;
-    x < W;
-    x += 2
-  ) {
-
-
-    const offset =
-      Math.round(
-        Math.sin(
-          (x + frame) / 15
-        )
-      );
-
-
-    const top =
-      waterStart +
-      offset;
-
-
-    pixel(
-
-      x,
-
-      top,
-
-      2,
-
-      H - top,
-
-      COLORS.waterDark
-
-    );
-
   }
 
-
-
-  /*
-    Horizontal layers
-  */
-
-
-  pixel(
-    0,
-    128,
-    W,
-    14,
-    COLORS.water1
-  );
-
-
-  pixel(
-    0,
-    142,
-    W,
-    17,
-    COLORS.water2
-  );
-
-
-  pixel(
-    0,
-    159,
-    W,
-    21,
-    COLORS.water1
-  );
-
-
-}
-
-
-
-/* ==========================================================
-   MOVING WATER LINES
-========================================================== */
-
-
-const waves = [
-
-  [10,124,14,1,0],
-
-  [50,129,22,1,1],
-
-  [95,125,13,1,2],
-
-  [145,133,25,1,0],
-
-  [206,127,15,1,1],
-
-  [260,132,24,1,2],
-
-
-  [23,143,22,2,2],
-
-  [79,150,16,1,0],
-
-  [128,146,28,1,1],
-
-  [185,154,20,2,2],
-
-  [235,145,15,1,0],
-
-  [287,153,22,1,1],
-
-
-  [5,166,28,1,1],
-
-  [65,173,19,2,0],
-
-  [114,164,31,1,2],
-
-  [173,171,25,1,1],
-
-  [233,166,23,2,0],
-
-  [279,174,27,1,2]
-
-];
-
-
-
-function drawWaves(frame) {
-
-
-  waves.forEach(
-    (
-      [
-        baseX,
-        y,
-        width,
-        height,
-        type
-      ],
-      i
-    ) => {
-
-
-      /*
-        Everything moves to the right.
-      */
-
-
-      const speed =
-        1 +
-        type;
-
-
-      const move =
-        Math.floor(
-          frame / (8 - type)
-        );
-
-
-      let x =
-        (
-          baseX +
-          move * speed
-        ) %
-        (W + 50);
-
-
-      x -= 25;
-
-
-      let color =
-        COLORS.water3;
-
-
-      if (type === 1) {
-
-        color =
-          COLORS.waterLight;
-
-      }
-
-
-      if (type === 2) {
-
-        color =
-          "#587987";
-
-      }
-
-
-      pixel(
-
-        x,
-
-        y,
-
-        width,
-
-        height,
-
-        color
-
-      );
-
-
-      /*
-        wrapping copy
-      */
-
-
-      pixel(
-
-        x - W,
-
-        y,
-
-        width,
-
-        height,
-
-        color
-
-      );
-
+  function drawWaterBase(frame) {
+    pixel(0, horizonY + 2, W, 18, COLORS.water0);
+    pixel(0, horizonY + 20, W, 20, COLORS.water1);
+    pixel(0, horizonY + 40, W, 22, COLORS.water2);
+    pixel(0, horizonY + 62, W, 26, COLORS.water3);
+    pixel(0, horizonY + 88, W, 40, COLORS.water4);
+
+    for (let x = 0; x < W; x += 2) {
+      const top = horizonY + ((x + Math.floor(frame / 4)) % 27 === 0 ? 1 : 0);
+      pixel(x, top, 2, H - top, COLORS.water0);
     }
-  );
 
-}
-
-
-
-/* ==========================================================
-   MOONLIGHT ON WATER
-========================================================== */
-
-
-function reflection(
-  frame,
-  moonX
-) {
-
-
-  const shineRows = [
-
-    [123,11],
-
-    [128,8],
-
-    [134,15],
-
-    [141,10],
-
-    [149,18],
-
-    [158,12],
-
-    [169,20]
-
-  ];
-
-
-  shineRows.forEach(
-    ([y,width],i) => {
-
-
-      /*
-        Reflection flickers only in discrete pixels.
-      */
-
-
-      const jitter =
-        (
-          (
-            Math.floor(
-              frame / 4
-            ) +
-            i * 3
-          )
-          %
-          5
-        )
-        -
-        2;
-
-
-      const shrink =
-        (
-          Math.floor(
-            frame / 6
-          ) +
-          i
-        )
-        %
-        3;
-
-
-      const actualWidth =
-        Math.max(
-          3,
-          width - shrink
-        );
-
-
-      const color =
-
-        i % 3 === 0
-
-          ? COLORS.moon1
-
-          : i % 3 === 1
-
-          ? COLORS.moon2
-
-          : "#bcb99c";
-
-
-      pixel(
-
-        moonX -
-        Math.floor(
-          actualWidth / 2
-        ) +
-        jitter,
-
-        y,
-
-        actualWidth,
-
-        i % 2 === 0
-          ? 2
-          : 1,
-
-        color
-
-      );
-
+    for (let y = horizonY + 6; y < H; y += 6) {
+      for (let x = 0; x < W; x += 16) {
+        if ((x + y) % 32 === 0) {
+          pixel(x, y, 8, 1, y % 12 === 0 ? COLORS.water2 : COLORS.water1);
+        }
+      }
     }
-  );
-
-}
-
-
-
-/* ==========================================================
-   PIXEL WILLOW
-========================================================== */
-
-
-/*
-  Willow branches are arrays of points.
-
-  The custom pixelLine() function joins them
-  using square pixels only.
-*/
-
-
-const willowBranches = [
-
-  {
-    x: 178,
-    points: [
-      [0,-5],
-      [1,12],
-      [3,26],
-      [1,43],
-      [4,61],
-      [3,79]
-    ]
-  },
-
-
-  {
-    x: 194,
-    points: [
-      [0,-4],
-      [2,15],
-      [0,31],
-      [4,46],
-      [2,66],
-      [6,86]
-    ]
-  },
-
-
-  {
-    x: 207,
-    points: [
-      [0,-3],
-      [-1,15],
-      [2,32],
-      [0,52],
-      [4,69],
-      [2,91]
-    ]
-  },
-
-
-  /*
-    This branch crosses the moon.
-  */
-
-  {
-    x: 220,
-    moonBranch: true,
-
-    points: [
-      [0,-4],
-      [2,13],
-      [5,29],
-      [8,45],
-      [13,61],
-      [15,81]
-    ]
-  },
-
-
-  {
-    x: 236,
-    moonBranch: true,
-
-    points: [
-      [0,-3],
-      [-1,15],
-      [1,31],
-      [3,47],
-      [7,65],
-      [9,84]
-    ]
-  },
-
-
-  {
-    x: 252,
-
-    points: [
-      [0,-4],
-      [-2,17],
-      [1,34],
-      [-1,51],
-      [3,70],
-      [1,92]
-    ]
-  },
-
-
-  {
-    x: 270,
-
-    points: [
-      [0,-5],
-      [1,15],
-      [-2,31],
-      [1,50],
-      [-1,69],
-      [3,88]
-    ]
-  },
-
-
-  {
-    x: 291,
-
-    points: [
-      [0,-5],
-      [-2,17],
-      [0,36],
-      [-3,55],
-      [0,74],
-      [-1,95]
-    ]
-  },
-
-
-  /*
-    Left side branches.
-  */
-
-  {
-    x: 16,
-
-    points: [
-      [0,-4],
-      [2,16],
-      [0,34],
-      [4,51],
-      [2,73]
-    ]
-  },
-
-
-  {
-    x: 36,
-
-    points: [
-      [0,-4],
-      [-1,15],
-      [3,33],
-      [1,52],
-      [5,77]
-    ]
-  },
-
-
-  {
-    x: 58,
-
-    points: [
-      [0,-4],
-      [2,17],
-      [1,37],
-      [5,57],
-      [4,81]
-    ]
   }
 
-];
+  function drawWaterDetails(frame) {
+    const palette = [
+      COLORS.waterLight,
+      COLORS.waterLight2,
+      "#436b7d",
+      "#547b8d",
+      "#6f91a1"
+    ];
 
+    for (let i = 0; i < 75; i++) {
+      const y = horizonY + 8 + (i % 23) * 3 + Math.floor(i / 23);
+      const width = 6 + (i * 7) % 20;
+      const speed = 1 + (i % 3);
+      let x = ((i * 29) + Math.floor(frame / (7 - (i % 3))) * speed) % (W + 50) - 25;
+      const c = palette[i % palette.length];
 
+      pixel(x, y, width, 1, c);
+      pixel(x - W - 30, y, width, 1, c);
+    }
 
-/*
-  Moon branch moves aside every few seconds.
+    for (let i = 0; i < 40; i++) {
+      const y = horizonY + 15 + (i % 18) * 4;
+      const width = 10 + (i * 5) % 12;
+      const speed = 1 + (i % 2);
+      let x = ((i * 41) + Math.floor(frame / (8 - (i % 2))) * speed) % (W + 60) - 30;
+      const c = i % 2 === 0 ? "#294c5f" : "#365c6c";
 
-  The movement uses integer values only.
+      pixel(x, y, width, 1, c);
+      pixel(x - W - 30, y, width, 1, c);
+    }
+  }
 
-  It therefore looks like pixel animation,
-  not smooth vector movement.
-*/
+  function drawReflection(frame, moonX) {
+    const rows = [
+      [horizonY + 10, 12, 2, COLORS.reflection1],
+      [horizonY + 17, 8, 1, COLORS.reflection2],
+      [horizonY + 26, 13, 2, COLORS.reflection3],
+      [horizonY + 35, 9, 1, COLORS.reflection1],
+      [horizonY + 46, 15, 2, COLORS.reflection2],
+      [horizonY + 58, 10, 1, COLORS.reflection3],
+      [horizonY + 70, 16, 2, COLORS.reflection2],
+      [horizonY + 84, 11, 1, COLORS.reflection3]
+    ];
 
+    rows.forEach(([y, w, h, c], i) => {
+      const jitter = ((Math.floor(frame / 3) + i) % 5) - 2;
+      const shrink = (Math.floor(frame / 5) + i) % 3;
 
-function getMoonReveal(frame) {
+      pixel(
+        moonX - Math.floor((w - shrink) / 2) + jitter,
+        y,
+        Math.max(4, w - shrink),
+        h,
+        c
+      );
+    });
+  }
 
+  function getRevealShift(frame, seed = 0) {
+    const cycle = (frame + seed) % 120;
 
-  /*
-    96 frames × about 100ms
-
-    roughly one cycle every 10 seconds.
-  */
-
-
-  const cycle =
-    frame % 96;
-
-
-  if (cycle < 25) {
-
+    if (cycle < 28) return 0;
+    if (cycle < 45) return Math.floor((cycle - 28) / 2);
+    if (cycle < 68) return 8;
+    if (cycle < 90) return Math.max(0, 8 - Math.floor((cycle - 68) / 3));
     return 0;
-
   }
 
-
-  if (cycle < 40) {
-
-    return Math.floor(
-      (cycle - 25) / 2
-    );
-
-  }
-
-
-  if (cycle < 61) {
-
-    return 8;
-
-  }
-
-
-  if (cycle < 78) {
-
-    return Math.max(
-
-      0,
-
-      8 -
-      Math.floor(
-        (cycle - 61) / 2
-      )
-
-    );
-
-  }
-
-
-  return 0;
-
-}
-
-
-
-function drawWillowBranch(
-  branch,
-  frame,
-  index
-) {
-
-
-  /*
-    Slow natural sway,
-    rounded to whole pixels.
-  */
-
-
-  let sway =
-    Math.round(
-      Math.sin(
-        frame / 13 +
-        index * 0.7
-      ) *
-      2
-    );
-
-
-  if (
-    branch.moonBranch
-  ) {
-
-    sway +=
-      getMoonReveal(frame);
-
-  }
-
-
-  const pts =
-    branch.points;
-
-
-  for (
-    let i = 0;
-    i < pts.length - 1;
-    i++
-  ) {
-
-
-    const p1 =
-      pts[i];
-
-
-    const p2 =
-      pts[i + 1];
-
-
-    pixelLine(
-
-      branch.x +
-      p1[0] +
-      sway,
-
-      p1[1],
-
-      branch.x +
-      p2[0] +
-      sway,
-
-      p2[1],
-
-      i < 2
-        ? COLORS.willowDark
-        : COLORS.willowMid,
-
-      i < 2
-        ? 2
-        : 1
-
-    );
-
-  }
-
-
-
-  /*
-    Small willow leaves
-  */
-
-
-  for (
-    let i = 1;
-    i < pts.length;
-    i++
-  ) {
-
-
-    const p =
-      pts[i];
-
-
-    const x =
-      branch.x +
-      p[0] +
-      sway;
-
-
-    const y =
-      p[1];
-
-
-    /*
-      left leaf
-    */
-
-
-    pixel(
-
-      x - 4,
-
-      y + 1,
-
-      4,
-
-      2,
-
-      COLORS.willowLight
-
-    );
-
-
-    pixel(
-
-      x - 3,
-
-      y + 3,
-
-      3,
-
-      1,
-
-      COLORS.willowMid
-
-    );
-
-
-    /*
-      occasional right leaf
-    */
-
-
-    if (
-      i % 2 === 0
-    ) {
-
-      pixel(
-
-        x + 1,
-
-        y + 4,
-
-        4,
-
-        2,
-
-        COLORS.willowLight
-
-      );
-
-    }
-
-  }
-
-}
-
-
-
-function drawWillows(frame) {
-
-
-  willowBranches.forEach(
-    (branch,index) => {
-
-      drawWillowBranch(
-        branch,
-        frame,
-        index
-      );
-
-    }
-  );
-
-}
-
-
-
-/* ==========================================================
-   EXTRA SMALL BRANCHES
-========================================================== */
-
-
-function tinyWillowLeaves(frame) {
-
-
-  const sway =
-    Math.round(
-      Math.sin(
-        frame / 14
-      )
-      *
-      2
-    );
-
-
-  const leaves = [
-
-    [8,37],
-    [20,48],
-    [30,27],
-    [46,63],
-    [62,45],
-    [184,39],
-    [198,55],
-    [210,67],
-    [260,38],
-    [278,61],
-    [303,42]
-
+  const branches = [
+    { x: 10,  len: 132, topAmp: 1, tailAmp: 2, phase: 0.3 },
+    { x: 22,  len: 150, topAmp: 1, tailAmp: 3, phase: 0.8 },
+    { x: 38,  len: 138, topAmp: 2, tailAmp: 3, phase: 1.2 },
+    { x: 55,  len: 162, topAmp: 1, tailAmp: 4, phase: 1.8 },
+    { x: 76,  len: 145, topAmp: 2, tailAmp: 3, phase: 2.1 },
+
+    { x: 220, len: 138, topAmp: 1, tailAmp: 3, phase: 0.7, reveal: true, seed: 0 },
+    { x: 232, len: 154, topAmp: 2, tailAmp: 4, phase: 1.0, reveal: true, seed: 6 },
+    { x: 245, len: 170, topAmp: 2, tailAmp: 5, phase: 1.3, reveal: true, seed: 12 },
+    { x: 259, len: 148, topAmp: 1, tailAmp: 3, phase: 1.7, reveal: false },
+    { x: 272, len: 182, topAmp: 2, tailAmp: 5, phase: 2.2, reveal: false },
+    { x: 288, len: 158, topAmp: 1, tailAmp: 4, phase: 2.7, reveal: false },
+    { x: 305, len: 188, topAmp: 2, tailAmp: 5, phase: 3.1, reveal: false },
+    { x: 324, len: 146, topAmp: 1, tailAmp: 3, phase: 3.6, reveal: false },
+    { x: 342, len: 172, topAmp: 2, tailAmp: 5, phase: 4.1, reveal: false },
+    { x: 364, len: 160, topAmp: 1, tailAmp: 4, phase: 4.5, reveal: false },
+    { x: 382, len: 178, topAmp: 2, tailAmp: 5, phase: 5.0, reveal: false }
   ];
 
+  function createBranchPoints(len, seed) {
+    const pts = [];
+    let y = -4;
+    let x = 0;
 
-  leaves.forEach(
-    ([x,y],i) => {
+    pts.push([x, y]);
 
+    const segHeights = [18, 19, 20, 23, 24, 24, 26, 28];
+    const segMoves = [0, 1, -1, 1, -1, 1, 0, 1];
 
-      const move =
-        i % 2 === 0
-          ? sway
-          : -sway;
-
-
-      pixel(
-
-        x + move,
-
-        y,
-
-        5,
-
-        2,
-
-        i % 3 === 0
-          ? COLORS.willowLight
-          : COLORS.willowMid
-
-      );
-
+    for (let i = 0; i < segHeights.length; i++) {
+      y += segHeights[i] + ((seed + i) % 3 === 0 ? 1 : 0);
+      x += segMoves[(i + seed) % segMoves.length];
+      pts.push([x, Math.min(y, len)]);
+      if (y >= len) break;
     }
-  );
 
-}
+    return pts;
+  }
 
+  function drawOneBranch(branch, index, frame) {
+    const pts = createBranchPoints(branch.len, index + 3);
 
+    const topSway = Math.round(Math.sin(frame / 16 + branch.phase) * branch.topAmp);
+    const tailSway = Math.round(Math.sin(frame / 10 + branch.phase * 1.7) * branch.tailAmp);
+    const reveal = branch.reveal ? getRevealShift(frame, branch.seed || 0) : 0;
 
-/* ==========================================================
-   PIXEL TEXT
-========================================================== */
+    const split = Math.floor(pts.length / 2);
 
+    function pointX(i) {
+      const p = pts[i];
+      let extra = 0;
 
-function drawTitle() {
-
-
-  /*
-    Because the entire canvas is only
-    320 × 180 pixels,
-    this text is rendered at tiny resolution
-    and enlarged as pixel art.
-  */
-
-
-  ctx.textAlign =
-    "center";
-
-
-  ctx.textBaseline =
-    "middle";
-
-
-  ctx.font =
-    'bold 14px "Courier New", "PingFang SC", monospace';
-
-
-
-  /*
-    pixel shadow
-  */
-
-
-  ctx.fillStyle =
-    "#06091d";
-
-
-  ctx.fillText(
-    "hi 我是山山田",
-    162,
-    82
-  );
-
-
-  ctx.fillText(
-    "hi 我是山山田",
-    161,
-    81
-  );
-
-
-
-  /*
-    white text
-  */
-
-
-  ctx.fillStyle =
-    COLORS.white;
-
-
-  ctx.fillText(
-    "hi 我是山山田",
-    160,
-    79
-  );
-
-
-
-  /*
-    little subtitle
-  */
-
-
-  ctx.font =
-    '5px "Courier New", monospace';
-
-
-  ctx.fillStyle =
-    "#b7bed8";
-
-
-  ctx.fillText(
-    "SPRING RIVER · MOONLIGHT · NIGHT",
-    160,
-    94
-  );
-
-}
-
-
-
-/* ==========================================================
-   LITTLE LIGHT SPARKLES
-========================================================== */
-
-
-function sparkles(frame) {
-
-
-  const points = [
-
-    [39,123],
-
-    [77,137],
-
-    [108,128],
-
-    [152,146],
-
-    [187,132],
-
-    [271,139],
-
-    [297,126]
-
-  ];
-
-
-  points.forEach(
-    ([x,y],i) => {
-
-
-      if (
-        (
-          Math.floor(
-            frame / 6
-          ) +
-          i
-        )
-        %
-        3 === 0
-      ) {
-
-        pixel(
-
-          x,
-
-          y,
-
-          2,
-
-          1,
-
-          "#8aa0a9"
-
-        );
-
+      if (i > split) {
+        const t = (i - split) / Math.max(1, pts.length - split - 1);
+        extra = Math.round(tailSway * t * 1.25);
       }
 
+      return branch.x + p[0] + topSway + reveal + extra;
     }
-  );
 
-}
+    function pointY(i) {
+      return pts[i][1];
+    }
 
+    for (let i = 0; i < pts.length - 1; i++) {
+      const c = i < 2 ? COLORS.willowTrunk : COLORS.willowMid;
+      const thickness = i < 2 ? 2 : 1;
 
+      pixelLine(
+        pointX(i),
+        pointY(i),
+        pointX(i + 1),
+        pointY(i + 1),
+        c,
+        thickness
+      );
+    }
 
-/* ==========================================================
-   DRAW EVERYTHING
-========================================================== */
+    for (let i = 1; i < pts.length; i++) {
+      const x = pointX(i);
+      const y = pointY(i);
 
+      const leafColor = i % 2 === 0 ? COLORS.willowLeaf : COLORS.willowLeaf2;
 
-let frame = 0;
+      pixel(x - 4, y + 1, 4, 2, leafColor);
+      pixel(x - 2, y + 4, 3, 1, COLORS.willowMid);
 
-let lastUpdate = 0;
+      if (i % 2 === 0) {
+        pixel(x + 1, y + 3, 4, 2, leafColor);
+      }
 
-
-
-function render(time) {
-
-
-  /*
-    Pixel-art animation runs slower than
-    a modern 60fps animation.
-
-    About 10 frames per second gives the
-    little "game animation" feeling.
-  */
-
-
-  if (
-    time - lastUpdate >
-    100
-  ) {
-
-    frame++;
-
-    lastUpdate =
-      time;
-
+      if (i > split) {
+        pixel(x - 3, y + 6, 3, 1, COLORS.willowLeaf2);
+      }
+    }
   }
 
+  function drawWillows(frame) {
+    branches.forEach((b, i) => drawOneBranch(b, i, frame));
+  }
 
+  let frame = 0;
+  let lastUpdate = 0;
 
-  /*
-    Clear frame
-  */
+  function render(time) {
+    if (time - lastUpdate > 90) {
+      frame++;
+      lastUpdate = time;
+    }
 
+    ctx.clearRect(0, 0, W, H);
 
-  ctx.clearRect(
-    0,
-    0,
-    W,
-    H
-  );
+    drawSky();
+    drawMoon(296, 54);
+    drawHorizon();
+    drawWaterBase(frame);
+    drawWaterDetails(frame);
+    drawReflection(frame, 296);
+    drawWillows(frame);
 
+    requestAnimationFrame(render);
+  }
 
-
-  /*
-    Painter order is important.
-
-    Willow is painted AFTER the moon,
-    so branches actually cover the moon.
-  */
-
-
-  drawSky();
-
-
-  pixelMoon(
-    237,
-    50
-  );
-
-
-  drawHorizon();
-
-
-  drawWater(
-    frame
-  );
-
-
-  drawWaves(
-    frame
-  );
-
-
-  reflection(
-    frame,
-    237
-  );
-
-
-  sparkles(
-    frame
-  );
-
-
-  /*
-    title behind willow
-  */
-
-
-  drawTitle();
-
-
-  /*
-    Willow is foreground.
-
-    Some branches therefore cross
-    both the text and moon,
-    like a real foreground tree.
-  */
-
-
-  drawWillows(
-    frame
-  );
-
-
-  tinyWillowLeaves(
-    frame
-  );
-
-
-  requestAnimationFrame(
-    render
-  );
-
-}
-
-
-requestAnimationFrame(
-  render
-);
-
-
+  requestAnimationFrame(render);
 </script>
 
-
 </body>
-
 </html>
