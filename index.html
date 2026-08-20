@@ -3,55 +3,186 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>雅蘭亭拾遺</title>
 
+
   <style>
+
+    /* =====================================================
+       GLOBAL
+    ====================================================== */
+
     * {
       box-sizing: border-box;
     }
+
 
     html {
       scroll-behavior: smooth;
     }
 
+
     body {
       margin: 0;
-      background: #f5f4ef;
-      color: #222;
-      font-family: Arial, Helvetica, sans-serif;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      transition:
+        background-color 0.6s ease,
+        color 0.6s ease;
     }
 
-    /* =====================================
+
+
+    /* =====================================================
+       DAY THEME
+    ====================================================== */
+
+    body[data-theme="day"] {
+
+      --page-bg: #faf9f5;
+
+      --page-text: #22231f;
+
+      --secondary-text: #66665f;
+
+      --header-bg: rgba(248, 248, 244, 0.78);
+
+      --header-border: rgba(20, 25, 30, 0.08);
+
+      --nav-text: rgba(25, 28, 30, 0.66);
+
+      --nav-hover: #111;
+
+      --card-line: rgba(20, 20, 20, 0.10);
+
+      --bulb-glass: #d8d8cf;
+
+      --bulb-core: #babbb4;
+
+      --bulb-shadow: none;
+
+      --cord: rgba(40, 45, 46, 0.48);
+
+      --socket: #4e5353;
+
+    }
+
+
+
+    /* =====================================================
+       NIGHT THEME
+    ====================================================== */
+
+    body[data-theme="night"] {
+
+      --page-bg: #070b0f;
+
+      --page-text: #e9ece9;
+
+      --secondary-text: #9ba2a1;
+
+      --header-bg: rgba(2, 6, 14, 0.72);
+
+      --header-border: rgba(255, 255, 255, 0.05);
+
+      --nav-text: rgba(255, 255, 255, 0.66);
+
+      --nav-hover: #ffffff;
+
+      --card-line: rgba(255, 255, 255, 0.10);
+
+      --bulb-glass: #fff0b2;
+
+      --bulb-core: #fff7d6;
+
+      --bulb-shadow:
+        0 0 5px rgba(255, 232, 157, 0.95),
+        0 0 12px rgba(255, 220, 120, 0.70),
+        0 0 24px rgba(255, 214, 103, 0.28);
+
+      --cord: rgba(235, 238, 230, 0.45);
+
+      --socket: #a4a49b;
+
+    }
+
+
+
+    body {
+      background:
+        var(--page-bg);
+
+      color:
+        var(--page-text);
+    }
+
+
+
+    /* =====================================================
        HEADER
-    ====================================== */
+    ====================================================== */
 
     header {
+
       position: fixed;
+
       top: 0;
       left: 0;
       right: 0;
 
       height: 58px;
-      padding: 0 34px;
+
+      padding:
+        0 88px
+        0 34px;
 
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
 
       z-index: 100;
 
-      background: rgba(1, 5, 15, 0.66);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
 
-      backdrop-filter: blur(4px);
+      background:
+        var(--header-bg);
+
+
+      border-bottom:
+        1px solid
+        var(--header-border);
+
+
+      backdrop-filter:
+        blur(7px);
+
+
+      transition:
+        background-color 0.6s ease,
+        border-color 0.6s ease;
+
     }
 
+
+
     .site-name {
+
       margin: 0;
 
-      color: white;
+      color:
+        var(--page-text);
+
 
       font-family:
         "Songti TC",
@@ -59,143 +190,684 @@
         "PingFang TC",
         serif;
 
+
       font-size: 17px;
+
       font-weight: 400;
+
       letter-spacing: 5px;
 
       white-space: nowrap;
+
+
+      transition:
+        color 0.6s ease;
+
     }
 
-    nav a {
-      margin-left: 26px;
 
-      color: rgba(255,255,255,0.68);
+
+    nav {
+
+      display: flex;
+
+      align-items: center;
+
+    }
+
+
+
+    nav a {
+
+      position: relative;
+
+      margin-left: 28px;
+
+      padding:
+        20px 0
+        18px;
+
+
+      color:
+        var(--nav-text);
+
 
       text-decoration: none;
+
 
       font-family:
         "Courier New",
         monospace;
 
-      font-size: 12px;
-      letter-spacing: 1.5px;
+
+      font-size: 11px;
+
+      letter-spacing: 1.8px;
+
+
+      transition:
+        color 0.25s ease;
+
     }
+
+
+
+    nav a::after {
+
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      right: 100%;
+
+      bottom: 13px;
+
+      height: 1px;
+
+      background:
+        var(--nav-hover);
+
+
+      transition:
+        right 0.25s ease;
+
+    }
+
+
 
     nav a:hover {
-      color: white;
+
+      color:
+        var(--nav-hover);
+
     }
 
-    /* =====================================
+
+
+    nav a:hover::after {
+
+      right: 0;
+
+    }
+
+
+
+    /* =====================================================
+       HANGING BULB
+    ====================================================== */
+
+    .theme-pull {
+
+      --pull: 0px;
+
+
+      position: fixed;
+
+      top: 58px;
+
+      right: 24px;
+
+
+      width: 34px;
+
+      height: 108px;
+
+
+      z-index: 150;
+
+
+      pointer-events: none;
+
+    }
+
+
+
+    .cord {
+
+      position: absolute;
+
+      top: 0;
+
+      left: 16px;
+
+
+      width: 1px;
+
+      height:
+        calc(51px + var(--pull));
+
+
+      background:
+        var(--cord);
+
+
+      transition:
+        height 0.22s ease,
+        background-color 0.6s ease;
+
+    }
+
+
+
+    .pull-handle {
+
+      position: absolute;
+
+      top:
+        calc(47px + var(--pull));
+
+      left: 5px;
+
+
+      width: 24px;
+
+      height: 34px;
+
+
+      cursor: grab;
+
+      pointer-events: auto;
+
+      touch-action: none;
+
+      user-select: none;
+
+
+      transition:
+        top 0.22s cubic-bezier(.2,.8,.2,1);
+
+    }
+
+
+
+    .theme-pull.dragging .cord,
+    .theme-pull.dragging .pull-handle {
+
+      transition: none;
+
+    }
+
+
+
+    .pull-handle:active {
+
+      cursor: grabbing;
+
+    }
+
+
+
+    .socket {
+
+      position: absolute;
+
+      top: 0;
+
+      left: 7px;
+
+
+      width: 10px;
+
+      height: 7px;
+
+
+      background:
+        var(--socket);
+
+
+      border-radius:
+        2px 2px 1px 1px;
+
+
+      transition:
+        background-color 0.6s ease;
+
+    }
+
+
+
+    .bulb {
+
+      position: absolute;
+
+      top: 6px;
+
+      left: 5px;
+
+
+      width: 14px;
+
+      height: 17px;
+
+
+      background:
+        var(--bulb-glass);
+
+
+      border-radius:
+        7px 7px
+        6px 6px;
+
+
+      box-shadow:
+        var(--bulb-shadow);
+
+
+      transition:
+        background-color 0.6s ease,
+        box-shadow 0.6s ease;
+
+    }
+
+
+
+    .bulb::before {
+
+      content: "";
+
+      position: absolute;
+
+      left: 4px;
+
+      bottom: -4px;
+
+
+      width: 6px;
+
+      height: 5px;
+
+
+      background:
+        var(--socket);
+
+    }
+
+
+
+    .bulb::after {
+
+      content: "";
+
+      position: absolute;
+
+      left: 5px;
+
+      top: 5px;
+
+
+      width: 4px;
+
+      height: 5px;
+
+
+      background:
+        var(--bulb-core);
+
+
+      border-radius: 50%;
+
+
+      transition:
+        background-color 0.6s ease;
+
+    }
+
+
+
+    /* =====================================================
        HERO
-    ====================================== */
+    ====================================================== */
 
     .hero {
+
       position: relative;
 
       width: 100%;
+
       height: 100vh;
+
       min-height: 650px;
+
 
       overflow: hidden;
 
-      background: #01040b;
+
+      background:
+        #01040b;
+
     }
+
+
 
     #scene {
+
       position: absolute;
 
       left: 50%;
+
       top: 50%;
 
-      transform: translate(-50%, -50%);
 
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
+      transform:
+        translate(-50%, -50%);
+
+
+      image-rendering:
+        pixelated;
+
+      image-rendering:
+        crisp-edges;
+
     }
 
+
+
     .scroll {
+
       position: absolute;
 
       left: 50%;
+
       bottom: 20px;
 
-      transform: translateX(-50%);
 
-      color: rgba(255,255,255,0.18);
+      transform:
+        translateX(-50%);
 
-      font-family: "Courier New", monospace;
+
+      color:
+        rgba(255,255,255,0.20);
+
+
+      font-family:
+        "Courier New",
+        monospace;
+
+
       font-size: 9px;
+
       letter-spacing: 4px;
+
     }
 
-    /* =====================================
+
+
+    /* =====================================================
        CONTENT
-    ====================================== */
+    ====================================================== */
+
+    main {
+
+      background:
+        var(--page-bg);
+
+
+      transition:
+        background-color 0.6s ease;
+
+    }
+
+
 
     .content {
+
       max-width: 850px;
+
       margin: auto;
-      padding: 90px 24px;
+
+      padding:
+        105px 24px
+        80px;
+
     }
+
+
 
     .content section {
-      margin-bottom: 100px;
+
+      scroll-margin-top: 90px;
+
+      margin-bottom: 115px;
+
     }
+
+
 
     .content h2 {
-      font-size: 28px;
-      margin-bottom: 24px;
+
+      margin:
+        0 0 25px;
+
+
+      color:
+        var(--page-text);
+
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+
+      font-size: 29px;
+
+      font-weight: 400;
+
+
+      transition:
+        color 0.6s ease;
+
     }
+
+
 
     .content p {
-      color: #444;
-      font-size: 16px;
-      line-height: 1.9;
+
+      color:
+        var(--secondary-text);
+
+
+      font-size: 15px;
+
+      line-height: 1.95;
+
+
+      transition:
+        color 0.6s ease;
+
     }
+
+
 
     .blog-card {
-      padding: 25px 0;
-      border-bottom: 1px solid #ddd;
+
+      padding:
+        24px 0
+        28px;
+
+
+      border-bottom:
+        1px solid
+        var(--card-line);
+
+
+      transition:
+        border-color 0.6s ease;
+
     }
+
+
+
+    .blog-card:first-of-type {
+
+      border-top:
+        1px solid
+        var(--card-line);
+
+    }
+
+
+
+    .blog-date {
+
+      margin-bottom: 8px;
+
+
+      color:
+        var(--secondary-text);
+
+
+      font-family:
+        "Courier New",
+        monospace;
+
+
+      font-size: 10px;
+
+      letter-spacing: 1.4px;
+
+    }
+
+
+
+    .blog-card h3 {
+
+      margin:
+        6px 0
+        12px;
+
+
+      font-size: 20px;
+
+      font-weight: 500;
+
+    }
+
+
 
     .blog-card a {
-      color: #222;
+
+      color:
+        var(--page-text);
+
+
       text-decoration: none;
+
     }
+
+
 
     .blog-card a:hover {
+
       text-decoration: underline;
+
     }
+
+
+
+    .contact-note {
+
+      max-width: 560px;
+
+    }
+
+
 
     footer {
-      padding: 40px;
+
+      padding:
+        44px 20px;
+
+
+      background:
+        var(--page-bg);
+
+
+      color:
+        var(--secondary-text);
+
+
       text-align: center;
-      color: #999;
-      font-size: 13px;
+
+
+      font-family:
+        "Courier New",
+        monospace;
+
+
+      font-size: 11px;
+
+
+      transition:
+        background-color 0.6s ease,
+        color 0.6s ease;
+
     }
 
-    @media (max-width: 650px) {
+
+
+    /* =====================================================
+       MOBILE
+    ====================================================== */
+
+    @media (max-width: 700px) {
+
       header {
+
         height: 54px;
-        padding: 0 15px;
+
+        padding:
+          0 58px
+          0 15px;
+
       }
+
 
       .site-name {
+
         font-size: 13px;
+
         letter-spacing: 2px;
+
       }
 
+
       nav a {
-        margin-left: 10px;
-        font-size: 10px;
+
+        margin-left: 11px;
+
+        font-size: 9px;
+
+        letter-spacing: 0.8px;
+
       }
+
+
+      .theme-pull {
+
+        top: 54px;
+
+        right: 10px;
+
+      }
+
     }
+
+
   </style>
+
 </head>
+
 
 
 <body>
 
+
+
+<!-- =====================================================
+     HEADER
+====================================================== -->
 
 <header>
 
@@ -203,22 +875,76 @@
     雅蘭亭拾遺
   </h1>
 
+
   <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#blog">Blog</a>
+
+    <a href="#home">
+      HOME
+    </a>
+
+    <a href="#about">
+      ABOUT
+    </a>
+
+    <a href="#blog">
+      BLOG
+    </a>
+
+    <a href="#contact">
+      CONTACT
+    </a>
+
   </nav>
 
 </header>
 
 
-<section class="hero" id="home">
+
+<!-- =====================================================
+     PULL LIGHT
+====================================================== -->
+
+<div
+  class="theme-pull"
+  id="themePull"
+  aria-label="Pull to switch day and night mode"
+>
+
+  <div class="cord"></div>
+
+  <div
+    class="pull-handle"
+    id="pullHandle"
+    role="button"
+    tabindex="0"
+    aria-label="Pull to switch theme"
+  >
+
+    <div class="socket"></div>
+
+    <div class="bulb"></div>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<section
+  class="hero"
+  id="home"
+>
 
   <canvas
     id="scene"
     width="320"
     height="180"
   ></canvas>
+
 
   <div class="scroll">
     SCROLL ↓
@@ -227,51 +953,109 @@
 </section>
 
 
-<main class="content">
 
-  <section id="about">
+<!-- =====================================================
+     CONTENT
+====================================================== -->
 
-    <h2>About Me</h2>
+<main>
 
-    <p>
-      Hi! I'm 山山田.
-    </p>
-
-    <p>
-      Welcome to my personal blog.
-      This is where I keep thoughts,
-      memories, experiences,
-      and things I find interesting.
-    </p>
-
-  </section>
+  <div class="content">
 
 
-  <section id="blog">
+    <section id="about">
 
-    <h2>Blog</h2>
-
-    <div class="blog-card">
-
-      <h3>
-        <a href="#">
-          My First Blog Post
-        </a>
-      </h3>
+      <h2>
+        About Me
+      </h2>
 
       <p>
-        August 20, 2026
+        Hi! I'm 山山田.
       </p>
 
       <p>
-        Welcome to my little corner of the internet.
+        Welcome to my personal blog.
+        This is where I keep thoughts,
+        memories, experiences,
+        and things I find interesting.
       </p>
 
-    </div>
+    </section>
 
-  </section>
+
+
+    <section id="blog">
+
+      <h2>
+        Blog
+      </h2>
+
+
+      <article class="blog-card">
+
+        <div class="blog-date">
+          AUGUST 20, 2026
+        </div>
+
+        <h3>
+
+          <a href="#">
+            My First Blog Post
+          </a>
+
+        </h3>
+
+        <p>
+          Welcome to my little corner of the internet.
+        </p>
+
+      </article>
+
+
+      <article class="blog-card">
+
+        <div class="blog-date">
+          NOTES
+        </div>
+
+        <h3>
+
+          <a href="#">
+            Things I'm Thinking About
+          </a>
+
+        </h3>
+
+        <p>
+          A place for small observations,
+          unfinished ideas, and things worth remembering.
+        </p>
+
+      </article>
+
+    </section>
+
+
+
+    <section id="contact">
+
+      <h2>
+        Contact
+      </h2>
+
+      <p class="contact-note">
+        For questions, collaborations,
+        or a simple hello, you can add your
+        email and social links here.
+      </p>
+
+    </section>
+
+
+  </div>
 
 </main>
+
 
 
 <footer>
@@ -280,120 +1064,590 @@
 
 
 
+
 <script>
 
 /* =====================================================
-   SETUP
-   最小像素单元始终 = 2 × 2
+   INITIAL THEME
+===================================================== */
+
+const savedTheme =
+  localStorage.getItem(
+    "blog-theme"
+  );
+
+
+const preferredTheme =
+  window.matchMedia(
+    "(prefers-color-scheme: light)"
+  ).matches
+  ?
+  "day"
+  :
+  "night";
+
+
+document.body.dataset.theme =
+  savedTheme ||
+  preferredTheme;
+
+
+
+/* =====================================================
+   PULL-CORD THEME SWITCH
+===================================================== */
+
+const themePull =
+  document.getElementById(
+    "themePull"
+  );
+
+
+const pullHandle =
+  document.getElementById(
+    "pullHandle"
+  );
+
+
+let pulling =
+  false;
+
+
+let startY =
+  0;
+
+
+let pullDistance =
+  0;
+
+
+let didMove =
+  false;
+
+
+
+function toggleTheme() {
+
+  const current =
+    document.body.dataset.theme;
+
+
+  const next =
+    current === "night"
+    ?
+    "day"
+    :
+    "night";
+
+
+  document.body.dataset.theme =
+    next;
+
+
+  localStorage.setItem(
+    "blog-theme",
+    next
+  );
+
+}
+
+
+
+pullHandle.addEventListener(
+  "pointerdown",
+  event => {
+
+    pulling =
+      true;
+
+
+    didMove =
+      false;
+
+
+    startY =
+      event.clientY;
+
+
+    pullDistance =
+      0;
+
+
+    themePull.classList.add(
+      "dragging"
+    );
+
+
+    pullHandle.setPointerCapture(
+      event.pointerId
+    );
+
+  }
+);
+
+
+
+pullHandle.addEventListener(
+  "pointermove",
+  event => {
+
+    if (
+      !pulling
+    ) {
+      return;
+    }
+
+
+    pullDistance =
+      Math.max(
+        0,
+        Math.min(
+          62,
+          event.clientY -
+          startY
+        )
+      );
+
+
+    if (
+      pullDistance >
+      4
+    ) {
+
+      didMove =
+        true;
+
+    }
+
+
+    themePull.style.setProperty(
+      "--pull",
+      pullDistance + "px"
+    );
+
+  }
+);
+
+
+
+function finishPull() {
+
+  if (
+    !pulling
+  ) {
+    return;
+  }
+
+
+  pulling =
+    false;
+
+
+  /*
+    拉超过 30px 才切换
+  */
+
+  if (
+    pullDistance >=
+    30
+  ) {
+
+    toggleTheme();
+
+  }
+
+
+  themePull.classList.remove(
+    "dragging"
+  );
+
+
+  pullDistance =
+    0;
+
+
+  themePull.style.setProperty(
+    "--pull",
+    "0px"
+  );
+
+}
+
+
+
+pullHandle.addEventListener(
+  "pointerup",
+  finishPull
+);
+
+
+pullHandle.addEventListener(
+  "pointercancel",
+  finishPull
+);
+
+
+
+/*
+  键盘也可以操作
+*/
+
+pullHandle.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Enter" ||
+      event.key === " "
+    ) {
+
+      event.preventDefault();
+
+      toggleTheme();
+
+    }
+
+  }
+);
+
+
+
+/* =====================================================
+   CANVAS SETUP
 ===================================================== */
 
 const canvas =
-  document.getElementById("scene");
+  document.getElementById(
+    "scene"
+  );
+
 
 const ctx =
-  canvas.getContext("2d");
+  canvas.getContext(
+    "2d"
+  );
+
 
 ctx.imageSmoothingEnabled =
   false;
 
+
 const W =
   320;
 
+
 const H =
   180;
+
 
 const PX =
   2;
 
 
-/* =====================================================
-   SCALE
-===================================================== */
 
 function fitCanvas() {
 
   const scale =
     Math.max(
-      window.innerWidth / W,
-      window.innerHeight / H
+
+      window.innerWidth /
+      W,
+
+      window.innerHeight /
+      H
+
     );
 
+
   canvas.style.width =
-    Math.ceil(W * scale) + "px";
+    Math.ceil(
+      W *
+      scale
+    ) +
+    "px";
+
 
   canvas.style.height =
-    Math.ceil(H * scale) + "px";
+    Math.ceil(
+      H *
+      scale
+    ) +
+    "px";
+
 }
+
 
 window.addEventListener(
   "resize",
   fitCanvas
 );
 
+
 fitCanvas();
 
 
+
 /* =====================================================
-   COLORS
+   COLOR THEMES FOR CANVAS
 ===================================================== */
 
-const C = {
+const SCENE = {
 
-  /* SKY */
 
-  sky0: [1,4,11],
-  sky1: [2,8,21],
-  sky2: [3,15,37],
-  sky3: [5,26,58],
-  sky4: [7,39,81],
-  sky5: [10,54,106],
-  sky6: [14,69,128],
+  night: {
 
-  /* CLOUD */
+    sky: [
 
-  cloud0: "#061833",
-  cloud1: "#082349",
+      [1,4,11],
 
-  /* WATER */
+      [2,8,21],
 
-  water0: [5,21,31],
-  water1: [6,29,40],
-  water2: [8,37,49],
-  water3: [10,45,58],
+      [3,15,37],
 
-  wave0: "#0d3342",
-  wave1: "#103c4c",
-  wave2: "#144656",
+      [5,26,58],
 
-  /* WILLOW */
+      [7,39,81],
 
-  willowDark: "#07332c",
-  willow: "#0b493d",
-  willowLight: "#135c4a",
+      [10,54,106],
 
-  /* MOON */
+      [14,69,128]
 
-  moonDark: "#bab3a1",
-  moonEdge: "#cbc5b3",
-  moonMid: "#ddd8c9",
-  moonLight: "#efeadf",
-  moonCore: "#fffdf2",
+    ],
 
-  /* WATER LIGHT */
 
-  reflection0: "#bdb498",
-  reflection1: "#dcd1ac",
-  reflection2: "#f2e7c4",
+    cloud: [
 
-  sparkle0: "#d7d0ba",
-  sparkle1: "#f7f3df",
+      "#061833",
 
-  white: "#ffffff"
+      "#082349"
+
+    ],
+
+
+    water: [
+
+      [5,21,31],
+
+      [6,29,40],
+
+      [8,37,49],
+
+      [10,45,58]
+
+    ],
+
+
+    waves: [
+
+      "#0d3342",
+
+      "#103c4c",
+
+      "#144656"
+
+    ],
+
+
+    willow: {
+
+      dark:
+        "#07332c",
+
+      main:
+        "#0b493d",
+
+      light:
+        "#135c4a"
+
+    },
+
+
+    celestial: {
+
+      glow:
+        "#fff0b7",
+
+      glowAlpha:
+        0.14,
+
+      shades: [
+
+        "#aaa898",
+
+        "#c4c0b2",
+
+        "#d8d5c8",
+
+        "#ebe8dc",
+
+        "#fffdf2"
+
+      ]
+
+    },
+
+
+    reflection: [
+
+      "#bcb397",
+
+      "#dcd1ac",
+
+      "#f1e6c1"
+
+    ],
+
+
+    sparkle: [
+
+      "#d5cfb8",
+
+      "#f8f3de"
+
+    ],
+
+
+    horizon:
+      "#071923"
+
+  },
+
+
+
+  day: {
+
+    sky: [
+
+      [89,145,200],
+
+      [106,163,216],
+
+      [126,181,228],
+
+      [151,199,236],
+
+      [177,215,242],
+
+      [203,229,246],
+
+      [222,239,248]
+
+    ],
+
+
+    cloud: [
+
+      "#cbdde9",
+
+      "#dbe8ef"
+
+    ],
+
+
+    water: [
+
+      [74,135,159],
+
+      [84,146,168],
+
+      [97,158,177],
+
+      [111,169,186]
+
+    ],
+
+
+    waves: [
+
+      "#6b9cad",
+
+      "#72a4b4",
+
+      "#7dabb9"
+
+    ],
+
+
+    willow: {
+
+      dark:
+        "#204b3c",
+
+      main:
+        "#2f624c",
+
+      light:
+        "#477862"
+
+    },
+
+
+    celestial: {
+
+      glow:
+        "#fff0a3",
+
+      glowAlpha:
+        0.18,
+
+      shades: [
+
+        "#e8bf62",
+
+        "#f0cb70",
+
+        "#f5d87e",
+
+        "#fbe493",
+
+        "#fff2ad"
+
+      ]
+
+    },
+
+
+    reflection: [
+
+      "#d9c77c",
+
+      "#ead995",
+
+      "#f8e9ae"
+
+    ],
+
+
+    sparkle: [
+
+      "#dce9e8",
+
+      "#ffffff"
+
+    ],
+
+
+    horizon:
+      "#557b81"
+
+  }
+
 };
 
 
+
+function currentScene() {
+
+  return SCENE[
+    document.body.dataset.theme
+  ];
+
+}
+
+
+
 /* =====================================================
-   BASIC PIXEL
+   PIXEL
 ===================================================== */
 
 function px(
@@ -406,23 +1660,37 @@ function px(
   ctx.globalAlpha =
     alpha;
 
+
   ctx.fillStyle =
     color;
 
+
   ctx.fillRect(
 
-    Math.round(x / PX) * PX,
+    Math.round(
+      x /
+      PX
+    ) *
+    PX,
 
-    Math.round(y / PX) * PX,
+    Math.round(
+      y /
+      PX
+    ) *
+    PX,
 
     PX,
+
     PX
 
   );
 
+
   ctx.globalAlpha =
     1;
+
 }
+
 
 
 function rect2(
@@ -440,11 +1708,13 @@ function rect2(
     yy += PX
   ) {
 
+
     for (
       let xx = x;
       xx < x + width;
       xx += PX
     ) {
+
 
       px(
         xx,
@@ -456,11 +1726,13 @@ function rect2(
     }
 
   }
+
 }
 
 
+
 /* =====================================================
-   COLOR MIX
+   RGB MIX
 ===================================================== */
 
 function mix(
@@ -472,23 +1744,48 @@ function mix(
   const r =
     Math.round(
       a[0] +
-      (b[0] - a[0]) * t
+      (
+        b[0] -
+        a[0]
+      ) *
+      t
     );
+
 
   const g =
     Math.round(
       a[1] +
-      (b[1] - a[1]) * t
+      (
+        b[1] -
+        a[1]
+      ) *
+      t
     );
+
 
   const blue =
     Math.round(
       a[2] +
-      (b[2] - a[2]) * t
+      (
+        b[2] -
+        a[2]
+      ) *
+      t
     );
 
-  return `rgb(${r},${g},${blue})`;
+
+  return (
+    "rgb(" +
+    r +
+    "," +
+    g +
+    "," +
+    blue +
+    ")"
+  );
+
 }
+
 
 
 /* =====================================================
@@ -499,76 +1796,130 @@ const horizon =
   136;
 
 
-function skyColor(y) {
+
+function skyColor(
+  y,
+  palette
+) {
 
   const t =
-    y / horizon;
+    y /
+    horizon;
 
 
-  if (t < 0.18) {
+  const stops =
+    palette.sky;
+
+
+  if (
+    t <
+    0.18
+  ) {
 
     return mix(
-      C.sky0,
-      C.sky1,
-      t / 0.18
+      stops[0],
+      stops[1],
+      t /
+      0.18
     );
 
   }
 
 
-  if (t < 0.38) {
+  if (
+    t <
+    0.38
+  ) {
 
     return mix(
-      C.sky1,
-      C.sky2,
-      (t - 0.18) / 0.20
+      stops[1],
+      stops[2],
+      (
+        t -
+        0.18
+      )
+      /
+      0.20
     );
 
   }
 
 
-  if (t < 0.60) {
+  if (
+    t <
+    0.60
+  ) {
 
     return mix(
-      C.sky2,
-      C.sky3,
-      (t - 0.38) / 0.22
+      stops[2],
+      stops[3],
+      (
+        t -
+        0.38
+      )
+      /
+      0.22
     );
 
   }
 
 
-  if (t < 0.80) {
+  if (
+    t <
+    0.80
+  ) {
 
     return mix(
-      C.sky3,
-      C.sky4,
-      (t - 0.60) / 0.20
+      stops[3],
+      stops[4],
+      (
+        t -
+        0.60
+      )
+      /
+      0.20
     );
 
   }
 
 
-  if (t < 0.93) {
+  if (
+    t <
+    0.93
+  ) {
 
     return mix(
-      C.sky4,
-      C.sky5,
-      (t - 0.80) / 0.13
+      stops[4],
+      stops[5],
+      (
+        t -
+        0.80
+      )
+      /
+      0.13
     );
 
   }
 
 
   return mix(
-    C.sky5,
-    C.sky6,
-    (t - 0.93) / 0.07
+    stops[5],
+    stops[6],
+    (
+      t -
+      0.93
+    )
+    /
+    0.07
   );
+
 }
 
 
-function drawSky() {
+
+function drawSky(
+  palette
+) {
 
   for (
     let y = 0;
@@ -577,7 +1928,10 @@ function drawSky() {
   ) {
 
     const color =
-      skyColor(y);
+      skyColor(
+        y,
+        palette
+      );
 
 
     for (
@@ -595,7 +1949,9 @@ function drawSky() {
     }
 
   }
+
 }
+
 
 
 /* =====================================================
@@ -605,56 +1961,88 @@ function drawSky() {
 const clouds = [
 
   {
-    x: -72,
-    y: 42,
-    speed: 0.55,
+    x:
+      -72,
+
+    y:
+      42,
+
+    speed:
+      0.55,
 
     pieces: [
 
-      [0,10,60,10,C.cloud0],
-      [20,6,76,14,C.cloud0],
-      [48,2,78,16,C.cloud1],
-      [82,6,76,14,C.cloud1],
-      [116,10,60,10,C.cloud0],
-      [28,18,108,12,C.cloud0],
-      [62,24,72,8,C.cloud0]
+      [0,10,60,10,0],
+
+      [20,6,76,14,0],
+
+      [48,2,78,16,1],
+
+      [82,6,76,14,1],
+
+      [116,10,60,10,0],
+
+      [28,18,108,12,0],
+
+      [62,24,72,8,0]
 
     ]
   },
 
 
   {
-    x: 104,
-    y: 58,
-    speed: 0.36,
+    x:
+      104,
+
+    y:
+      58,
+
+    speed:
+      0.36,
 
     pieces: [
 
-      [0,10,58,10,C.cloud0],
-      [18,6,84,14,C.cloud0],
-      [48,2,88,16,C.cloud1],
-      [86,6,84,14,C.cloud1],
-      [130,10,58,10,C.cloud0],
-      [30,18,118,12,C.cloud0],
-      [70,24,72,8,C.cloud0]
+      [0,10,58,10,0],
+
+      [18,6,84,14,0],
+
+      [48,2,88,16,1],
+
+      [86,6,84,14,1],
+
+      [130,10,58,10,0],
+
+      [30,18,118,12,0],
+
+      [70,24,72,8,0]
 
     ]
   },
 
 
   {
-    x: 266,
-    y: 36,
-    speed: 0.46,
+    x:
+      266,
+
+    y:
+      36,
+
+    speed:
+      0.46,
 
     pieces: [
 
-      [0,10,56,10,C.cloud0],
-      [18,6,82,14,C.cloud0],
-      [48,2,80,16,C.cloud1],
-      [82,6,78,14,C.cloud1],
-      [122,10,56,10,C.cloud0],
-      [28,18,110,12,C.cloud0]
+      [0,10,56,10,0],
+
+      [18,6,82,14,0],
+
+      [48,2,80,16,1],
+
+      [82,6,78,14,1],
+
+      [122,10,56,10,0],
+
+      [28,18,110,12,0]
 
     ]
   }
@@ -662,10 +2050,12 @@ const clouds = [
 ];
 
 
+
 function drawCloudMass(
   baseX,
   baseY,
-  pieces
+  pieces,
+  palette
 ) {
 
   pieces.forEach(
@@ -675,36 +2065,48 @@ function drawCloudMass(
         y,
         width,
         height,
-        color
+        shade
       ]
     ) => {
 
+
       rect2(
 
-        baseX + x,
+        baseX +
+        x,
 
-        baseY + y,
+        baseY +
+        y,
 
         width,
 
         height,
 
-        color
+        palette.cloud[
+          shade
+        ]
 
       );
 
     }
   );
+
 }
 
 
-function drawClouds(state) {
+
+function drawClouds(
+  state,
+  palette
+) {
 
   clouds.forEach(
     cloud => {
 
+
       const wrap =
-        W + 220;
+        W +
+        220;
 
 
       let x =
@@ -715,7 +2117,8 @@ function drawClouds(state) {
 
       while (
         x >
-        W + 100
+        W +
+        100
       ) {
 
         x -=
@@ -727,88 +2130,108 @@ function drawClouds(state) {
       drawCloudMass(
         x,
         cloud.y,
-        cloud.pieces
+        cloud.pieces,
+        palette
       );
 
 
       drawCloudMass(
-        x - wrap,
+        x -
+        wrap,
         cloud.y,
-        cloud.pieces
+        cloud.pieces,
+        palette
       );
 
     }
   );
+
 }
 
 
-/* =====================================================
-   MOON
 
-   抬高，不贴江面
+/* =====================================================
+   MOON / SUN
 ===================================================== */
 
 const moonX =
   228;
 
-/*
-  原来 116
-  现在提升到 96
-*/
 
 const moonY =
   96;
 
 
-const moonPattern = [
+
+const celestialPattern = [
 
   "000000111111111000000",
+
   "000011111111111110000",
+
   "000111111111111111000",
+
   "001111111111111111100",
+
   "011111111111111111110",
+
   "011111111111111111110",
+
   "111111111111111111111",
+
   "111111111111111111111",
+
   "111111111111111111111",
+
   "111111111111111111111",
+
   "111111111111111111111",
+
   "111111111111111111111",
+
   "111111111111111111111",
+
   "011111111111111111110",
+
   "011111111111111111110",
+
   "001111111111111111100",
+
   "000111111111111111000",
+
   "000011111111111110000",
+
   "000000111111111000000"
 
 ];
 
 
-/* =====================================================
-   MOON SELF GLOW
-===================================================== */
 
-function drawMoonGlow() {
+function drawCelestialGlow(
+  palette
+) {
 
-  const moonRadius =
+  const inner =
     19;
 
-  const maxRadius =
-    38;
+
+  const outer =
+    39;
 
 
   for (
-    let y = -maxRadius;
-    y <= maxRadius;
+    let y = -outer;
+    y <= outer;
     y += PX
   ) {
 
+
     for (
-      let x = -maxRadius;
-      x <= maxRadius;
+      let x = -outer;
+      x <= outer;
       x += PX
     ) {
+
 
       const distance =
         Math.sqrt(
@@ -819,40 +2242,47 @@ function drawMoonGlow() {
 
       if (
         distance >
-        moonRadius &&
+        inner &&
         distance <
-        maxRadius
+        outer
       ) {
+
 
         const strength =
           1 -
           (
             distance -
-            moonRadius
+            inner
           )
           /
           (
-            maxRadius -
-            moonRadius
+            outer -
+            inner
           );
 
-
-        /*
-          靠月亮更亮，
-          向外自然消失
-        */
 
         const alpha =
           strength *
           strength *
-          0.13;
+          palette
+            .celestial
+            .glowAlpha;
 
 
         px(
-          moonX + x,
-          moonY + y,
-          "#fff1bd",
+
+          moonX +
+          x,
+
+          moonY +
+          y,
+
+          palette
+            .celestial
+            .glow,
+
           alpha
+
         );
 
       }
@@ -860,12 +2290,15 @@ function drawMoonGlow() {
     }
 
   }
+
 }
 
 
-function moonShade(
+
+function celestialShade(
   row,
-  column
+  column,
+  palette
 ) {
 
   const value =
@@ -874,47 +2307,87 @@ function moonShade(
     0.5;
 
 
-  if (value < 7) {
-    return C.moonDark;
+  if (
+    value <
+    7
+  ) {
+
+    return palette
+      .celestial
+      .shades[0];
+
   }
 
 
-  if (value < 12) {
-    return C.moonEdge;
+  if (
+    value <
+    12
+  ) {
+
+    return palette
+      .celestial
+      .shades[1];
+
   }
 
 
-  if (value < 17) {
-    return C.moonMid;
+  if (
+    value <
+    17
+  ) {
+
+    return palette
+      .celestial
+      .shades[2];
+
   }
 
 
-  if (value < 22) {
-    return C.moonLight;
+  if (
+    value <
+    22
+  ) {
+
+    return palette
+      .celestial
+      .shades[3];
+
   }
 
 
-  return C.moonCore;
+  return palette
+    .celestial
+    .shades[4];
+
 }
 
 
-function drawMoon() {
 
-  drawMoonGlow();
+function drawCelestial(
+  palette
+) {
+
+  drawCelestialGlow(
+    palette
+  );
 
 
   const startX =
-    moonX - 20;
+    moonX -
+    20;
+
 
   const startY =
-    moonY - 18;
+    moonY -
+    18;
 
 
-  moonPattern.forEach(
+  celestialPattern.forEach(
     (
       row,
       rowIndex
     ) => {
+
 
       [...row].forEach(
         (
@@ -922,21 +2395,27 @@ function drawMoon() {
           columnIndex
         ) => {
 
+
           if (
-            value === "1"
+            value ===
+            "1"
           ) {
+
 
             px(
 
               startX +
-              columnIndex * PX,
+              columnIndex *
+              PX,
 
               startY +
-              rowIndex * PX,
+              rowIndex *
+              PX,
 
-              moonShade(
+              celestialShade(
                 rowIndex,
-                columnIndex
+                columnIndex,
+                palette
               )
 
             );
@@ -948,30 +2427,39 @@ function drawMoon() {
 
     }
   );
+
 }
+
 
 
 /* =====================================================
    HORIZON
 ===================================================== */
 
-function drawHorizon() {
+function drawHorizon(
+  palette
+) {
 
   rect2(
     0,
     horizon,
     W,
     2,
-    "#071923"
+    palette.horizon
   );
+
 }
+
 
 
 /* =====================================================
    WATER
 ===================================================== */
 
-function waterColor(y) {
+function waterColor(
+  y,
+  palette
+) {
 
   const t =
     (
@@ -985,47 +2473,77 @@ function waterColor(y) {
     );
 
 
-  if (t < 0.35) {
+  if (
+    t <
+    0.35
+  ) {
 
     return mix(
-      C.water0,
-      C.water1,
-      t / 0.35
+      palette.water[0],
+      palette.water[1],
+      t /
+      0.35
     );
 
   }
 
 
-  if (t < 0.70) {
+  if (
+    t <
+    0.70
+  ) {
 
     return mix(
-      C.water1,
-      C.water2,
-      (t - 0.35) / 0.35
+      palette.water[1],
+      palette.water[2],
+      (
+        t -
+        0.35
+      )
+      /
+      0.35
     );
 
   }
 
 
   return mix(
-    C.water2,
-    C.water3,
-    (t - 0.70) / 0.30
+    palette.water[2],
+    palette.water[3],
+    (
+      t -
+      0.70
+    )
+    /
+    0.30
   );
+
 }
 
 
-function drawWaterBase() {
+
+function drawWaterBase(
+  palette
+) {
 
   for (
     let y =
-      horizon + 2;
-    y < H;
-    y += PX
+      horizon +
+      2;
+
+    y <
+    H;
+
+    y +=
+      PX
   ) {
 
+
     const color =
-      waterColor(y);
+      waterColor(
+        y,
+        palette
+      );
 
 
     for (
@@ -1033,6 +2551,7 @@ function drawWaterBase() {
       x < W;
       x += PX
     ) {
+
 
       px(
         x,
@@ -1043,11 +2562,13 @@ function drawWaterBase() {
     }
 
   }
+
 }
 
 
+
 /* =====================================================
-   FULL WAVE
+   WAVES
 ===================================================== */
 
 function fullWave(
@@ -1068,10 +2589,13 @@ function fullWave(
     x += PX
   ) {
 
+
     const y =
       Math.round(
+
         (
           baseY +
+
           Math.sin(
             (
               x -
@@ -1082,9 +2606,11 @@ function fullWave(
           )
           *
           amplitude
+
         )
         /
         PX
+
       )
       *
       PX;
@@ -1102,13 +2628,18 @@ function fullWave(
       previousY
     ) {
 
+
       px(
+
         x,
+
         Math.min(
           y,
           previousY
         ),
+
         color
+
       );
 
     }
@@ -1118,7 +2649,9 @@ function fullWave(
       y;
 
   }
+
 }
+
 
 
 /* =====================================================
@@ -1128,24 +2661,38 @@ function fullWave(
 const sparkleData = [
 
   [18,148,0.2],
+
   [47,165,1.1],
+
   [75,153,2.7],
+
   [102,174,4.3],
+
   [130,145,5.2],
+
   [149,162,6.7],
+
   [177,151,8.0],
+
   [197,171,9.4],
+
   [219,145,10.6],
+
   [238,159,11.9],
+
   [261,174,13.0],
+
   [281,150,14.7],
+
   [302,166,16.2]
 
 ];
 
 
+
 function drawSparkles(
-  state
+  state,
+  palette
 ) {
 
   sparkleData.forEach(
@@ -1158,62 +2705,76 @@ function drawSparkles(
       index
     ) => {
 
+
       const light =
         0.5 +
         0.5 *
         Math.sin(
+
           state.time *
           0.00105 +
+
           phase
+
         );
 
-
-      /*
-        只有很亮的时候才出现
-      */
 
       if (
         light >
         0.95
       ) {
 
+
         const dx =
           Math.round(
+
             Math.sin(
+
               state.time *
               0.00031 +
+
               phase
+
             )
             *
             2 /
             PX
+
           )
           *
           PX;
 
 
         const color =
-          light > 0.982
+          light >
+          0.982
           ?
-          C.sparkle1
+          palette.sparkle[1]
           :
-          C.sparkle0;
+          palette.sparkle[0];
 
 
         px(
-          baseX + dx,
+          baseX +
+          dx,
           baseY,
           color
         );
 
 
         if (
-          index % 6 === 0 &&
-          light > 0.987
+          index %
+          6 ===
+          0 &&
+          light >
+          0.987
         ) {
 
+
           px(
-            baseX + dx + 2,
+            baseX +
+            dx +
+            2,
             baseY,
             color
           );
@@ -1224,7 +2785,9 @@ function drawSparkles(
 
     }
   );
+
 }
+
 
 
 /* =====================================================
@@ -1232,51 +2795,81 @@ function drawSparkles(
 ===================================================== */
 
 function drawRiver(
-  state
+  state,
+  palette
 ) {
 
   fullWave(
+
     144,
+
     1.1,
+
     40,
-    state.flow * 18,
-    C.wave0
+
+    state.flow *
+    18,
+
+    palette.waves[0]
+
   );
 
 
   fullWave(
+
     154,
+
     1.2,
+
     54,
-    state.flow * 16 + 18,
-    C.wave1
+
+    state.flow *
+    16 +
+    18,
+
+    palette.waves[1]
+
   );
 
 
   fullWave(
+
     165,
+
     1.4,
+
     66,
-    state.flow * 20 + 36,
-    C.wave1
+
+    state.flow *
+    20 +
+    36,
+
+    palette.waves[1]
+
   );
 
 
   fullWave(
+
     176,
+
     1.2,
+
     76,
-    state.flow * 15 + 12,
-    C.wave2
+
+    state.flow *
+    15 +
+    12,
+
+    palette.waves[2]
+
   );
 
 
-  /*
-    月光倒影位置仍然对应月亮 x
-  */
 
   const shimmer =
     Math.round(
+
       Math.sin(
         state.time *
         0.0009
@@ -1284,263 +2877,274 @@ function drawRiver(
       *
       2 /
       PX
+
     )
     *
     PX;
 
 
   rect2(
-    moonX - 7 + shimmer,
+
+    moonX -
+    7 +
+    shimmer,
+
     140,
+
     14,
+
     2,
-    C.reflection2
+
+    palette.reflection[2]
+
   );
 
 
   rect2(
-    moonX - 4 - shimmer,
+
+    moonX -
+    4 -
+    shimmer,
+
     149,
+
     8,
+
     2,
-    C.reflection0
+
+    palette.reflection[0]
+
   );
 
 
   rect2(
-    moonX - 9 + shimmer,
+
+    moonX -
+    9 +
+    shimmer,
+
     159,
+
     18,
+
     2,
-    C.reflection1
+
+    palette.reflection[1]
+
   );
 
 
   rect2(
-    moonX - 5,
+
+    moonX -
+    5,
+
     169,
+
     10,
+
     2,
-    C.reflection0
+
+    palette.reflection[0]
+
   );
 
 
   rect2(
-    moonX - 7 - shimmer,
+
+    moonX -
+    7 -
+    shimmer,
+
     177,
+
     14,
+
     2,
-    C.reflection1
+
+    palette.reflection[1]
+
   );
 
 
   drawSparkles(
-    state
+    state,
+    palette
   );
+
 }
+
 
 
 /* =====================================================
    WILLOW CONFIG
-
-   每根柳枝拥有自己完全独立的参数
 ===================================================== */
 
 const willowConfigs = [
 
-  /* LEFT */
-
   {
-    root: 8,
-    length: 68,
-    density: 0.24,
-
-    windGain: 0.82,
-    gustFreq: 0.00031,
-    gustAmp: 0.018,
-    phase: 0.2,
-
-    stiffness: 1.15,
-    damping: 1.10
+    root:8,
+    length:68,
+    density:.24,
+    gain:.82,
+    freq:.00031,
+    gust:.018,
+    phase:.2,
+    stiff:1.15,
+    damp:1.10
   },
 
   {
-    root: 19,
-    length: 126,
-    density: 0.70,
-
-    windGain: 1.03,
-    gustFreq: 0.00024,
-    gustAmp: 0.025,
-    phase: 1.1,
-
-    stiffness: 0.96,
-    damping: 1.04
+    root:19,
+    length:126,
+    density:.70,
+    gain:1.03,
+    freq:.00024,
+    gust:.025,
+    phase:1.1,
+    stiff:.96,
+    damp:1.04
   },
 
   {
-    root: 47,
-    length: 88,
-    density: 0.34,
-
-    windGain: 0.88,
-    gustFreq: 0.00038,
-    gustAmp: 0.016,
-    phase: 2.0,
-
-    stiffness: 1.08,
-    damping: 1.12
+    root:47,
+    length:88,
+    density:.34,
+    gain:.88,
+    freq:.00038,
+    gust:.016,
+    phase:2.0,
+    stiff:1.08,
+    damp:1.12
   },
 
   {
-    root: 70,
-    length: 142,
-    density: 0.61,
-
-    windGain: 1.12,
-    gustFreq: 0.00021,
-    gustAmp: 0.028,
-    phase: 2.9,
-
-    stiffness: 0.91,
-    damping: 1.00
+    root:70,
+    length:142,
+    density:.61,
+    gain:1.12,
+    freq:.00021,
+    gust:.028,
+    phase:2.9,
+    stiff:.91,
+    damp:1
   },
 
   {
-    root: 108,
-    length: 60,
-    density: 0.18,
-
-    windGain: 0.76,
-    gustFreq: 0.00042,
-    gustAmp: 0.013,
-    phase: 3.7,
-
-    stiffness: 1.20,
-    damping: 1.15
+    root:108,
+    length:60,
+    density:.18,
+    gain:.76,
+    freq:.00042,
+    gust:.013,
+    phase:3.7,
+    stiff:1.2,
+    damp:1.15
   },
 
 
   /* RIGHT */
 
+
   {
-    root: 202,
-    length: 66,
-    density: 0.26,
-
-    windGain: 0.83,
-    gustFreq: 0.00037,
-    gustAmp: 0.015,
-    phase: 0.5,
-
-    stiffness: 1.18,
-    damping: 1.13
+    root:202,
+    length:66,
+    density:.26,
+    gain:.83,
+    freq:.00037,
+    gust:.015,
+    phase:.5,
+    stiff:1.18,
+    damp:1.13
   },
 
   {
-    root: 214,
-    length: 119,
-    density: 0.68,
-
-    windGain: 1.06,
-    gustFreq: 0.00025,
-    gustAmp: 0.024,
-    phase: 1.3,
-
-    stiffness: 0.97,
-    damping: 1.03
+    root:214,
+    length:119,
+    density:.68,
+    gain:1.06,
+    freq:.00025,
+    gust:.024,
+    phase:1.3,
+    stiff:.97,
+    damp:1.03
   },
 
   {
-    root: 238,
-    length: 86,
-    density: 0.38,
-
-    windGain: 0.90,
-    gustFreq: 0.00041,
-    gustAmp: 0.017,
-    phase: 2.2,
-
-    stiffness: 1.09,
-    damping: 1.10
+    root:238,
+    length:86,
+    density:.38,
+    gain:.90,
+    freq:.00041,
+    gust:.017,
+    phase:2.2,
+    stiff:1.09,
+    damp:1.10
   },
 
   {
-    root: 247,
-    length: 149,
-    density: 0.72,
-
-    windGain: 1.16,
-    gustFreq: 0.00020,
-    gustAmp: 0.030,
-    phase: 3.1,
-
-    stiffness: 0.88,
-    damping: 0.98
+    root:247,
+    length:149,
+    density:.72,
+    gain:1.16,
+    freq:.00020,
+    gust:.030,
+    phase:3.1,
+    stiff:.88,
+    damp:.98
   },
 
   {
-    root: 270,
-    length: 73,
-    density: 0.22,
-
-    windGain: 0.79,
-    gustFreq: 0.00046,
-    gustAmp: 0.014,
-    phase: 4.0,
-
-    stiffness: 1.16,
-    damping: 1.15
+    root:270,
+    length:73,
+    density:.22,
+    gain:.79,
+    freq:.00046,
+    gust:.014,
+    phase:4,
+    stiff:1.16,
+    damp:1.15
   },
 
   {
-    root: 282,
-    length: 134,
-    density: 0.63,
-
-    windGain: 1.08,
-    gustFreq: 0.00027,
-    gustAmp: 0.024,
-    phase: 4.8,
-
-    stiffness: 0.94,
-    damping: 1.01
+    root:282,
+    length:134,
+    density:.63,
+    gain:1.08,
+    freq:.00027,
+    gust:.024,
+    phase:4.8,
+    stiff:.94,
+    damp:1.01
   },
 
   {
-    root: 291,
-    length: 94,
-    density: 0.43,
-
-    windGain: 0.94,
-    gustFreq: 0.00034,
-    gustAmp: 0.019,
-    phase: 5.6,
-
-    stiffness: 1.04,
-    damping: 1.08
+    root:291,
+    length:94,
+    density:.43,
+    gain:.94,
+    freq:.00034,
+    gust:.019,
+    phase:5.6,
+    stiff:1.04,
+    damp:1.08
   },
 
   {
-    root: 314,
-    length: 145,
-    density: 0.68,
-
-    windGain: 1.13,
-    gustFreq: 0.00022,
-    gustAmp: 0.028,
-    phase: 6.3,
-
-    stiffness: 0.90,
-    damping: 0.99
+    root:314,
+    length:145,
+    density:.68,
+    gain:1.13,
+    freq:.00022,
+    gust:.028,
+    phase:6.3,
+    stiff:.90,
+    damp:.99
   }
 
 ];
 
 
-/* =====================================================
-   CREATE INDEPENDENT PHYSICS STATE
-===================================================== */
 
 const willowPhysics =
   willowConfigs.map(
@@ -1548,46 +3152,24 @@ const willowPhysics =
 
       config,
 
-      /*
-        4 段独立角度
-      */
+      angle:
+        [0,0,0,0],
 
-      angle: [
-        0,
-        0,
-        0,
-        0
-      ],
-
-      /*
-        4 段独立速度
-      */
-
-      velocity: [
-        0,
-        0,
-        0,
-        0
-      ]
+      velocity:
+        [0,0,0,0]
 
     })
   );
 
 
-/* =====================================================
-   GLOBAL WIND
 
-   风速一直变化
-   方向永远左 → 右
+/* =====================================================
+   WIND
 ===================================================== */
 
 function globalWind(
   time
 ) {
-
-  /*
-    很慢的大尺度风速变化
-  */
 
   const slow =
     Math.sin(
@@ -1597,10 +3179,6 @@ function globalWind(
     *
     0.018;
 
-
-  /*
-    中尺度变化
-  */
 
   const medium =
     Math.sin(
@@ -1612,10 +3190,6 @@ function globalWind(
     0.011;
 
 
-  /*
-    很轻的小阵风
-  */
-
   const fast =
     Math.sin(
       time *
@@ -1626,12 +3200,8 @@ function globalWind(
     0.005;
 
 
-  /*
-    始终 > 0
-    所以风永远向右
-  */
-
   return Math.max(
+
     0.028,
 
     0.062 +
@@ -1640,11 +3210,13 @@ function globalWind(
     fast
 
   );
+
 }
 
 
+
 /* =====================================================
-   UPDATE EACH WILLOW SEPARATELY
+   INDEPENDENT WILLOW PHYSICS
 ===================================================== */
 
 function updateWillows(
@@ -1652,7 +3224,7 @@ function updateWillows(
   dt
 ) {
 
-  const baseWind =
+  const wind =
     globalWind(
       state.time
     );
@@ -1664,195 +3236,143 @@ function updateWillows(
       branchIndex
     ) => {
 
+
       const c =
         branch.config;
 
 
-      /*
-        每根柳枝自己的局部风
-      */
-
       const localGust =
         Math.sin(
+
           state.time *
-          c.gustFreq +
+          c.freq +
+
           c.phase
+
         )
         *
-        c.gustAmp;
+        c.gust;
 
-
-      /*
-        仍然确保不反向
-      */
 
       const localWind =
         Math.max(
+
           0.015,
-          baseWind *
-          c.windGain +
+
+          wind *
+          c.gain +
           localGust
+
         );
 
 
-      /*
-        四段对风的反应完全不同
-      */
-
-      const windResponse = [
-        0.42,
-        0.68,
-        0.96,
-        1.28
-      ];
+      const response =
+        [
+          .42,
+          .68,
+          .96,
+          1.28
+        ];
 
 
-      /*
-        4 段基础弹性
-      */
-
-      const springBase = [
-        13.0,
-        10.5,
-        8.4,
-        6.7
-      ];
+      const springs =
+        [
+          13,
+          10.5,
+          8.4,
+          6.7
+        ];
 
 
-      /*
-        4 段基础阻尼
-      */
-
-      const dampingBase = [
-        9.1,
-        8.0,
-        7.0,
-        6.1
-      ];
+      const damping =
+        [
+          9.1,
+          8,
+          7,
+          6.1
+        ];
 
 
       for (
-        let section = 0;
-        section < 4;
-        section++
+        let part = 0;
+        part < 4;
+        part++
       ) {
 
-        /*
-          每段还有自己的微小摆动
-        */
 
-        const microMotion =
+        const tinyMotion =
           Math.sin(
 
             state.time *
             (
-              c.gustFreq *
+              c.freq *
               (
                 1.2 +
-                section *
-                0.22
+                part *
+                .22
               )
             )
             +
 
             c.phase +
 
-            section *
-            0.73
+            part *
+            .73
 
           )
           *
           (
-            0.004 +
-            section *
-            0.003
+            .004 +
+            part *
+            .003
           );
 
 
-        /*
-          目标角度
-          越往下越容易向右
-        */
-
         const target =
-          0.012 +
+          .012 +
           localWind *
-          windResponse[
-            section
-          ]
-          +
-          microMotion;
-
-
-        /*
-          每根柳枝拥有自己的弹性
-        */
-
-        const spring =
-          springBase[
-            section
-          ]
-          *
-          c.stiffness;
-
-
-        /*
-          每根柳枝拥有自己的阻尼
-        */
-
-        const damping =
-          dampingBase[
-            section
-          ]
-          *
-          c.damping;
-
-
-        const difference =
-          target -
-          branch.angle[
-            section
-          ];
+          response[part] +
+          tinyMotion;
 
 
         const acceleration =
-          difference *
-          spring;
+          (
+            target -
+            branch.angle[part]
+          )
+          *
+          springs[part]
+          *
+          c.stiff;
 
 
-        branch.velocity[
-          section
-        ] +=
+        branch.velocity[part] +=
           acceleration *
           dt;
 
 
-        /*
-          阻尼
-        */
-
-        branch.velocity[
-          section
-        ] *=
+        branch.velocity[part] *=
           Math.exp(
-            -damping *
+
+            -
+            damping[part] *
+            c.damp *
             dt
+
           );
 
 
-        branch.angle[
-          section
-        ] +=
-          branch.velocity[
-            section
-          ] *
+        branch.angle[part] +=
+          branch.velocity[part] *
           dt;
 
       }
 
     }
   );
+
 }
+
 
 
 /* =====================================================
@@ -1868,10 +3388,13 @@ function stemLine(
 ) {
 
   const dx =
-    x1 - x0;
+    x1 -
+    x0;
+
 
   const dy =
-    y1 - y0;
+    y1 -
+    y0;
 
 
   const distance =
@@ -1897,8 +3420,10 @@ function stemLine(
     i++
   ) {
 
+
     const t =
-      i / steps;
+      i /
+      steps;
 
 
     px(
@@ -1916,7 +3441,9 @@ function stemLine(
     );
 
   }
+
 }
+
 
 
 /* =====================================================
@@ -1939,36 +3466,37 @@ function leafSeed(
   )
   %
   100;
+
 }
 
 
+
 /* =====================================================
-   DRAW WILLOW
+   DRAW WILLOWS
 ===================================================== */
 
 function drawOneWillow(
   branch,
-  branchIndex
+  branchIndex,
+  palette
 ) {
 
   const c =
     branch.config;
 
 
-  /*
-    四段长度
-  */
-
-  const proportions = [
-    0.22,
-    0.24,
-    0.25,
-    0.29
-  ];
+  const proportions =
+    [
+      .22,
+      .24,
+      .25,
+      .29
+    ];
 
 
   let rootX =
     c.root;
+
 
   let rootY =
     -4;
@@ -1980,16 +3508,13 @@ function drawOneWillow(
     section++
   ) {
 
+
     const length =
       c.length *
       proportions[
         section
       ];
 
-
-    /*
-      每一段使用自己的物理角度
-    */
 
     const angle =
       branch.angle[
@@ -2015,23 +3540,22 @@ function drawOneWillow(
       length;
 
 
-    /*
-      每段内部继续画成柔和曲线
-      但不会像面条
-    */
-
     const detail =
       Math.max(
+
         3,
+
         Math.round(
           length /
           8
         )
+
       );
 
 
     let previousX =
       rootX;
+
 
     let previousY =
       rootY;
@@ -2043,14 +3567,11 @@ function drawOneWillow(
       i++
     ) {
 
+
       const t =
         i /
         detail;
 
-
-      /*
-        非常轻微的局部弧线
-      */
 
       const curve =
         Math.sin(
@@ -2060,7 +3581,7 @@ function drawOneWillow(
         *
         angle *
         length *
-        0.055;
+        .055;
 
 
       const x =
@@ -2084,7 +3605,7 @@ function drawOneWillow(
         t;
 
 
-      const gridX =
+      const gx =
         Math.round(
           x /
           PX
@@ -2093,7 +3614,7 @@ function drawOneWillow(
         PX;
 
 
-      const gridY =
+      const gy =
         Math.round(
           y /
           PX
@@ -2103,17 +3624,21 @@ function drawOneWillow(
 
 
       stemLine(
+
         previousX,
+
         previousY,
-        gridX,
-        gridY,
-        C.willow
+
+        gx,
+
+        gy,
+
+        palette
+          .willow
+          .main
+
       );
 
-
-      /*
-        每根柳枝自己的叶片密度
-      */
 
       const seed =
         leafSeed(
@@ -2129,23 +3654,29 @@ function drawOneWillow(
         100
       ) {
 
+
         if (
           seed %
           3 ===
           0
         ) {
 
+
           px(
-            gridX + 2,
-            gridY,
-            C.willowLight
+            gx + 2,
+            gy,
+            palette
+              .willow
+              .light
           );
 
 
           px(
-            gridX + 4,
-            gridY,
-            C.willowLight
+            gx + 4,
+            gy,
+            palette
+              .willow
+              .light
           );
 
         }
@@ -2157,17 +3688,22 @@ function drawOneWillow(
           1
         ) {
 
+
           px(
-            gridX - 2,
-            gridY + 2,
-            C.willowDark
+            gx - 2,
+            gy + 2,
+            palette
+              .willow
+              .dark
           );
 
 
           px(
-            gridX - 4,
-            gridY + 2,
-            C.willowDark
+            gx - 4,
+            gy + 2,
+            palette
+              .willow
+              .dark
           );
 
         }
@@ -2175,10 +3711,13 @@ function drawOneWillow(
 
         else {
 
+
           px(
-            gridX + 2,
-            gridY + 2,
-            C.willowLight
+            gx + 2,
+            gy + 2,
+            palette
+              .willow
+              .light
           );
 
         }
@@ -2187,29 +3726,31 @@ function drawOneWillow(
 
 
       previousX =
-        gridX;
+        gx;
+
 
       previousY =
-        gridY;
+        gy;
 
     }
 
 
-    /*
-      下一段接上一段末端
-    */
-
     rootX =
       endX;
+
 
     rootY =
       endY;
 
   }
+
 }
 
 
-function drawWillows() {
+
+function drawWillows(
+  palette
+) {
 
   willowPhysics.forEach(
     (
@@ -2217,18 +3758,22 @@ function drawWillows() {
       index
     ) => {
 
+
       drawOneWillow(
         branch,
-        index
+        index,
+        palette
       );
 
     }
   );
+
 }
 
 
+
 /* =====================================================
-   PIXEL FONT
+   PIXEL TITLE
 ===================================================== */
 
 const EN = {
@@ -2276,6 +3821,7 @@ const EN = {
 };
 
 
+
 const CN = {
 
   "山": [
@@ -2305,6 +3851,7 @@ const CN = {
 };
 
 
+
 function drawMatrix(
   matrix,
   x,
@@ -2317,15 +3864,19 @@ function drawMatrix(
       rowIndex
     ) => {
 
+
       [...row].forEach(
         (
           value,
           columnIndex
         ) => {
 
+
           if (
-            value === "1"
+            value ===
+            "1"
           ) {
+
 
             px(
 
@@ -2337,7 +3888,7 @@ function drawMatrix(
               rowIndex *
               PX,
 
-              C.white
+              "#ffffff"
 
             );
 
@@ -2348,12 +3899,10 @@ function drawMatrix(
 
     }
   );
+
 }
 
 
-/* =====================================================
-   TITLE
-===================================================== */
 
 function drawTitle() {
 
@@ -2371,15 +3920,19 @@ function drawTitle() {
   const widths = {
 
     h: 5,
+
     i: 5,
+
     "'": 5,
+
     m: 5,
+
     " ": 3
 
   };
 
 
-  const letterGap =
+  const gap =
     4;
 
 
@@ -2390,12 +3943,11 @@ function drawTitle() {
   english.forEach(
     char => {
 
+
       englishWidth +=
-        widths[
-          char
-        ] *
+        widths[char] *
         PX +
-        letterGap;
+        gap;
 
     }
   );
@@ -2407,16 +3959,13 @@ function drawTitle() {
 
   const chineseWidth =
     3 *
-    (
-      9 *
-      PX
-    )
-    +
+    9 *
+    PX +
     2 *
     chineseGap;
 
 
-  const totalWidth =
+  const total =
     englishWidth +
     10 +
     chineseWidth;
@@ -2424,16 +3973,18 @@ function drawTitle() {
 
   let x =
     Math.round(
+
       (
         (
           W -
-          totalWidth
+          total
         )
         /
         2
       )
       /
       PX
+
     )
     *
     PX;
@@ -2446,15 +3997,15 @@ function drawTitle() {
   english.forEach(
     char => {
 
+
       if (
         char !==
         " "
       ) {
 
+
         drawMatrix(
-          EN[
-            char
-          ],
+          EN[char],
           x,
           y + 2
         );
@@ -2463,11 +4014,9 @@ function drawTitle() {
 
 
       x +=
-        widths[
-          char
-        ] *
+        widths[char] *
         PX +
-        letterGap;
+        gap;
 
     }
   );
@@ -2487,10 +4036,9 @@ function drawTitle() {
       index
     ) => {
 
+
       drawMatrix(
-        CN[
-          char
-        ],
+        CN[char],
         x,
         y
       );
@@ -2513,7 +4061,9 @@ function drawTitle() {
 
     }
   );
+
 }
+
 
 
 /* =====================================================
@@ -2525,16 +4075,17 @@ const state = {
   time:
     0,
 
+  last:
+    0,
+
   flow:
     0,
 
   cloudShift:
-    0,
-
-  last:
     0
 
 };
+
 
 
 /* =====================================================
@@ -2564,52 +4115,39 @@ function render(
     1000;
 
 
-  /*
-    防止后台回来发生跳跃
-  */
-
   dt =
     Math.min(
       dt,
-      0.033
+      .033
     );
 
 
   state.last =
     stamp;
 
+
   state.time =
     stamp;
 
-
-  /*
-    江水仍然非常慢
-  */
 
   state.flow +=
     dt *
     1.05;
 
 
-  /*
-    云更慢
-  */
-
   state.cloudShift +=
     dt *
-    0.65;
+    .65;
 
-
-  /*
-    每一根柳枝，
-    每一段，
-    单独计算一次物理
-  */
 
   updateWillows(
     state,
     dt
   );
+
+
+  const palette =
+    currentScene();
 
 
   ctx.clearRect(
@@ -2620,23 +4158,42 @@ function render(
   );
 
 
-  drawSky();
+  drawSky(
+    palette
+  );
+
 
   drawClouds(
-    state
+    state,
+    palette
   );
 
-  drawMoon();
 
-  drawHorizon();
+  drawCelestial(
+    palette
+  );
 
-  drawWaterBase();
+
+  drawHorizon(
+    palette
+  );
+
+
+  drawWaterBase(
+    palette
+  );
+
 
   drawRiver(
-    state
+    state,
+    palette
   );
 
-  drawWillows();
+
+  drawWillows(
+    palette
+  );
+
 
   drawTitle();
 
@@ -2644,7 +4201,9 @@ function render(
   requestAnimationFrame(
     render
   );
+
 }
+
 
 
 requestAnimationFrame(
@@ -2655,5 +4214,4 @@ requestAnimationFrame(
 
 
 </body>
-
 </html>
