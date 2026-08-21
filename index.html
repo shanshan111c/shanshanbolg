@@ -829,21 +829,23 @@
 
 
 
-    <section id="contact">
+   <section id="contact">
 
-      <h2>
-        Contact
-      </h2>
+  <h2>Contact</h2>
 
-    <p>
-  If you would like to share sth. interest with Tian, please conatact with 
-  Email:
-  <a href="mailto:kxitian@ucdavis.edu">
+  <p>
+    If you would like to share something interesting with Tian,
+    please get in touch by email:
+  </p>
+
+  <a
+    class="contact-email"
+    href="mailto:shanshan111c@outlook.com"
+  >
     shanshan111c@outlook.com
   </a>
-</p>
-shanshan111c@outlook.com
-    </section>
+
+</section>
 
 
   </div>
@@ -853,7 +855,7 @@ shanshan111c@outlook.com
 
 
 <footer>
-  © 2026 雅蘭亭拾遺
+  © 2026 made with 雅蘭亭拾遺
 </footer>
 
 
@@ -6175,6 +6177,29 @@ requestAnimationFrame(
 <!-- ===== PC 竹帘收起修正 V2 结束 ===== -->
 
 
+<style>
+  #contact .contact-email {
+    display: inline-block;
+    margin-top: 12px;
 
+    color: inherit;
+    font-family: inherit;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+
+    opacity: 0.72;
+    transition:
+      opacity 0.25s ease,
+      letter-spacing 0.25s ease;
+  }
+
+  #contact .contact-email:hover {
+    opacity: 1;
+    letter-spacing: 0.08em;
+  }
+</style>
 </body>
 </html>
