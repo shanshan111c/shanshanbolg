@@ -6350,7 +6350,7 @@ requestAnimationFrame(
   if(window.__pixelButterflyCursor||!matchMedia('(pointer:fine)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   window.__pixelButterflyCursor=true;
   const cv=document.querySelector('#pixelButterflyCursor'),c=cv.getContext('2d');
-  let dpr=1,x=innerWidth/2,y=innerHeight/2,px=x,py=y,mothX=x,mothY=y,mothVX=0,mothVY=0,visible=false,last=performance.now(),lastEmit=0,travel=0,dirX=1,dirY=0,flapPhase=0,flapHz=1.25,nextFlapSample=0,lastInput=performance.now(),flightState='follow',flightPath=[],flightPos=0,tailTurn=0,circleEnergy=0,prevTailDirX=1,prevTailDirY=0,tailCurvePhase=Math.random()*Math.PI*2;
+  let dpr=1,x=innerWidth/2,y=innerHeight/2,px=x,py=y,mothX=x,mothY=y,mothVX=0,mothVY=0,visible=false,last=performance.now(),lastEmit=0,travel=0,dirX=1,dirY=0,flapPhase=0,flapHz=1.25,nextFlapSample=0,lastInput=performance.now(),flightState='follow',flightPath=[],flightPos=0,tailTurn=0,circleEnergy=0,downFlight=0,flowerContrast=false,prevTailDirX=1,prevTailDirY=0,tailCurvePhase=Math.random()*Math.PI*2;
   const motes=[],wingPoints=[{x:mothX,y:mothY,vx:0,vy:0},{x:mothX,y:mothY,vx:0,vy:0}],tailSpine=[],tailChains=[[],[]];
   function fit(){dpr=Math.min(devicePixelRatio||1,2);cv.width=Math.round(innerWidth*dpr);cv.height=Math.round(innerHeight*dpr);c.setTransform(dpr,0,0,dpr,0,0);c.imageSmoothingEnabled=false}
   fit();addEventListener('resize',fit,{passive:true});
@@ -6371,6 +6371,7 @@ requestAnimationFrame(
     if(scene){const r=scene.getBoundingClientRect();if(cx>=r.left&&cx<=r.right&&cy>=r.top&&cy<=r.bottom){const gx=(cx-r.left)/r.width*320,gy=(cy-r.top)/r.height*180;for(const root of willowRoots){const edge=root<160?1:-1,spread=gy*.085+3.2,lean=edge*gy*.018;if(Math.abs(gx-(root+lean))<spread&&gy<154)return true}}}
     return false;
   }
+  function isFlowerTarget(cx,cy){return document.elementsFromPoint(cx,cy).some(el=>el!==cv&&el.closest?.('#musicBambooPanel .mb-flowers,#musicBambooPanel .mb-flower'))}
   function makeSpiralPath(){
     const start={x:mothX,y:mothY},margin=90,ang=Math.random()*Math.PI*2,dist=130+Math.random()*250,target={x:clamp(start.x+Math.cos(ang)*dist,margin,innerWidth-margin),y:clamp(start.y+Math.sin(ang)*dist,margin,innerHeight-margin)},n=72+Math.floor(Math.random()*35),turns=.35+Math.random()*1.55,radius=18+Math.random()*48,spiralMix=.18+Math.random()*.62,waveA=12+Math.random()*42,waveF=1.2+Math.random()*2.8,phase=Math.random()*6.28,curve=(Math.random()-.5)*150,dx=target.x-start.x,dy=target.y-start.y,len=Math.hypot(dx,dy)||1,nx=-dy/len,ny=dx/len;
     flightPath=[];for(let i=0;i<n;i++){const q=i/(n-1),ease=q*q*(3-2*q),baseX=start.x+dx*ease+nx*curve*Math.sin(Math.PI*q),baseY=start.y+dy*ease+ny*curve*Math.sin(Math.PI*q),fade=Math.sin(Math.PI*q),spin=q*turns*Math.PI*2+phase,r=fade*radius*spiralMix,wave=Math.sin(q*waveF*Math.PI*2+phase)*waveA*fade*(1-spiralMix*.55),jitter=Math.sin(q*17+phase*1.7)*6*fade;flightPath.push({x:baseX+Math.cos(spin)*r+nx*(wave+jitter),y:baseY+Math.sin(spin)*r+ny*(wave+jitter)})}flightPos=0;flightState='depart';
@@ -6438,7 +6439,9 @@ requestAnimationFrame(
       const q=j/(tailSpine.length-1),ease=q*q*(3-2*q),gentleRandom=Math.sin(now*.00048+tailCurvePhase)*.055,curve=(sharedCurve+gentleRandom)*motionAmount*u*1.55*ease,p=tailSpine[j],baseX=spineX+bx*u*1.08*j+sx*curve,baseY=spineY+by*u*1.08*j+sy*curve,guide=.02+.035*(1-q);
       p.x+=(baseX-p.x)*guide;p.y+=(baseY-p.y)*guide;
     }
-    const tipOpen=u*(.025+.055*(.5+.5*Math.sin(now*.0011+tailCurvePhase)));
+    /* 尾尖继承前段切线，避免末端单独高速折动。 */
+    if(tailSpine.length>3){const n=tailSpine.length,p=tailSpine[n-1],a=tailSpine[n-3],b=tailSpine[n-2],tx=b.x+(b.x-a.x),ty=b.y+(b.y-a.y),oldX=p.x,oldY=p.y;p.x+=(tx-p.x)*.42;p.y+=(ty-p.y)*.42;p.px+=p.x-oldX;p.py+=p.y-oldY}
+    const tipOpen=u*(.018+.03*(.5+.5*Math.sin(now*.00085+tailCurvePhase)));
     for(let k=0;k<2;k++){
       const side=k?1:-1,chain=tailChains[k];chain.length=tailSpine.length;
       for(let j=0;j<tailSpine.length;j++){
@@ -6458,20 +6461,34 @@ requestAnimationFrame(
     lastEmit=t;
   }
   function butterfly(t,dt){
-    const pal=theme().wing,u=innerWidth>=900?6:4,flap=.82+Math.sin(flapPhase)*.18,ox=mothX,oy=mothY,sx=-dirY,sy=dirX,bx=-dirX,by=-dirY;
+    const pal=theme().wing,tailPal=theme().tail,u=innerWidth>=900?6:4,flap=.82+Math.sin(flapPhase)*.18,ox=mothX,oy=mothY,sx=-dirY,sy=dirX,bx=-dirX,by=-dirY;
     updateAppendages(dt,u,flap);
-    c.shadowBlur=theme().blur;c.shadowColor=theme().glow;
-    dot(ox,oy,u,pal[0],1);dot(ox+bx*u,oy+by*u,u,pal[0],.96);
+    c.shadowBlur=flowerContrast?11:theme().blur;c.shadowColor=flowerContrast?(isDay()?'rgba(92,22,55,.78)':'rgba(0,20,27,.82)'):theme().glow;
+    const turnBank=clamp(Math.abs(tailTurn)*8.5+circleEnergy*.58,0,1),downQ=clamp((dirY-.12)/.6,0,1),downEase=downQ*downQ*(3-2*downQ),moveStrength=clamp(Math.hypot(mothVX,mothVY)/220,0,1);downFlight=downFlight*.84+downEase*moveStrength*.16;const bank=Math.max(turnBank,downFlight),bankSide=Math.abs(tailTurn)>.008?(tailTurn>=0?1:-1):(dirX>=0?1:-1),tiltAngle=bank*Math.PI*.41,crossScale=Math.cos(tiltAngle),blendQ=clamp((bank-.28)/.55,0,1),sideBlend=blendQ*blendQ*(3-2*blendQ),frontWeight=1-sideBlend,profileWeight=sideBlend,wingRows=[[-3,3,5],[-2,2,6],[-1,1,7],[0,1,7],[1,1,5],[2,1,4],[3,2,3]],sideRows=[[-7,4,4],[-6,3,5],[-5,2,6],[-4,2,7],[-3,1,8],[-2,1,9],[-1,1,9],[0,1,8],[1,1,6],[2,2,5],[3,2,4],[4,3,4]];
     for(const side of [-1,1]){
-      const wing=[[1,-1,1],[2,-2,1],[3,-3,2],[4,-3,2],[5,-2,3],[6,-1,3],[7,0,3],[2,-1,1],[3,-1,2],[4,-1,2],[5,0,3],[2,0,1],[3,0,2],[4,0,2],[1,1,1],[2,1,1],[3,1,2],[4,1,3],[2,2,2],[3,2,2],[4,2,3],[2,3,2],[3,3,3],[1,2,1]];
-      const tip=wingPoints[side>0?1:0],tvx=tip.x-ox,tvy=tip.y-oy,td=Math.hypot(tvx,tvy)||1,wsx=tvx/td,wsy=tvy/td,width=clamp(td/(u*6.2),.72,1.18);
-      wing.forEach(([wx,wy,ci])=>dot(ox+wsx*u*wx*width+bx*u*wy,oy+wsy*u*wx*width+by*u*wy,u,pal[ci],.96-ci*.055));
-      const chain=tailChains[side>0?1:0];chain.forEach((p,j)=>{dot(p.x,p.y,u,j<3?pal[1]:j<8?pal[2]:pal[3],Math.max(.5,.96-j*.03));if(j>0){const a=chain[j-1],dd=Math.hypot(p.x-a.x,p.y-a.y),steps=Math.max(1,Math.round(dd/u));for(let n=1;n<steps;n++)dot(a.x+(p.x-a.x)*n/steps,a.y+(p.y-a.y)*n/steps,u,j<8?pal[2]:pal[3],.72)}});if(chain.length){const tip=chain[chain.length-1];dot(tip.x,tip.y,u,pal[0],.84)}
+      const tip=wingPoints[side>0?1:0],tvx=tip.x-ox,tvy=tip.y-oy,td=Math.hypot(tvx,tvy)||1,wsx=tvx/td,wsy=tvy/td,width=clamp(td/(u*6.2),.72,1.18),sideAlpha=side===bankSide?1:1-bank*.72;
+      for(const [wy,from,to] of wingRows)for(let wx=from;wx<=to;wx++){
+        const upper=wy<=0,edge=wx===to||Math.abs(wy)===3,ci=edge?3:upper?(wx<=2?1:2):(wx<=2?1:2),spread=wx*width*crossScale;
+        dot(ox+wsx*u*spread+bx*u*wy*(1-bank*.12),oy+wsy*u*spread+by*u*wy*(1-bank*.12),u,pal[ci],sideAlpha*frontWeight*(edge?.84:.95));
+      }
+      /* 全侧飞只保留一片合并侧翼；倾斜越大，翼尖主轴越明确地朝上。 */
+      if(side===bankSide&&profileWeight>.02){
+        let upX=wsx,upY=wsy;if(upY>0){upX=-upX;upY=-upY}const upMix=profileWeight*profileWeight;upX*=1-upMix;upY=upY*(1-upMix)-upMix;let upLen=Math.hypot(upX,upY)||1;upX/=upLen;upY/=upLen;
+        let chordX=bx-upX*(bx*upX+by*upY),chordY=by-upY*(bx*upX+by*upY),chordLen=Math.hypot(chordX,chordY);if(chordLen<.08){chordX=-upY;chordY=upX;chordLen=1}chordX/=chordLen;chordY/=chordLen;if(chordX*bx+chordY*by<0){chordX=-chordX;chordY=-chordY}
+        for(const [wy,from,to] of sideRows)for(let wx=from;wx<=to;wx++){
+          const upper=wy<=0,edge=wx===to||wy===-7||wy===4,ci=edge?3:upper?(wx<4?1:2):(wx<3?2:3),profileScale=.74+profileWeight*.06,profileSpread=wx*width*(profileScale+Math.sin(flapPhase)*.032*(1-profileWeight*.65)),profileBack=wy*(.98-bank*.035);
+          dot(ox+upX*u*profileSpread+chordX*u*profileBack,oy+upY*u*profileSpread+chordY*u*profileBack,u,pal[ci],profileWeight*(edge?.88:.97));
+        }
+      }
     }
+    const drawTail=(chain,alpha)=>{if(alpha<=.01)return;chain.forEach((p,j)=>{dot(p.x,p.y,u,j<3?tailPal[1]:j<8?tailPal[2]:tailPal[3],alpha*Math.max(.5,.96-j*.03));if(j>0){const a=chain[j-1],dd=Math.hypot(p.x-a.x,p.y-a.y),steps=Math.max(1,Math.round(dd/u));for(let n=1;n<steps;n++)dot(a.x+(p.x-a.x)*n/steps,a.y+(p.y-a.y)*n/steps,u,j<8?tailPal[2]:tailPal[3],alpha*.72)}});if(chain.length){const tip=chain[chain.length-1];dot(tip.x,tip.y,u,tailPal[0],alpha*.84)}};
+    drawTail(tailChains[0],1-sideBlend);drawTail(tailChains[1],1-sideBlend);drawTail(tailSpine,sideBlend);
+    /* 不画虫身，但用左右翼根像素填满中央连接处，避免留下空洞。 */
+    const rootSpan=1-sideBlend*.55;dot(ox,oy,u,pal[1],1);dot(ox+bx*u,oy+by*u,u,pal[2],.96);dot(ox+sx*u*rootSpan,oy+sy*u*rootSpan,u,pal[1],.9);dot(ox-sx*u*rootSpan,oy-sy*u*rootSpan,u,pal[1],.9);
     c.shadowBlur=0;c.globalAlpha=1;
   }
   function frame(t){
-    const dt=Math.min(.034,(t-last)/1000);last=t;cv.style.mixBlendMode=isDay()?'normal':'screen';cv.style.filter=isDay()?'saturate(1.22) contrast(1.08)':'none';updateFlight(t,dt);if(t>=nextFlapSample){const mean=flightState==='perch'?.58:1.25,sd=flightState==='perch'?.12:.28;flapHz=Math.max(.38,Math.min(2,normal(mean,sd)));nextFlapSample=t+1200+Math.random()*1600}flapPhase=(flapPhase+dt*Math.PI*2*flapHz)%(Math.PI*2);c.clearRect(0,0,innerWidth,innerHeight);
+    const dt=Math.min(.034,(t-last)/1000);last=t;flowerContrast=isFlowerTarget(x,y);cv.style.mixBlendMode=isDay()||flowerContrast?'normal':'screen';cv.style.filter=flowerContrast?'saturate(1.35) contrast(1.22)':isDay()?'saturate(1.22) contrast(1.08)':'none';updateFlight(t,dt);if(t>=nextFlapSample){const mean=flightState==='perch'?.42:.9,sd=flightState==='perch'?.08:.18;flapHz=Math.max(.28,Math.min(1.45,normal(mean,sd)));nextFlapSample=t+1400+Math.random()*1900}flapPhase=(flapPhase+dt*Math.PI*2*flapHz)%(Math.PI*2);c.clearRect(0,0,innerWidth,innerHeight);
     for(let i=motes.length-1;i>=0;i--){const p=motes[i];p.age+=dt;if(p.age>=p.life){motes.splice(i,1);continue}p.vx=0;p.vy+=p.g*dt;p.y+=p.vy*dt;const q=p.age/p.life,u=innerWidth>=900?6:4,s=q>.78?u:Math.max(u,Math.round(p.size/u)*u),a=(1-q)*.68;c.shadowBlur=22;c.shadowColor=theme().glow;dot(p.x,p.y,s,p.col,a)}
     c.shadowBlur=0;if(visible)butterfly(t,dt);requestAnimationFrame(frame)
   }
@@ -6481,6 +6498,7 @@ requestAnimationFrame(
   requestAnimationFrame(frame);
 })();
 </script>
+<!-- ===== 常驻像素荧光蝴蝶鼠标补丁结束 ===== -->
 <!-- ===== 常驻像素荧光蝴蝶鼠标补丁结束 ===== -->
 </body>
 </html>
