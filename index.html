@@ -6141,7 +6141,41 @@ requestAnimationFrame(
 </style>
 <!-- ===== 竹帘木条恢复补丁结束 ===== -->
 
+<!-- ===== PC 竹帘收起修正 V2 ===== -->
+<style id="bamboo-slats-pc-fix-v2">
+  /* 恢复正确收起高度 */
+  #musicBambooPanel:not(.open) {
+    transform: translateY(-374px) !important;
+  }
 
+  /* 收起时隐藏其他木条 */
+  #musicBambooPanel:not(.open) .mb-slat {
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  /* 收起时只露出最后两根木条 */
+  #musicBambooPanel:not(.open) .mb-slat:nth-last-child(-n + 2) {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* 展开后显示完整竹帘 */
+  #musicBambooPanel.open .mb-slat {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* 防止门户样式隐藏整个木条容器 */
+  #musicBambooPanel .mb-slats {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+</style>
+<!-- ===== PC 竹帘收起修正 V2 结束 ===== -->
 
 
 
