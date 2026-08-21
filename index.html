@@ -6272,7 +6272,7 @@ requestAnimationFrame(
 <style id="suzhou-reading-inpage-style">
   #suzhouReadingLayer{
     --sr-pixel:clamp(4px,.46vw,8px);
-    --sr-surface:rgba(3,10,20,.88);
+    --sr-surface:rgba(3,10,20,.68);
     --sr-card:rgba(9,20,33,.9);
     --sr-ink:#eeeae0;
     position:fixed;left:0;right:0;top:64px;bottom:0;z-index:90;
@@ -6280,12 +6280,14 @@ requestAnimationFrame(
     padding:clamp(54px,7vw,100px) clamp(22px,7vw,120px) 110px;
     color:var(--sr-ink);
     background:var(--sr-surface);
+    backdrop-filter:blur(18px) saturate(.82);
+    -webkit-backdrop-filter:blur(18px) saturate(.82);
     opacity:0;visibility:hidden;pointer-events:none;
     transform:translateY(var(--sr-pixel));
     transition:opacity .24s linear,transform .24s steps(4,end),visibility .24s;
     image-rendering:pixelated;
   }
-  body[data-theme="day"] #suzhouReadingLayer{--sr-surface:rgba(235,239,229,.86);--sr-card:rgba(244,242,233,.9);--sr-ink:#24302e}
+  body[data-theme="day"] #suzhouReadingLayer{--sr-surface:rgba(235,239,229,.68);--sr-card:rgba(244,242,233,.9);--sr-ink:#24302e}
   #suzhouReadingLayer.open{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
   #suzhouReadingLayer::before{content:"";position:fixed;inset:64px 0 0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,transparent 0 12%,color-mix(in srgb,var(--page-text) 4%,transparent) 12% 19%,transparent 19% 61%,color-mix(in srgb,var(--page-text) 4%,transparent) 61% 70%,transparent 70%);background-size:calc(var(--sr-pixel)*40) calc(var(--sr-pixel)*30)}
   .sr-inner{width:min(1000px,100%);margin:0 auto}
