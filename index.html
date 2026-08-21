@@ -6327,7 +6327,7 @@ requestAnimationFrame(
   const open=()=>{layer.classList.add('open');layer.setAttribute('aria-hidden','false');document.body.classList.add('suzhou-reading-open');layer.scrollTop=0;if(location.hash!=='#suzhou-reading-pavilion')history.pushState({suzhou:true},'', '#suzhou-reading-pavilion')};
   const close=()=>{layer.classList.remove('open');layer.setAttribute('aria-hidden','true');document.body.classList.remove('suzhou-reading-open');if(location.hash==='#suzhou-reading-pavilion')history.pushState({},'',location.pathname+location.search)};
   const bindLink=()=>{const link=document.querySelector('#heritageSubmenu a[href="suzhou-shuchang.html"],#heritageSubmenu a[href="#suzhou-reading-pavilion"]');if(!link)return;link.href='#suzhou-reading-pavilion';link.textContent='The Suzhou Reading Pavilion';if(link.dataset.inpage!=='1'){link.dataset.inpage='1';link.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();open()})}};
-  bindLink();new MutationObserver(bindLink).observe(document.documentElement,{childList:true,subtree:true});
+  bindLink()
   layer.querySelector('.sr-back').addEventListener('click',close);
   addEventListener('popstate',()=>{if(location.hash==='#suzhou-reading-pavilion')open();else{layer.classList.remove('open');layer.setAttribute('aria-hidden','true');document.body.classList.remove('suzhou-reading-open')}});
   if(location.hash==='#suzhou-reading-pavilion')open();
