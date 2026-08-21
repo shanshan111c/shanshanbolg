@@ -6340,6 +6340,7 @@ requestAnimationFrame(
 <!-- ===== 常驻像素荧光蝴蝶鼠标补丁：放在 </body> 前 ===== -->
 <style id="pixel-butterfly-cursor-style">
   #pixelButterflyCursor{position:fixed;inset:0;width:100vw;height:100vh;z-index:10020;pointer-events:none;image-rendering:pixelated;image-rendering:crisp-edges;mix-blend-mode:screen}
+  body[data-theme="day"] #pixelButterflyCursor{mix-blend-mode:normal;filter:saturate(1.22) contrast(1.08)}
   @media(pointer:fine){html,body,body *{cursor:none!important}}
   @media(pointer:coarse),(prefers-reduced-motion:reduce){#pixelButterflyCursor{display:none!important}}
 </style>
@@ -6353,7 +6354,8 @@ requestAnimationFrame(
   const motes=[],wingPoints=[{x:mothX,y:mothY,vx:0,vy:0},{x:mothX,y:mothY,vx:0,vy:0}],tailSpine=[],tailChains=[[],[]];
   function fit(){dpr=Math.min(devicePixelRatio||1,2);cv.width=Math.round(innerWidth*dpr);cv.height=Math.round(innerHeight*dpr);c.setTransform(dpr,0,0,dpr,0,0);c.imageSmoothingEnabled=false}
   fit();addEventListener('resize',fit,{passive:true});
-  const theme=()=>document.body.dataset.theme==='day'?{wing:['#ffffff','#fff1f6','#ffb0ca','#f36f9f'],tail:['#ffffff','#ffe7f0','#ff9fbe','#e95f92'],glow:'rgba(255,226,238,.52)'}:{wing:['#ffffff','#f8ffff','#e5fffd','#bdf7f3'],tail:['#ffffff','#f1ffff','#d8fbf8','#a8eee9'],glow:'rgba(232,255,255,.42)'};
+  const isDay=()=>document.body.dataset.theme==='day';
+  const theme=()=>isDay()?{wing:['#fff9fb','#ffd8e6','#ff8fb5','#df477c'],tail:['#fff7fa','#ffc8da','#fa78a5','#d53f73'],glow:'rgba(202,52,103,.58)',blur:18}:{wing:['#ffffff','#f8ffff','#e5fffd','#bdf7f3'],tail:['#ffffff','#f1ffff','#d8fbf8','#a8eee9'],glow:'rgba(232,255,255,.42)',blur:32};
   function normal(mean,sd){let a=0,b=0;while(!a)a=Math.random();while(!b)b=Math.random();return mean+Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)*sd}
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const willowRoots=[8,19,47,70,108,200,211,231,244,268,278,289,313];
@@ -6458,7 +6460,7 @@ requestAnimationFrame(
   function butterfly(t,dt){
     const pal=theme().wing,u=innerWidth>=900?6:4,flap=.82+Math.sin(flapPhase)*.18,ox=mothX,oy=mothY,sx=-dirY,sy=dirX,bx=-dirX,by=-dirY;
     updateAppendages(dt,u,flap);
-    c.shadowBlur=32;c.shadowColor=theme().glow;
+    c.shadowBlur=theme().blur;c.shadowColor=theme().glow;
     dot(ox,oy,u,pal[0],1);dot(ox+bx*u,oy+by*u,u,pal[0],.96);
     for(const side of [-1,1]){
       const wing=[[1,-1,1],[2,-2,1],[3,-3,2],[4,-3,2],[5,-2,3],[6,-1,3],[7,0,3],[2,-1,1],[3,-1,2],[4,-1,2],[5,0,3],[2,0,1],[3,0,2],[4,0,2],[1,1,1],[2,1,1],[3,1,2],[4,1,3],[2,2,2],[3,2,2],[4,2,3],[2,3,2],[3,3,3],[1,2,1]];
@@ -6469,7 +6471,7 @@ requestAnimationFrame(
     c.shadowBlur=0;c.globalAlpha=1;
   }
   function frame(t){
-    const dt=Math.min(.034,(t-last)/1000);last=t;updateFlight(t,dt);if(t>=nextFlapSample){const mean=flightState==='perch'?.58:1.25,sd=flightState==='perch'?.12:.28;flapHz=Math.max(.38,Math.min(2,normal(mean,sd)));nextFlapSample=t+1200+Math.random()*1600}flapPhase=(flapPhase+dt*Math.PI*2*flapHz)%(Math.PI*2);c.clearRect(0,0,innerWidth,innerHeight);
+    const dt=Math.min(.034,(t-last)/1000);last=t;cv.style.mixBlendMode=isDay()?'normal':'screen';cv.style.filter=isDay()?'saturate(1.22) contrast(1.08)':'none';updateFlight(t,dt);if(t>=nextFlapSample){const mean=flightState==='perch'?.58:1.25,sd=flightState==='perch'?.12:.28;flapHz=Math.max(.38,Math.min(2,normal(mean,sd)));nextFlapSample=t+1200+Math.random()*1600}flapPhase=(flapPhase+dt*Math.PI*2*flapHz)%(Math.PI*2);c.clearRect(0,0,innerWidth,innerHeight);
     for(let i=motes.length-1;i>=0;i--){const p=motes[i];p.age+=dt;if(p.age>=p.life){motes.splice(i,1);continue}p.vx=0;p.vy+=p.g*dt;p.y+=p.vy*dt;const q=p.age/p.life,u=innerWidth>=900?6:4,s=q>.78?u:Math.max(u,Math.round(p.size/u)*u),a=(1-q)*.68;c.shadowBlur=22;c.shadowColor=theme().glow;dot(p.x,p.y,s,p.col,a)}
     c.shadowBlur=0;if(visible)butterfly(t,dt);requestAnimationFrame(frame)
   }
