@@ -6518,6 +6518,202 @@ requestAnimationFrame(
 })();
 </script>
 <!-- ===== 标题菜单像素化补丁结束 ===== -->
+  <!-- ===== 觀心亭拾遺 · 文雅像素菜单完整补丁（放在 </body> 前） ===== -->
+<style id="elegant-pavilion-menu-style">
+  header{overflow:visible!important}
+  .site-name{
+    --menu-pixel:clamp(4px,.46vw,8px);
+    position:relative!important;z-index:240!important;cursor:pointer!important;
+    user-select:none;-webkit-user-select:none;outline:none;transform-origin:left center
+  }
+  .site-name::after{content:"⌄";display:inline-block;margin-left:8px;font-size:.7em;letter-spacing:0;opacity:.42;transition:transform .22s steps(3,end),opacity .2s linear}
+  .site-name:hover,.site-name:focus-visible,.site-name.menu-open{transform:translateY(2px) scale(.985)}
+  .site-name:hover::after,.site-name:focus-visible::after,.site-name.menu-open::after{opacity:.9}
+  .site-name.menu-open::after{transform:rotate(180deg)}
+  #pavilionEnglishTitle{display:block;margin-top:5px;font-family:Georgia,"Times New Roman",serif;font-size:9px;font-weight:400;line-height:1.2;letter-spacing:.12em;white-space:nowrap;opacity:.42}
+  #heritageSubmenu{
+    position:absolute;left:-14px;top:calc(100% + 18px);width:280px;
+    margin:0;padding:var(--menu-pixel) 0;list-style:none;
+    background:var(--page-bg)!important;
+    border:var(--menu-pixel) solid color-mix(in srgb,var(--page-text) 18%,var(--page-bg))!important;
+    border-radius:0!important;
+    box-shadow:var(--menu-pixel) var(--menu-pixel) 0 color-mix(in srgb,var(--page-text) 10%,var(--page-bg)),calc(var(--menu-pixel)*2) calc(var(--menu-pixel)*2) 0 color-mix(in srgb,var(--page-text) 4%,var(--page-bg))!important;
+    backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+    image-rendering:pixelated;opacity:0;visibility:hidden;pointer-events:none;
+    transform:translateY(calc(var(--menu-pixel)*-1));
+    transition:opacity .18s linear,transform .18s steps(3,end),visibility .18s
+  }
+  #heritageSubmenu::before{content:"";position:absolute;left:calc(var(--menu-pixel)*2);right:calc(var(--menu-pixel)*2);top:calc(var(--menu-pixel)*-1);height:var(--menu-pixel);background:color-mix(in srgb,var(--page-text) 13%,var(--page-bg))}
+  .site-name:hover #heritageSubmenu,.site-name:focus-within #heritageSubmenu,.site-name.menu-open #heritageSubmenu{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+  #heritageSubmenu li{margin:0;padding:0}
+  #heritageSubmenu a{display:block;padding:14px 18px;border-left:var(--menu-pixel) solid transparent;color:var(--page-text);font-family:Georgia,"Songti SC",serif;font-size:14px;font-weight:400;line-height:1.2;letter-spacing:.065em;text-decoration:none;opacity:.7;transition:opacity .12s linear,transform .12s steps(2,end),background .12s linear}
+  #heritageSubmenu a:hover,#heritageSubmenu a:focus-visible{opacity:1;border-left-color:color-mix(in srgb,var(--page-text) 48%,var(--page-bg));background:color-mix(in srgb,var(--page-text) 9%,var(--page-bg));transform:translateX(var(--menu-pixel));outline:none}
+  @media(max-width:720px){#pavilionEnglishTitle{display:none}#heritageSubmenu{left:-8px;top:calc(100% + 15px);width:250px}#heritageSubmenu a{padding:12px 14px;font-size:13px}}
+</style>
+
+<script id="elegant-pavilion-menu-script">
+(()=>{
+  const title=document.querySelector('.site-name');
+  if(!title)return;
+  [...title.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE).forEach(n=>n.remove());
+  let subtitle=title.querySelector('#pavilionEnglishTitle');
+  let menu=title.querySelector('#heritageSubmenu');
+  if(!subtitle){subtitle=document.createElement('small');subtitle.id='pavilionEnglishTitle'}
+  subtitle.textContent='Gleanings from the Pavilion of Contemplation';
+  if(!menu){menu=document.createElement('ul');menu.id='heritageSubmenu'}
+  menu.setAttribute('role','menu');
+  menu.innerHTML=`
+    <li><a role="menuitem" href="suzhou-shuchang.html">The Suzhou Reading Pavilion</a></li>
+    <li><a role="menuitem" href="music.html">Melodies by the Balustrade</a></li>
+    <li><a role="menuitem" href="art.html">Ink &amp; Brush</a></li>
+    <li><a role="menuitem" href="essays.html">Miscellanea</a></li>`;
+  title.insertBefore(document.createTextNode('觀心亭拾遺'),title.firstChild);
+  if(menu.parentNode===title){title.insertBefore(subtitle,menu)}
+  else{title.appendChild(subtitle);title.appendChild(menu)}
+  document.title=document.title.replace(/雅蘭亭拾遺|观心亭拾遗|觀心亭拾遺|观心亭|觀心亭/g,'觀心亭拾遺');
+  title.tabIndex=0;title.setAttribute('role','button');title.setAttribute('aria-haspopup','menu');title.setAttribute('aria-expanded','false');
+  if(title.dataset.elegantMenu==='1')return;
+  title.dataset.elegantMenu='1';
+  let closeTimer=0;
+  const setOpen=open=>{clearTimeout(closeTimer);title.classList.toggle('menu-open',open);title.setAttribute('aria-expanded',String(open))};
+  const laterClose=()=>{clearTimeout(closeTimer);closeTimer=setTimeout(()=>{if(!title.matches(':hover')&&!title.matches(':focus-within'))setOpen(false)},320)};
+  title.addEventListener('pointerenter',()=>setOpen(true));title.addEventListener('pointerleave',laterClose);
+  menu.addEventListener('pointerenter',()=>setOpen(true));menu.addEventListener('pointerleave',laterClose);
+  title.addEventListener('click',e=>{if(e.target.closest('#heritageSubmenu'))return;e.stopPropagation();setOpen(!title.classList.contains('menu-open'))});
+  title.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!title.classList.contains('menu-open'))}if(e.key==='Escape')setOpen(false)});
+  document.addEventListener('click',()=>setOpen(false));
+})();
+</script>
+<!-- ===== 觀心亭拾遺文雅像素菜单结束 ===== -->
+  <!-- ===== The Suzhou Reading Pavilion：主页内嵌子页面补丁（放在文雅菜单补丁之后） ===== -->
+<style id="suzhou-reading-inpage-style">
+  #suzhouReadingLayer{
+    --sr-pixel:clamp(4px,.46vw,8px);
+    position:fixed;left:0;right:0;top:64px;bottom:0;z-index:90;
+    overflow:auto;overscroll-behavior:contain;
+    padding:clamp(54px,7vw,100px) clamp(22px,7vw,120px) 110px;
+    color:var(--page-text);
+    background:color-mix(in srgb,var(--page-bg) 82%,transparent);
+    opacity:0;visibility:hidden;pointer-events:none;
+    transform:translateY(var(--sr-pixel));
+    transition:opacity .24s linear,transform .24s steps(4,end),visibility .24s;
+    image-rendering:pixelated;
+  }
+  #suzhouReadingLayer.open{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+  #suzhouReadingLayer::before{content:"";position:fixed;inset:64px 0 0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,transparent 0 12%,color-mix(in srgb,var(--page-text) 4%,transparent) 12% 19%,transparent 19% 61%,color-mix(in srgb,var(--page-text) 4%,transparent) 61% 70%,transparent 70%);background-size:calc(var(--sr-pixel)*40) calc(var(--sr-pixel)*30)}
+  .sr-inner{width:min(1000px,100%);margin:0 auto}
+  .sr-back{display:inline-block;margin:0 0 38px;padding:10px 14px;border:var(--sr-pixel) solid color-mix(in srgb,var(--page-text) 16%,transparent);background:var(--page-bg);color:var(--page-text);font:500 12px/1 Georgia,serif;letter-spacing:.16em;text-decoration:none;cursor:pointer;box-shadow:var(--sr-pixel) var(--sr-pixel) 0 color-mix(in srgb,var(--page-text) 7%,transparent)}
+  .sr-back:active{transform:translate(var(--sr-pixel),var(--sr-pixel));box-shadow:none}
+  .sr-eyebrow{margin:0 0 14px;font:400 11px/1.4 Georgia,serif;letter-spacing:.24em;text-transform:uppercase;opacity:.5}
+  .sr-title{max-width:840px;margin:0;font:500 clamp(42px,6.2vw,84px)/1.02 Georgia,"Songti SC",serif;letter-spacing:.025em}
+  .sr-intro{max-width:720px;margin:28px 0 70px;font:400 clamp(17px,1.7vw,23px)/1.75 Georgia,serif;opacity:.62}
+  .sr-shelf{margin-top:34px;padding-top:30px;border-top:var(--sr-pixel) solid color-mix(in srgb,var(--page-text) 18%,transparent)}
+  .sr-shelf h2{margin:0 0 24px;font:500 clamp(25px,3vw,38px)/1.2 Georgia,serif;letter-spacing:.04em}
+  .sr-books{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--sr-pixel)*3);margin:0;padding:0;list-style:none}
+  .sr-book{position:relative;min-height:150px;padding:28px;background:color-mix(in srgb,var(--page-bg) 91%,transparent);border:var(--sr-pixel) solid color-mix(in srgb,var(--page-text) 20%,transparent);box-shadow:var(--sr-pixel) var(--sr-pixel) 0 color-mix(in srgb,var(--page-text) 8%,transparent)}
+  .sr-book::before{content:"";position:absolute;left:calc(var(--sr-pixel)*-1);top:22px;width:var(--sr-pixel);height:44px;background:var(--page-text);opacity:.46}
+  .sr-book-title{display:block;font:italic 500 25px/1.4 Georgia,serif}.sr-author{display:block;margin-top:18px;font:400 13px/1.4 Georgia,serif;letter-spacing:.12em;opacity:.56}
+  .sr-empty{padding:22px 0;font:400 15px/1.6 Georgia,serif;letter-spacing:.05em;opacity:.48}
+  body.suzhou-reading-open{overflow:hidden}
+  @media(max-width:720px){#suzhouReadingLayer{top:60px;padding:42px 18px 90px}#suzhouReadingLayer::before{inset:60px 0 0}.sr-books{grid-template-columns:1fr}.sr-intro{margin-bottom:48px}}
+</style>
+
+<script id="suzhou-reading-inpage-script">
+(()=>{
+  if(window.__suzhouReadingInPage)return;
+  window.__suzhouReadingInPage=true;
+  const layer=document.createElement('section');
+  layer.id='suzhouReadingLayer';layer.setAttribute('aria-hidden','true');
+  layer.innerHTML=`<div class="sr-inner">
+    <button class="sr-back" type="button">← RETURN TO THE PAVILION</button>
+    <p class="sr-eyebrow">Gleanings from the Pavilion of Contemplation</p>
+    <h1 class="sr-title">The Suzhou Reading Pavilion</h1>
+    <p class="sr-intro">A quiet register of books presently at hand, volumes already read, and reflections gathered along the way.</p>
+    <section class="sr-shelf"><h2>Currently Reading</h2><ul class="sr-books">
+      <li class="sr-book"><span class="sr-book-title">Lust, Caution</span><span class="sr-author">Eileen Chang</span></li>
+      <li class="sr-book"><span class="sr-book-title">Eight Outcasts</span><span class="sr-author">Yang Kuisong</span></li>
+    </ul></section>
+    <section class="sr-shelf"><h2>Finished Reading</h2><p class="sr-empty">More books will be added here.</p></section>
+    <section class="sr-shelf"><h2>Reviews &amp; Reflections</h2><p class="sr-empty">Reading notes and essays will appear here.</p></section>
+  </div>`;
+  document.body.appendChild(layer);
+  const open=()=>{layer.classList.add('open');layer.setAttribute('aria-hidden','false');document.body.classList.add('suzhou-reading-open');layer.scrollTop=0;if(location.hash!=='#suzhou-reading-pavilion')history.pushState({suzhou:true},'', '#suzhou-reading-pavilion')};
+  const close=()=>{layer.classList.remove('open');layer.setAttribute('aria-hidden','true');document.body.classList.remove('suzhou-reading-open');if(location.hash==='#suzhou-reading-pavilion')history.pushState({},'',location.pathname+location.search)};
+  const bindLink=()=>{const link=document.querySelector('#heritageSubmenu a[href="suzhou-shuchang.html"],#heritageSubmenu a[href="#suzhou-reading-pavilion"]');if(!link)return;link.href='#suzhou-reading-pavilion';link.textContent='The Suzhou Reading Pavilion';if(link.dataset.inpage!=='1'){link.dataset.inpage='1';link.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();open()})}};
+  bindLink();new MutationObserver(bindLink).observe(document.documentElement,{childList:true,subtree:true});
+  layer.querySelector('.sr-back').addEventListener('click',close);
+  addEventListener('popstate',()=>{if(location.hash==='#suzhou-reading-pavilion')open();else{layer.classList.remove('open');layer.setAttribute('aria-hidden','true');document.body.classList.remove('suzhou-reading-open')}});
+  if(location.hash==='#suzhou-reading-pavilion')open();
+})();
+</script>
+<!-- ===== The Suzhou Reading Pavilion 内嵌子页面结束 ===== -->
+  <!-- ===== 觀心亭拾遺 · 文雅像素菜单完整补丁（放在 </body> 前） ===== -->
+<style id="elegant-pavilion-menu-style">
+  header{overflow:visible!important}
+  .site-name{
+    --menu-pixel:clamp(4px,.46vw,8px);
+    position:relative!important;z-index:240!important;cursor:pointer!important;
+    user-select:none;-webkit-user-select:none;outline:none;transform-origin:left center
+  }
+  .site-name::after{content:"⌄";display:inline-block;margin-left:8px;font-size:.7em;letter-spacing:0;opacity:.42;transition:transform .22s steps(3,end),opacity .2s linear}
+  .site-name:hover,.site-name:focus-visible,.site-name.menu-open{transform:translateY(2px) scale(.985)}
+  .site-name:hover::after,.site-name:focus-visible::after,.site-name.menu-open::after{opacity:.9}
+  .site-name.menu-open::after{transform:rotate(180deg)}
+  #pavilionEnglishTitle{display:block;margin-top:5px;font-family:Georgia,"Times New Roman",serif;font-size:9px;font-weight:400;line-height:1.2;letter-spacing:.12em;white-space:nowrap;opacity:.42}
+  #heritageSubmenu{
+    position:absolute;left:-14px;top:calc(100% + 18px);width:280px;
+    margin:0;padding:var(--menu-pixel) 0;list-style:none;
+    background:var(--page-bg)!important;
+    border:var(--menu-pixel) solid color-mix(in srgb,var(--page-text) 18%,var(--page-bg))!important;
+    border-radius:0!important;
+    box-shadow:var(--menu-pixel) var(--menu-pixel) 0 color-mix(in srgb,var(--page-text) 10%,var(--page-bg)),calc(var(--menu-pixel)*2) calc(var(--menu-pixel)*2) 0 color-mix(in srgb,var(--page-text) 4%,var(--page-bg))!important;
+    backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+    image-rendering:pixelated;opacity:0;visibility:hidden;pointer-events:none;
+    transform:translateY(calc(var(--menu-pixel)*-1));
+    transition:opacity .18s linear,transform .18s steps(3,end),visibility .18s
+  }
+  #heritageSubmenu::before{content:"";position:absolute;left:calc(var(--menu-pixel)*2);right:calc(var(--menu-pixel)*2);top:calc(var(--menu-pixel)*-1);height:var(--menu-pixel);background:color-mix(in srgb,var(--page-text) 13%,var(--page-bg))}
+  .site-name:hover #heritageSubmenu,.site-name:focus-within #heritageSubmenu,.site-name.menu-open #heritageSubmenu{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+  #heritageSubmenu li{margin:0;padding:0}
+  #heritageSubmenu a{display:block;padding:14px 18px;border-left:var(--menu-pixel) solid transparent;color:var(--page-text);font-family:Georgia,"Songti SC",serif;font-size:14px;font-weight:400;line-height:1.2;letter-spacing:.065em;text-decoration:none;opacity:.7;transition:opacity .12s linear,transform .12s steps(2,end),background .12s linear}
+  #heritageSubmenu a:hover,#heritageSubmenu a:focus-visible{opacity:1;border-left-color:color-mix(in srgb,var(--page-text) 48%,var(--page-bg));background:color-mix(in srgb,var(--page-text) 9%,var(--page-bg));transform:translateX(var(--menu-pixel));outline:none}
+  @media(max-width:720px){#pavilionEnglishTitle{display:none}#heritageSubmenu{left:-8px;top:calc(100% + 15px);width:250px}#heritageSubmenu a{padding:12px 14px;font-size:13px}}
+</style>
+
+<script id="elegant-pavilion-menu-script">
+(()=>{
+  const title=document.querySelector('.site-name');
+  if(!title)return;
+  [...title.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE).forEach(n=>n.remove());
+  let subtitle=title.querySelector('#pavilionEnglishTitle');
+  let menu=title.querySelector('#heritageSubmenu');
+  if(!subtitle){subtitle=document.createElement('small');subtitle.id='pavilionEnglishTitle'}
+  subtitle.textContent='Gleanings from the Pavilion of Contemplation';
+  if(!menu){menu=document.createElement('ul');menu.id='heritageSubmenu'}
+  menu.setAttribute('role','menu');
+  menu.innerHTML=`
+    <li><a role="menuitem" href="suzhou-shuchang.html">The Suzhou Reading Pavilion</a></li>
+    <li><a role="menuitem" href="music.html">Melodies by the Balustrade</a></li>
+    <li><a role="menuitem" href="art.html">Ink &amp; Brush</a></li>
+    <li><a role="menuitem" href="essays.html">Miscellanea</a></li>`;
+  title.insertBefore(document.createTextNode('觀心亭拾遺'),title.firstChild);
+  if(menu.parentNode===title){title.insertBefore(subtitle,menu)}
+  else{title.appendChild(subtitle);title.appendChild(menu)}
+  document.title=document.title.replace(/雅蘭亭拾遺|观心亭拾遗|觀心亭拾遺|观心亭|觀心亭/g,'觀心亭拾遺');
+  title.tabIndex=0;title.setAttribute('role','button');title.setAttribute('aria-haspopup','menu');title.setAttribute('aria-expanded','false');
+  if(title.dataset.elegantMenu==='1')return;
+  title.dataset.elegantMenu='1';
+  let closeTimer=0;
+  const setOpen=open=>{clearTimeout(closeTimer);title.classList.toggle('menu-open',open);title.setAttribute('aria-expanded',String(open))};
+  const laterClose=()=>{clearTimeout(closeTimer);closeTimer=setTimeout(()=>{if(!title.matches(':hover')&&!title.matches(':focus-within'))setOpen(false)},320)};
+  title.addEventListener('pointerenter',()=>setOpen(true));title.addEventListener('pointerleave',laterClose);
+  menu.addEventListener('pointerenter',()=>setOpen(true));menu.addEventListener('pointerleave',laterClose);
+  title.addEventListener('click',e=>{if(e.target.closest('#heritageSubmenu'))return;e.stopPropagation();setOpen(!title.classList.contains('menu-open'))});
+  title.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!title.classList.contains('menu-open'))}if(e.key==='Escape')setOpen(false)});
+  document.addEventListener('click',()=>setOpen(false));
+})();
+</script>
+<!-- ===== 觀心亭拾遺文雅像素菜单结束 ===== -->
   
 </body>
 </html>
