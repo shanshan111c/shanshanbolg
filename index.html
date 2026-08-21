@@ -6326,6 +6326,198 @@ requestAnimationFrame(
 })();
 </script>
 <!-- ===== 雅蘭亭拾遺子页面菜单补丁结束 ===== -->
+  <!-- ===== 雅蘭亭拾遺：可按压子页面菜单补丁（放在 </body> 前） ===== -->
+<style id="site-title-dropdown-style">
+  header{overflow:visible!important}
+  .site-name{
+    position:relative!important;
+    z-index:240!important;
+    cursor:pointer!important;
+    user-select:none;
+    -webkit-user-select:none;
+    outline:none;
+    transform-origin:left center;
+  }
+  .site-name::after{
+    content:"⌄";
+    display:inline-block;
+    margin-left:8px;
+    font-size:.72em;
+    letter-spacing:0;
+    opacity:.48;
+    transition:transform .24s ease,opacity .24s ease;
+  }
+  .site-name:hover,
+  .site-name:focus-visible,
+  .site-name.menu-open{
+    transform:translateY(2px) scale(.985);
+  }
+  .site-name:hover::after,
+  .site-name:focus-visible::after,
+  .site-name.menu-open::after{opacity:.9}
+  .site-name.menu-open::after{transform:rotate(180deg)}
+
+  #heritageSubmenu{
+    position:absolute;
+    left:-14px;
+    top:calc(100% + 18px);
+    width:210px;
+    padding:10px 0;
+    margin:0;
+    list-style:none;
+    background:color-mix(in srgb,var(--page-bg) 88%,transparent);
+    border:1px solid color-mix(in srgb,var(--page-text) 18%,transparent);
+    box-shadow:8px 8px 0 color-mix(in srgb,var(--page-text) 7%,transparent);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform:translateY(-8px);
+    transition:opacity .22s ease,transform .22s ease,visibility .22s;
+  }
+  .site-name:hover #heritageSubmenu,
+  .site-name:focus-within #heritageSubmenu,
+  .site-name.menu-open #heritageSubmenu{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    transform:translateY(0);
+  }
+  #heritageSubmenu li{margin:0;padding:0}
+  #heritageSubmenu a{
+    display:block;
+    padding:13px 18px;
+    color:var(--page-text);
+    font-family:"Songti SC","Songti TC",STSong,SimSun,serif;
+    font-size:15px;
+    font-weight:500;
+    line-height:1;
+    letter-spacing:3px;
+    text-decoration:none;
+    opacity:.72;
+    transition:background .18s ease,opacity .18s ease,transform .18s ease;
+  }
+  #heritageSubmenu a:hover,
+  #heritageSubmenu a:focus-visible{
+    opacity:1;
+    background:color-mix(in srgb,var(--page-text) 8%,transparent);
+    transform:translateX(4px);
+    outline:none;
+  }
+  @media(max-width:720px){
+    #heritageSubmenu{left:-8px;top:calc(100% + 15px);width:180px}
+    #heritageSubmenu a{padding:12px 14px;font-size:14px;letter-spacing:2px}
+  }
+</style>
+
+<script id="site-title-dropdown-script">
+(()=>{
+  if(window.__heritageTitleMenu)return;
+  window.__heritageTitleMenu=true;
+
+  const title=document.querySelector('.site-name');
+  if(!title)return;
+  title.tabIndex=0;
+  title.setAttribute('role','button');
+  title.setAttribute('aria-haspopup','menu');
+  title.setAttribute('aria-expanded','false');
+
+  const menu=document.createElement('ul');
+  menu.id='heritageSubmenu';
+  menu.setAttribute('role','menu');
+  menu.innerHTML=`
+    <li><a role="menuitem" href="suzhou-shuchang.html">Suzhou Story House</a></li>
+    <li><a role="menuitem" href="music.html">凭栏听曲</a></li>
+    <li><a role="menuitem" href="art.html">书画</a></li>
+    <li><a role="menuitem" href="essays.html">杂谈</a></li>`;
+  title.appendChild(menu);
+
+  const setOpen=open=>{
+    title.classList.toggle('menu-open',open);
+    title.setAttribute('aria-expanded',String(open));
+  };
+  title.addEventListener('click',e=>{
+    if(e.target.closest('#heritageSubmenu'))return;
+    e.stopPropagation();
+    setOpen(!title.classList.contains('menu-open'));
+  });
+  title.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!title.classList.contains('menu-open'))}
+    if(e.key==='Escape')setOpen(false);
+  });
+  document.addEventListener('click',()=>setOpen(false));
+})();
+</script>
+<!-- ===== 雅蘭亭拾遺子页面菜单补丁结束 ===== -->
+
+<!-- ===== 觀心亭拾遺标题菜单：悬停确认 + 背景同颗粒像素化补丁（放在旧菜单补丁之后） ===== -->
+<style id="title-menu-pixel-hover-fix">
+  .site-name{--title-menu-pixel:clamp(4px,.46vw,8px)}
+  #heritageSubmenu{
+    padding:var(--title-menu-pixel) 0!important;
+    background:var(--page-bg)!important;
+    border:var(--title-menu-pixel) solid color-mix(in srgb,var(--page-text) 18%,var(--page-bg))!important;
+    border-radius:0!important;
+    box-shadow:
+      var(--title-menu-pixel) var(--title-menu-pixel) 0 color-mix(in srgb,var(--page-text) 10%,var(--page-bg)),
+      calc(var(--title-menu-pixel) * 2) calc(var(--title-menu-pixel) * 2) 0 color-mix(in srgb,var(--page-text) 4%,var(--page-bg))!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+    image-rendering:pixelated;
+  }
+  #heritageSubmenu::before{
+    content:"";
+    position:absolute;
+    left:calc(var(--title-menu-pixel) * 2);
+    right:calc(var(--title-menu-pixel) * 2);
+    top:calc(var(--title-menu-pixel) * -1);
+    height:var(--title-menu-pixel);
+    background:color-mix(in srgb,var(--page-text) 13%,var(--page-bg));
+  }
+  #heritageSubmenu a{
+    border-left:var(--title-menu-pixel) solid transparent;
+    transition:opacity .12s linear,transform .12s steps(2,end),background .12s linear!important;
+  }
+  #heritageSubmenu a:hover,
+  #heritageSubmenu a:focus-visible{
+    border-left-color:color-mix(in srgb,var(--page-text) 48%,var(--page-bg));
+    background:color-mix(in srgb,var(--page-text) 9%,var(--page-bg))!important;
+    transform:translateX(var(--title-menu-pixel))!important;
+  }
+</style>
+
+<script id="title-menu-hover-confirm-script">
+(()=>{
+  const title=document.querySelector('.site-name');
+  const menu=document.querySelector('#heritageSubmenu');
+  if(!title||!menu||title.dataset.hoverConfirm==='1')return;
+  [...title.childNodes].filter(node=>node.nodeType===Node.TEXT_NODE).forEach(node=>node.remove());
+  title.insertBefore(document.createTextNode('觀心亭拾遺'),title.firstChild);
+  document.title=document.title.replace(/雅蘭亭拾遺|观心亭拾遗|觀心亭拾遺|观心亭|觀心亭/g,'觀心亭拾遺');
+  title.dataset.hoverConfirm='1';
+  let closeTimer=0;
+  const open=()=>{
+    clearTimeout(closeTimer);
+    title.classList.add('menu-open');
+    title.setAttribute('aria-expanded','true');
+  };
+  const laterClose=()=>{
+    clearTimeout(closeTimer);
+    closeTimer=setTimeout(()=>{
+      if(!title.matches(':hover')&&!title.matches(':focus-within')){
+        title.classList.remove('menu-open');
+        title.setAttribute('aria-expanded','false');
+      }
+    },320);
+  };
+  title.addEventListener('pointerenter',open);
+  title.addEventListener('pointerleave',laterClose);
+  menu.addEventListener('pointerenter',open);
+  menu.addEventListener('pointerleave',laterClose);
+})();
+</script>
+<!-- ===== 标题菜单像素化补丁结束 ===== -->
   
 </body>
 </html>
