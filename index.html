@@ -6336,6 +6336,63 @@ requestAnimationFrame(
 })();
 </script>
 <!-- ===== The Suzhou Reading Pavilion 内嵌子页面结束 ===== -->
-  
+ <!-- ===== 常驻像素荧光蝴蝶鼠标补丁：放在 </body> 前 ===== -->
+<style id="pixel-butterfly-cursor-style">
+  #pixelButterflyCursor{position:fixed;inset:0;width:100vw;height:100vh;z-index:10020;pointer-events:none;image-rendering:pixelated;image-rendering:crisp-edges;mix-blend-mode:screen}
+  @media(pointer:fine){html,body,body *{cursor:none!important}}
+  @media(pointer:coarse),(prefers-reduced-motion:reduce){#pixelButterflyCursor{display:none!important}}
+</style>
+<canvas id="pixelButterflyCursor" aria-hidden="true"></canvas>
+<script id="pixel-butterfly-cursor-script">
+(()=>{
+  if(window.__pixelButterflyCursor||!matchMedia('(pointer:fine)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  window.__pixelButterflyCursor=true;
+  const cv=document.querySelector('#pixelButterflyCursor'),c=cv.getContext('2d');
+  let dpr=1,x=innerWidth/2,y=innerHeight/2,px=x,py=y,visible=false,last=performance.now(),lastEmit=0,travel=0,dirX=1,dirY=0,flapPhase=0,flapHz=1.65,nextFlapSample=0;
+  const motes=[];
+  function fit(){dpr=Math.min(devicePixelRatio||1,2);cv.width=Math.round(innerWidth*dpr);cv.height=Math.round(innerHeight*dpr);c.setTransform(dpr,0,0,dpr,0,0);c.imageSmoothingEnabled=false}
+  fit();addEventListener('resize',fit,{passive:true});
+  const theme=()=>document.body.dataset.theme==='day'?{wing:['#ffffff','#fffafd','#fff0f6','#ffd5e4'],tail:['#ffffff','#fff5fa','#ffe3ef','#fbc5dc'],glow:'rgba(255,244,250,.42)'}:{wing:['#ffffff','#f8ffff','#e5fffd','#bdf7f3'],tail:['#ffffff','#f1ffff','#d8fbf8','#a8eee9'],glow:'rgba(232,255,255,.42)'};
+  function normal(mean,sd){let a=0,b=0;while(!a)a=Math.random();while(!b)b=Math.random();return mean+Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)*sd}
+  function dot(dx,dy,s,col,a=1){c.globalAlpha=a;c.fillStyle=col;c.fillRect(Math.round(dx/s)*s,Math.round(dy/s)*s,s,s)}
+  function emit(nx,ny,dx,dy,t){
+    const speed=Math.hypot(dx,dy),u=innerWidth>=900?6:4,pal=theme().tail,n=Math.min(3,1+Math.floor(speed/25)),sideX=-dirY,sideY=dirX;
+    for(const side of [-1,1])for(let i=0;i<n;i++){
+      const endX=nx-dirX*u*7.5+sideX*side*u*1.35,endY=ny-dirY*u*7.5+sideY*side*u*1.35,life=.72+Math.random()*1.2;
+      motes.push({x:endX+(Math.random()-.5)*u,y:endY+(Math.random()-.5)*u,vx:-dirX*(15+Math.random()*32)+sideX*side*(2+Math.random()*8),vy:-dirY*(15+Math.random()*32)+sideY*side*(2+Math.random()*8),age:0,life,phase:Math.random()*6.28,col:Math.random()<.2?pal[0]:pal[2+Math.floor(Math.random()*2)],size:Math.random()<.12?u*2:u});
+    }
+    lastEmit=t;
+  }
+  function butterfly(t){
+    const pal=theme().wing,u=innerWidth>=900?6:4,flap=.82+Math.sin(flapPhase)*.18,sx=-dirY,sy=dirX,bx=-dirX,by=-dirY;
+    c.shadowBlur=32;c.shadowColor=theme().glow;
+    dot(x,y,u,pal[0],1);dot(x+bx*u,y+by*u,u,pal[0],.94);
+    for(const side of [-1,1]){
+      for(let r=1;r<=5;r++){
+        const spread=side*u*r*flap,back=u*(.15+r*.28),col=pal[Math.min(3,Math.ceil(r*.65))],a=.98-r*.055;
+        dot(x+sx*spread+bx*back,y+sy*spread+by*back,u,col,a);
+        if(r<=4)dot(x+sx*spread+bx*(back+u),y+sy*spread+by*(back+u),u,col,a*.86);
+        if(r>=2&&r<=4)dot(x+sx*(spread-side*u*.35)+dirX*u*.8,y+sy*(spread-side*u*.35)+dirY*u*.8,u,col,a*.72);
+      }
+      for(let j=1;j<=8;j++){
+        const curve=Math.sin(j*.62+side*.7)*u*.23,tx=x+bx*u*(1.1+j*.72)+sx*(side*u*1.15+curve),ty=y+by*u*(1.1+j*.72)+sy*(side*u*1.15+curve),col=j<3?pal[1]:j<6?pal[2]:pal[3];
+        dot(tx,ty,u,col,.92-j*.045);
+      }
+      dot(x+bx*u*7.2+sx*side*u*1.2,y+by*u*7.2+sy*side*u*1.2,u,pal[0],.82);
+    }
+    c.shadowBlur=0;c.globalAlpha=1;
+  }
+  function frame(t){
+    const dt=Math.min(.034,(t-last)/1000);last=t;if(t>=nextFlapSample){flapHz=Math.max(.75,Math.min(2.65,normal(1.65,.34)));nextFlapSample=t+700+Math.random()*1300}flapPhase=(flapPhase+dt*Math.PI*2*flapHz)%(Math.PI*2);c.clearRect(0,0,innerWidth,innerHeight);
+    for(let i=motes.length-1;i>=0;i--){const p=motes[i];p.age+=dt;if(p.age>=p.life){motes.splice(i,1);continue}p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.982;p.vy*=.982;p.y+=Math.sin(p.age*8+p.phase)*.18;const q=p.age/p.life,u=innerWidth>=900?6:4,s=q>.78?u:Math.max(u,Math.round(p.size/u)*u),a=(1-q)*.68;c.shadowBlur=22;c.shadowColor=theme().glow;dot(p.x,p.y,s,p.col,a)}
+    c.shadowBlur=0;if(visible)butterfly(t);requestAnimationFrame(frame)
+  }
+  addEventListener('pointermove',e=>{if(e.pointerType&&e.pointerType!=='mouse')return;visible=true;const dx=e.clientX-px,dy=e.clientY-py,speed=Math.hypot(dx,dy);if(speed>.5){const ux=dx/speed,uy=dy/speed;dirX=dirX*.7+ux*.3;dirY=dirY*.7+uy*.3;const dl=Math.hypot(dirX,dirY)||1;dirX/=dl;dirY/=dl}x=e.clientX;y=e.clientY;travel+=speed;if(travel>10&&performance.now()-lastEmit>24){emit(x,y,dx,dy,performance.now());travel=0}px=x;py=y},{passive:true});
+  addEventListener('mouseout',e=>{if(!e.relatedTarget)visible=false},{passive:true});
+  addEventListener('mousedown',()=>{const pal=theme().tail;for(let i=0;i<5;i++)motes.push({x,y,vx:(Math.random()-.5)*55,vy:(Math.random()-.5)*55,age:0,life:.45+Math.random()*.35,phase:Math.random()*6.28,col:pal[i%pal.length],size:6})},{passive:true});
+  requestAnimationFrame(frame);
+})();
+</script>
+<!-- ===== 常驻像素荧光蝴蝶鼠标补丁结束 ===== --> 
 </body>
 </html>
