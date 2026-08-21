@@ -6105,7 +6105,41 @@ requestAnimationFrame(
 </script>
 <!-- ===== 横竹帘音乐补丁 V18 结束 ===== -->
 
+<!-- ===== 竹帘木条恢复补丁 ===== -->
+<style id="bamboo-slats-restore-patch">
+  /* 收起时保留顶部竹帘木条 */
+  #musicBambooPanel:not(.open) {
+    transform: translateY(-342px) !important;
+  }
 
+  /* 强制恢复木条和花 */
+  #musicBambooPanel .mb-slats,
+  #musicBambooPanel .mb-flowers {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  #musicBambooPanel .mb-slats {
+    opacity: 1 !important;
+    z-index: 1 !important;
+  }
+
+  #musicBambooPanel .mb-slat {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* 维持正确图层 */
+  #musicBambooWrap {
+    z-index: 179 !important;
+  }
+
+  #musicBambooWrap.music-active {
+    z-index: 190 !important;
+  }
+</style>
+<!-- ===== 竹帘木条恢复补丁结束 ===== -->
 
 
 
