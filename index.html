@@ -6336,7 +6336,6 @@ requestAnimationFrame(
 })();
 </script>
 <!-- ===== The Suzhou Reading Pavilion 内嵌子页面结束 ===== -->
-
 <!-- ===== 常驻像素荧光蝴蝶鼠标补丁：放在 </body> 前 ===== -->
 <style id="pixel-butterfly-cursor-style">
   #pixelButterflyCursor{position:fixed;inset:0;width:100vw;height:100vh;z-index:10020;pointer-events:none;image-rendering:pixelated;image-rendering:crisp-edges;mix-blend-mode:screen}
@@ -6355,7 +6354,7 @@ requestAnimationFrame(
   function fit(){dpr=Math.min(devicePixelRatio||1,2);cv.width=Math.round(innerWidth*dpr);cv.height=Math.round(innerHeight*dpr);c.setTransform(dpr,0,0,dpr,0,0);c.imageSmoothingEnabled=false}
   fit();addEventListener('resize',fit,{passive:true});
   const isDay=()=>document.body.dataset.theme==='day';
-  const theme=()=>isDay()?{wing:['#fff9fb','#ffd8e6','#ff8fb5','#df477c'],tail:['#fff7fa','#ffc8da','#fa78a5','#d53f73'],glow:'rgba(202,52,103,.58)',blur:18}:{wing:['#ffffff','#f8ffff','#e5fffd','#bdf7f3'],tail:['#ffffff','#f1ffff','#d8fbf8','#a8eee9'],glow:'rgba(232,255,255,.42)',blur:32};
+  const theme=()=>isDay()?{wing:['#ffffff','#fffafd','#ffeaf2','#f2a3bf'],tail:['#ffffff','#fff7fa','#ffdce8','#ee9ab8'],glow:'rgba(245,155,190,.42)'}:{wing:['#ffffff','#f8ffff','#e5fffd','#bdf7f3'],tail:['#ffffff','#f1ffff','#d8fbf8','#a8eee9'],glow:'rgba(232,255,255,.42)'};
   function normal(mean,sd){let a=0,b=0;while(!a)a=Math.random();while(!b)b=Math.random();return mean+Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)*sd}
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const willowRoots=[8,19,47,70,108,200,211,231,244,268,278,289,313];
@@ -6451,6 +6450,10 @@ requestAnimationFrame(
     }
   }
   function dot(dx,dy,s,col,a=1){c.globalAlpha=a;c.fillStyle=col;c.fillRect(Math.round(dx/s)*s,Math.round(dy/s)*s,s,s)}
+  function drawAura(cx,cy,u){
+    const radius=u*(flowerContrast?12:15),g=c.createRadialGradient(cx,cy,u*.6,cx,cy,radius),inner=flowerContrast?(isDay()?'rgba(87,28,53,.20)':'rgba(0,18,25,.24)'):(isDay()?'rgba(255,181,207,.18)':'rgba(226,255,255,.17)');
+    c.save();c.shadowBlur=0;c.globalAlpha=1;g.addColorStop(0,inner);g.addColorStop(.38,inner);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(cx-radius,cy-radius,radius*2,radius*2);c.restore();
+  }
   function emit(nx,ny,dx,dy,t){
     const speed=Math.hypot(dx,dy),u=innerWidth>=900?6:4,pal=theme().tail,n=Math.min(2,1+Math.floor(speed/42)),sideX=-dirY,sideY=dirX;
     for(const side of [-1,1])for(let i=0;i<n;i++){
@@ -6463,25 +6466,36 @@ requestAnimationFrame(
   function butterfly(t,dt){
     const pal=theme().wing,tailPal=theme().tail,u=innerWidth>=900?6:4,flap=.82+Math.sin(flapPhase)*.18,ox=mothX,oy=mothY,sx=-dirY,sy=dirX,bx=-dirX,by=-dirY;
     updateAppendages(dt,u,flap);
-    c.shadowBlur=flowerContrast?11:theme().blur;c.shadowColor=flowerContrast?(isDay()?'rgba(92,22,55,.78)':'rgba(0,20,27,.82)'):theme().glow;
-    const turnBank=clamp(Math.abs(tailTurn)*8.5+circleEnergy*.58,0,1),downQ=clamp((dirY-.12)/.6,0,1),downEase=downQ*downQ*(3-2*downQ),moveStrength=clamp(Math.hypot(mothVX,mothVY)/220,0,1);downFlight=downFlight*.84+downEase*moveStrength*.16;const bank=Math.max(turnBank,downFlight),bankSide=Math.abs(tailTurn)>.008?(tailTurn>=0?1:-1):(dirX>=0?1:-1),tiltAngle=bank*Math.PI*.41,crossScale=Math.cos(tiltAngle),blendQ=clamp((bank-.28)/.55,0,1),sideBlend=blendQ*blendQ*(3-2*blendQ),frontWeight=1-sideBlend,profileWeight=sideBlend,wingRows=[[-3,3,5],[-2,2,6],[-1,1,7],[0,1,7],[1,1,5],[2,1,4],[3,2,3]],sideRows=[[-7,4,4],[-6,3,5],[-5,2,6],[-4,2,7],[-3,1,8],[-2,1,9],[-1,1,9],[0,1,8],[1,1,6],[2,2,5],[3,2,4],[4,3,4]];
+    drawAura(ox,oy,u);c.shadowBlur=0;
+    const turnBank=clamp(Math.abs(tailTurn)*8.5+circleEnergy*.58,0,1),downQ=clamp((dirY-.12)/.6,0,1),downEase=downQ*downQ*(3-2*downQ),moveStrength=clamp(Math.hypot(mothVX,mothVY)/220,0,1);downFlight=downFlight*.84+downEase*moveStrength*.16;const bank=Math.max(turnBank,downFlight),bankSide=Math.abs(tailTurn)>.008?(tailTurn>=0?1:-1):(dirX>=0?1:-1),tiltAngle=bank*Math.PI*.41,crossScale=Math.cos(tiltAngle),blendQ=clamp((bank-.28)/.55,0,1),sideBlend=blendQ*blendQ*(3-2*blendQ),frontWeight=1-sideBlend,profileWeight=sideBlend,wingRows=[[-3,3,5],[-2,2,6],[-1,1,7],[0,1,7],[1,1,5],[2,1,4],[3,2,3]],sideCols=[[1,-3,4],[2,-3,4],[3,-3,3],[4,-2,3],[5,-2,2],[6,-2,2],[7,-1,2],[8,-1,1],[9,-1,1],[10,0,1],[11,0,0]];
     for(const side of [-1,1]){
       const tip=wingPoints[side>0?1:0],tvx=tip.x-ox,tvy=tip.y-oy,td=Math.hypot(tvx,tvy)||1,wsx=tvx/td,wsy=tvy/td,width=clamp(td/(u*6.2),.72,1.18),sideAlpha=side===bankSide?1:1-bank*.72;
       for(const [wy,from,to] of wingRows)for(let wx=from;wx<=to;wx++){
         const upper=wy<=0,edge=wx===to||Math.abs(wy)===3,ci=edge?3:upper?(wx<=2?1:2):(wx<=2?1:2),spread=wx*width*crossScale;
         dot(ox+wsx*u*spread+bx*u*wy*(1-bank*.12),oy+wsy*u*spread+by*u*wy*(1-bank*.12),u,pal[ci],sideAlpha*frontWeight*(edge?.84:.95));
       }
-      /* 全侧飞只保留一片合并侧翼；倾斜越大，翼尖主轴越明确地朝上。 */
+      /* 长尾蚕蛾侧翼：叶片形前翼向上、向后伸展，并与小型后翼连续相接。 */
       if(side===bankSide&&profileWeight>.02){
-        let upX=wsx,upY=wsy;if(upY>0){upX=-upX;upY=-upY}const upMix=profileWeight*profileWeight;upX*=1-upMix;upY=upY*(1-upMix)-upMix;let upLen=Math.hypot(upX,upY)||1;upX/=upLen;upY/=upLen;
-        let chordX=bx-upX*(bx*upX+by*upY),chordY=by-upY*(bx*upX+by*upY),chordLen=Math.hypot(chordX,chordY);if(chordLen<.08){chordX=-upY;chordY=upX;chordLen=1}chordX/=chordLen;chordY/=chordLen;if(chordX*bx+chordY*by<0){chordX=-chordX;chordY=-chordY}
-        for(const [wy,from,to] of sideRows)for(let wx=from;wx<=to;wx++){
-          const upper=wy<=0,edge=wx===to||wy===-7||wy===4,ci=edge?3:upper?(wx<4?1:2):(wx<3?2:3),profileScale=.74+profileWeight*.06,profileSpread=wx*width*(profileScale+Math.sin(flapPhase)*.032*(1-profileWeight*.65)),profileBack=wy*(.98-bank*.035);
-          dot(ox+upX*u*profileSpread+chordX*u*profileBack,oy+upY*u*profileSpread+chordY*u*profileBack,u,pal[ci],profileWeight*(edge?.88:.97));
+        let targetX=bx*.38,targetY=by*.38-.92,targetLen=Math.hypot(targetX,targetY)||1;targetX/=targetLen;targetY/=targetLen;let axisX=wsx,axisY=wsy;if(axisY>0){axisX=-axisX;axisY=-axisY}const axisMix=profileWeight*profileWeight;axisX=axisX*(1-axisMix)+targetX*axisMix;axisY=axisY*(1-axisMix)+targetY*axisMix;let axisLen=Math.hypot(axisX,axisY)||1;axisX/=axisLen;axisY/=axisLen;
+        let chordX=-axisY,chordY=axisX;if(chordX*bx+chordY*by<0){chordX=-chordX;chordY=-chordY}
+        for(const [wx,from,to] of sideCols)for(let wy=from;wy<=to;wy++){
+          const edge=wx===11||wy===from||wy===to,ci=edge?3:(wx<4?1:2),profileLength=wx*width*(.9+Math.sin(flapPhase)*.025*(1-profileWeight*.7)),profileWidth=wy*(.92-profileWeight*.06);
+          dot(ox+axisX*u*profileLength+chordX*u*profileWidth,oy+axisY*u*profileLength+chordY*u*profileWidth,u,pal[ci],profileWeight*(edge?.78:.96));
         }
       }
     }
-    const drawTail=(chain,alpha)=>{if(alpha<=.01)return;chain.forEach((p,j)=>{dot(p.x,p.y,u,j<3?tailPal[1]:j<8?tailPal[2]:tailPal[3],alpha*Math.max(.5,.96-j*.03));if(j>0){const a=chain[j-1],dd=Math.hypot(p.x-a.x,p.y-a.y),steps=Math.max(1,Math.round(dd/u));for(let n=1;n<steps;n++)dot(a.x+(p.x-a.x)*n/steps,a.y+(p.y-a.y)*n/steps,u,j<8?tailPal[2]:tailPal[3],alpha*.72)}});if(chain.length){const tip=chain[chain.length-1];dot(tip.x,tip.y,u,tailPal[0],alpha*.84)}};
+    const drawTail=(chain,alpha)=>{
+      if(alpha<=.01||!chain.length)return;
+      chain.forEach((p,j)=>{
+        const q=j/Math.max(1,chain.length-1),prev=chain[Math.max(0,j-1)],next=chain[Math.min(chain.length-1,j+1)],tx=next.x-prev.x,ty=next.y-prev.y,tl=Math.hypot(tx,ty)||1,nx=-ty/tl,ny=tx/tl,col=q<.22?tailPal[1]:q<.72?tailPal[2]:tailPal[3],baseAlpha=alpha*Math.max(.5,.96-j*.03);
+        dot(p.x,p.y,u,col,baseAlpha);
+        /* 翼根处较粗，随后快速收细；最末端只有很小的天然匙形。 */
+        if(q<.22){const spread=u*(.68-q*1.7);dot(p.x+nx*spread,p.y+ny*spread,u,col,baseAlpha*.42);dot(p.x-nx*spread,p.y-ny*spread,u,col,baseAlpha*.42)}
+        if(q>.93){const spread=u*.52,tipAlpha=baseAlpha*.48;dot(p.x+nx*spread,p.y+ny*spread,u,tailPal[2],tipAlpha);dot(p.x-nx*spread,p.y-ny*spread,u,tailPal[2],tipAlpha)}
+        if(j>0){const a=chain[j-1],dd=Math.hypot(p.x-a.x,p.y-a.y),steps=Math.max(1,Math.round(dd/u));for(let n=1;n<steps;n++)dot(a.x+(p.x-a.x)*n/steps,a.y+(p.y-a.y)*n/steps,u,col,alpha*.72)}
+      });
+      const tip=chain[chain.length-1];dot(tip.x,tip.y,u,tailPal[1],alpha*.78);
+    };
     drawTail(tailChains[0],1-sideBlend);drawTail(tailChains[1],1-sideBlend);drawTail(tailSpine,sideBlend);
     /* 不画虫身，但用左右翼根像素填满中央连接处，避免留下空洞。 */
     const rootSpan=1-sideBlend*.55;dot(ox,oy,u,pal[1],1);dot(ox+bx*u,oy+by*u,u,pal[2],.96);dot(ox+sx*u*rootSpan,oy+sy*u*rootSpan,u,pal[1],.9);dot(ox-sx*u*rootSpan,oy-sy*u*rootSpan,u,pal[1],.9);
