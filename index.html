@@ -6349,8 +6349,8 @@ requestAnimationFrame(
   if(window.__pixelButterflyCursor||!matchMedia('(pointer:fine)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   window.__pixelButterflyCursor=true;
   const cv=document.querySelector('#pixelButterflyCursor'),c=cv.getContext('2d');
-  let dpr=1,x=innerWidth/2,y=innerHeight/2,px=x,py=y,mothX=x,mothY=y,mothVX=0,mothVY=0,visible=false,last=performance.now(),lastEmit=0,travel=0,dirX=1,dirY=0,flapPhase=0,flapHz=1.25,nextFlapSample=0,lastInput=performance.now(),flightState='follow',flightPath=[],flightPos=0,tailTurn=0,circleEnergy=0,sideCharge=0,sideFlight=0,flowerContrast=false,prevTailDirX=1,prevTailDirY=0,tailCurvePhase=Math.random()*Math.PI*2;
-  const motes=[],wingPoints=[{x:mothX,y:mothY,vx:0,vy:0},{x:mothX,y:mothY,vx:0,vy:0}],lowerWingPoints=[{x:mothX,y:mothY,vx:0,vy:0},{x:mothX,y:mothY,vx:0,vy:0}],tailSpine=[],tailChains=[[],[]];
+  let dpr=1,x=innerWidth/2,y=innerHeight/2,px=x,py=y,mothX=x,mothY=y,mothVX=0,mothVY=0,visible=false,last=performance.now(),lastEmit=0,travel=0,dirX=1,dirY=0,flapPhase=0,flapHz=1.25,nextFlapSample=0,lastInput=performance.now(),flightState='follow',flightPath=[],flightPos=0,tailTurn=0,circleEnergy=0,downFlight=0,flowerContrast=false,prevTailDirX=1,prevTailDirY=0,tailCurvePhase=Math.random()*Math.PI*2;
+  const motes=[],wingPoints=[{x:mothX,y:mothY,vx:0,vy:0},{x:mothX,y:mothY,vx:0,vy:0}],tailSpine=[],tailChains=[[],[]];
   function fit(){dpr=Math.min(devicePixelRatio||1,2);cv.width=Math.round(innerWidth*dpr);cv.height=Math.round(innerHeight*dpr);c.setTransform(dpr,0,0,dpr,0,0);c.imageSmoothingEnabled=false}
   fit();addEventListener('resize',fit,{passive:true});
   const isDay=()=>document.body.dataset.theme==='day';
@@ -6396,7 +6396,7 @@ requestAnimationFrame(
     }
     const dx=mothX-oldX,dy=mothY-oldY,d=Math.hypot(dx,dy);
     /* 身体可以同步鼠标，但附肢先继承大部分位移，避免双尾被留在旧坐标或甩出画面。 */
-    if(flightState==='follow'&&d>0){[wingPoints,lowerWingPoints].forEach(points=>points.forEach(p=>{p.x+=dx*.94;p.y+=dy*.94}));tailSpine.forEach((p,j)=>{const q=j/Math.max(1,tailSpine.length-1),carry=.94-.055*q*q;p.x+=dx*carry;p.y+=dy*carry;p.px+=dx*carry;p.py+=dy*carry})}
+    if(flightState==='follow'&&d>0){wingPoints.forEach(p=>{p.x+=dx*.94;p.y+=dy*.94});tailSpine.forEach((p,j)=>{const q=j/Math.max(1,tailSpine.length-1),carry=.94-.055*q*q;p.x+=dx*carry;p.y+=dy*carry;p.px+=dx*carry;p.py+=dy*carry})}
     if(flightState!=='follow'&&d>.01&&t-lastEmit>90&&Math.random()<.48)emit(mothX,mothY,dx,dy,t)
   }
   function updateAppendages(dt,u,flap){
@@ -6406,10 +6406,8 @@ requestAnimationFrame(
     circleEnergy=circleEnergy*.9+clamp(Math.abs(turnCross)*12,0,1)*.1;
     const slowNaturalCurve=Math.sin(performance.now()*.00052+tailCurvePhase)*.075;
     const sharedCurve=(clamp(-tailTurn*5.2,-.62,.62)+slowNaturalCurve)*(1-circleEnergy*.34);
-    /* 上翼与下翼各自拥有弹簧、阻尼和惯性；翼根相连，但不再粘成一块运动。 */
+    /* 翅膀模拟昆虫外骨骼：整片快速回正，只允许翅尖有很小形变。 */
     for(let k=0;k<2;k++){const side=k?1:-1,p=wingPoints[k],tx=mothX+sx*side*u*6.2*flap+bx*u*.2,ty=mothY+sy*side*u*6.2*flap+by*u*.2,ax=(tx-p.x)*132-p.vx*17.5,ay=(ty-p.y)*132-p.vy*17.5;p.vx+=ax*dt;p.vy+=ay*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;const ex=p.x-tx,ey=p.y-ty,ed=Math.hypot(ex,ey),maxFlex=u*.52;if(ed>maxFlex){p.x=tx+ex/ed*maxFlex;p.y=ty+ey/ed*maxFlex;p.vx*=.28;p.vy*=.28}}
-    const lowerFlap=.9+Math.sin(flapPhase+.42)*.1;
-    for(let k=0;k<2;k++){const side=k?1:-1,p=lowerWingPoints[k],tx=mothX+sx*side*u*4.75*lowerFlap+bx*u*1.35,ty=mothY+sy*side*u*4.75*lowerFlap+by*u*1.35,ax=(tx-p.x)*108-p.vx*15.8,ay=(ty-p.y)*108-p.vy*15.8;p.vx+=ax*dt;p.vy+=ay*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;const ex=p.x-tx,ey=p.y-ty,ed=Math.hypot(ex,ey),maxFlex=u*.62;if(ed>maxFlex){p.x=tx+ex/ed*maxFlex;p.y=ty+ey/ed*maxFlex;p.vx*=.34;p.vy*=.34}}
     /* 长尾保留生命感，但加入逐节抗弯与更强长度约束，不再像软绳。 */
     /* 左右尾共用一条柔性中心骨架；两条可见尾巴由骨架等距展开。 */
     const spineX=mothX+bx*u*2,spineY=mothY+by*u*2,motionAmount=clamp(Math.hypot(mothVX,mothVY)/520,0,1),now=performance.now();
@@ -6440,8 +6438,6 @@ requestAnimationFrame(
       const q=j/(tailSpine.length-1),ease=q*q*(3-2*q),gentleRandom=Math.sin(now*.00048+tailCurvePhase)*.055,curve=(sharedCurve+gentleRandom)*motionAmount*u*1.55*ease,p=tailSpine[j],baseX=spineX+bx*u*1.08*j+sx*curve,baseY=spineY+by*u*1.08*j+sy*curve,guide=.02+.035*(1-q);
       p.x+=(baseX-p.x)*guide;p.y+=(baseY-p.y)*guide;
     }
-    /* 侧飞时让尾翅中后段共同形成很浅的上扬弧，不把弯折集中到尾尖。 */
-    if(sideFlight>.08)for(let j=2;j<tailSpine.length-1;j++){const q=j/(tailSpine.length-1),lift=Math.sin(Math.PI*clamp((q-.12)/.88,0,1))*sideFlight*u*.34,p=tailSpine[j],strength=.035+.025*(1-q);p.y-=lift*strength;p.py-=lift*strength*.72}
     /* 尾尖继承前段切线，避免末端单独高速折动。 */
     if(tailSpine.length>3){const n=tailSpine.length,p=tailSpine[n-1],a=tailSpine[n-3],b=tailSpine[n-2],tx=b.x+(b.x-a.x),ty=b.y+(b.y-a.y),oldX=p.x,oldY=p.y;p.x+=(tx-p.x)*.58;p.y+=(ty-p.y)*.58;p.px+=p.x-oldX;p.py+=p.y-oldY}
     const tipOpen=u*(.018+.03*(.5+.5*Math.sin(now*.00085+tailCurvePhase)));
@@ -6467,15 +6463,11 @@ requestAnimationFrame(
     const pal=theme().wing,tailPal=theme().tail,u=innerWidth>=900?6:4,flap=.82+Math.sin(flapPhase)*.18,ox=mothX,oy=mothY,sx=-dirY,sy=dirX,bx=-dirX,by=-dirY;
     updateAppendages(dt,u,flap);
     c.shadowBlur=0;
-    /* 只有持续的急转或明显向下俯冲才进入侧飞；蓄力和滞回避免一帧一切换。 */
-    const moveStrength=clamp(Math.hypot(mothVX,mothVY)/260,0,1),turnDemand=clamp((Math.abs(tailTurn)*9+circleEnergy*.5-.64)/.36,0,1),downQ=clamp((dirY-.54)/.34,0,1),downDemand=downQ*downQ*(3-2*downQ)*moveStrength,rawSide=Math.max(turnDemand,downDemand);
-    sideCharge=clamp(sideCharge+(rawSide>.74?dt*1.65:-dt*2.4),0,1);const sideTarget=sideCharge>.36?rawSide:0,sideRate=sideTarget>sideFlight?2.25:1.35;sideFlight+=(sideTarget-sideFlight)*(1-Math.exp(-dt*sideRate));
-    const bank=sideFlight,bankSide=Math.abs(tailTurn)>.012?(tailTurn>=0?1:-1):(dirX>=0?1:-1),tiltAngle=bank*Math.PI*.38,crossScale=Math.cos(tiltAngle),blendQ=clamp((bank-.34)/.54,0,1),sideBlend=blendQ*blendQ*(3-2*blendQ),frontWeight=1-sideBlend,profileWeight=sideBlend,wingRows=[[-3,3,5],[-2,2,6],[-1,1,7],[0,1,7],[1,1,5],[2,1,4],[3,2,3]],sideCols=[[1,-3,4],[2,-3,4],[3,-3,3],[4,-2,3],[5,-2,2],[6,-2,2],[7,-1,2],[8,-1,1],[9,-1,1],[10,0,1],[11,0,0]];
+    const turnBank=clamp(Math.abs(tailTurn)*8.5+circleEnergy*.58,0,1),downQ=clamp((dirY-.12)/.6,0,1),downEase=downQ*downQ*(3-2*downQ),moveStrength=clamp(Math.hypot(mothVX,mothVY)/220,0,1);downFlight=downFlight*.84+downEase*moveStrength*.16;const bank=Math.max(turnBank,downFlight),bankSide=Math.abs(tailTurn)>.008?(tailTurn>=0?1:-1):(dirX>=0?1:-1),tiltAngle=bank*Math.PI*.41,crossScale=Math.cos(tiltAngle),blendQ=clamp((bank-.28)/.55,0,1),sideBlend=blendQ*blendQ*(3-2*blendQ),frontWeight=1-sideBlend,profileWeight=sideBlend,wingRows=[[-3,3,5],[-2,2,6],[-1,1,7],[0,1,7],[1,1,5],[2,1,4],[3,2,3]],sideCols=[[1,-3,4],[2,-3,4],[3,-3,3],[4,-2,3],[5,-2,2],[6,-2,2],[7,-1,2],[8,-1,1],[9,-1,1],[10,0,1],[11,0,0]];
     for(const side of [-1,1]){
-      /* 外轮廓继续使用上一版的一体式长尾蚕蛾模板；下翼弹簧独立运行，但通过共同翼根合成，不能把造型撕成两块。 */
-      const index=side>0?1:0,tip=wingPoints[index],tvx=tip.x-ox,tvy=tip.y-oy,td=Math.hypot(tvx,tvy)||1,wsx=tvx/td,wsy=tvy/td,width=clamp(td/(u*6.2),.72,1.18),sideAlpha=side===bankSide?1:1-bank*.72;
+      const tip=wingPoints[side>0?1:0],tvx=tip.x-ox,tvy=tip.y-oy,td=Math.hypot(tvx,tvy)||1,wsx=tvx/td,wsy=tvy/td,width=clamp(td/(u*6.2),.72,1.18),sideAlpha=side===bankSide?1:1-bank*.72;
       for(const [wy,from,to] of wingRows)for(let wx=from;wx<=to;wx++){
-        const upper=wy<=0,edge=wx===to||Math.abs(wy)===3,ci=edge?3:(wx<=2?1:2),spread=wx*width*crossScale;
+        const upper=wy<=0,edge=wx===to||Math.abs(wy)===3,ci=edge?3:upper?(wx<=2?1:2):(wx<=2?1:2),spread=wx*width*crossScale;
         dot(ox+wsx*u*spread+bx*u*wy*(1-bank*.12),oy+wsy*u*spread+by*u*wy*(1-bank*.12),u,pal[ci],sideAlpha*frontWeight*(edge?.84:.95));
       }
       /* 长尾蚕蛾侧翼：叶片形前翼向上、向后伸展，并与小型后翼连续相接。 */
@@ -6506,16 +6498,17 @@ requestAnimationFrame(
     c.shadowBlur=0;c.globalAlpha=1;
   }
   function frame(t){
-    const dt=Math.min(.034,(t-last)/1000);last=t;flowerContrast=isFlowerTarget(x,y);cv.style.mixBlendMode=isDay()||flowerContrast?'normal':'screen';cv.style.filter=flowerContrast?(isDay()?'saturate(1.34) contrast(1.18) drop-shadow(0 0 4px rgba(255,226,238,.72)) drop-shadow(0 0 15px rgba(244,143,184,.30))':'saturate(1.16) contrast(1.13) drop-shadow(0 0 4px rgba(240,255,255,.72)) drop-shadow(0 0 17px rgba(145,240,237,.30))'):(isDay()?'saturate(1.22) contrast(1.08) drop-shadow(0 0 4px rgba(255,226,238,.62)) drop-shadow(0 0 14px rgba(244,151,190,.24))':'drop-shadow(0 0 4px rgba(238,255,255,.68)) drop-shadow(0 0 17px rgba(155,244,240,.28))');updateFlight(t,dt);if(t>=nextFlapSample){const mean=flightState==='perch'?.42:.9,sd=flightState==='perch'?.08:.18;flapHz=Math.max(.28,Math.min(1.45,normal(mean,sd)));nextFlapSample=t+1400+Math.random()*1900}flapPhase=(flapPhase+dt*Math.PI*2*flapHz)%(Math.PI*2);c.clearRect(0,0,innerWidth,innerHeight);
+    const dt=Math.min(.034,(t-last)/1000);last=t;flowerContrast=isFlowerTarget(x,y);cv.style.mixBlendMode=isDay()||flowerContrast?'normal':'screen';cv.style.filter=flowerContrast?(isDay()?'saturate(1.35) contrast(1.22) drop-shadow(0 0 4px rgba(255,226,238,.72)) drop-shadow(0 0 15px rgba(244,143,184,.30))':'saturate(1.16) contrast(1.13) drop-shadow(0 0 4px rgba(240,255,255,.72)) drop-shadow(0 0 17px rgba(145,240,237,.30))'):(isDay()?'saturate(1.22) contrast(1.08) drop-shadow(0 0 4px rgba(255,226,238,.62)) drop-shadow(0 0 14px rgba(244,151,190,.24))':'drop-shadow(0 0 4px rgba(238,255,255,.68)) drop-shadow(0 0 17px rgba(155,244,240,.28))');updateFlight(t,dt);if(t>=nextFlapSample){const mean=flightState==='perch'?.42:.9,sd=flightState==='perch'?.08:.18;flapHz=Math.max(.28,Math.min(1.45,normal(mean,sd)));nextFlapSample=t+1400+Math.random()*1900}flapPhase=(flapPhase+dt*Math.PI*2*flapHz)%(Math.PI*2);c.clearRect(0,0,innerWidth,innerHeight);
     for(let i=motes.length-1;i>=0;i--){const p=motes[i];p.age+=dt;if(p.age>=p.life){motes.splice(i,1);continue}p.vx=0;p.vy+=p.g*dt;p.y+=p.vy*dt;const q=p.age/p.life,u=innerWidth>=900?6:4,s=q>.78?u:Math.max(u,Math.round(p.size/u)*u),a=(1-q)*.68;c.shadowBlur=22;c.shadowColor=theme().glow;dot(p.x,p.y,s,p.col,a)}
     c.shadowBlur=0;if(visible)butterfly(t,dt);requestAnimationFrame(frame)
   }
-  addEventListener('pointermove',e=>{if(e.pointerType&&e.pointerType!=='mouse')return;const first=!visible;visible=true;const now=performance.now(),dx=e.clientX-px,dy=e.clientY-py,speed=Math.hypot(dx,dy);x=e.clientX;y=e.clientY;if(first){mothX=x;mothY=y;mothVX=0;mothVY=0;[wingPoints,lowerWingPoints].forEach(points=>points.forEach(p=>{p.x=x;p.y=y;p.vx=0;p.vy=0}));tailSpine.length=0;tailChains.forEach(a=>a.length=0)}if(speed>.5){lastInput=now;if(flightState!=='follow')beginReturn();const ux=dx/speed,uy=dy/speed;dirX=dirX*.7+ux*.3;dirY=dirY*.7+uy*.3;const dl=Math.hypot(dirX,dirY)||1;dirX/=dl;dirY/=dl}travel+=speed;if(flightState==='follow'&&travel>18&&now-lastEmit>58){emit(x,y,dx,dy,now);travel=0}px=x;py=y},{passive:true});
+  addEventListener('pointermove',e=>{if(e.pointerType&&e.pointerType!=='mouse')return;const first=!visible;visible=true;const now=performance.now(),dx=e.clientX-px,dy=e.clientY-py,speed=Math.hypot(dx,dy);x=e.clientX;y=e.clientY;if(first){mothX=x;mothY=y;mothVX=0;mothVY=0;wingPoints.forEach(p=>{p.x=x;p.y=y;p.vx=0;p.vy=0});tailSpine.length=0;tailChains.forEach(a=>a.length=0)}if(speed>.5){lastInput=now;if(flightState!=='follow')beginReturn();const ux=dx/speed,uy=dy/speed;dirX=dirX*.7+ux*.3;dirY=dirY*.7+uy*.3;const dl=Math.hypot(dirX,dirY)||1;dirX/=dl;dirY/=dl}travel+=speed;if(flightState==='follow'&&travel>18&&now-lastEmit>58){emit(x,y,dx,dy,now);travel=0}px=x;py=y},{passive:true});
   addEventListener('mouseout',e=>{if(!e.relatedTarget)visible=false},{passive:true});
   addEventListener('mousedown',()=>{lastInput=performance.now();beginReturn();const pal=theme().tail;for(let i=0;i<5;i++)motes.push({x:mothX,y:mothY,vx:0,vy:3+Math.random()*14,g:75+Math.random()*55,age:0,life:.45+Math.random()*.35,phase:Math.random()*6.28,col:pal[i%pal.length],size:6})},{passive:true});
   requestAnimationFrame(frame);
 })();
 </script>
 <!-- ===== 常驻像素荧光蝴蝶鼠标补丁结束 ===== -->
+</body></html>
 </body>
 </html>
