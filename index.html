@@ -6212,9 +6212,7 @@ function frontProps(n){
     // One shared 3px origin for the whole table.  Do not round the tabletop,
     // legs and food separately: that was the source of the visible cracks.
     const gr=(gx,gy,gw,gh,color)=>{p.fillStyle=color;p.fillRect(x+gx*u,y+gy*u,gw*u,gh*u)},
-          T=wide
-            ?{left:-17,width:34,top:-2,th:2,ll:-15,rl:12,lw:3,lh:3}
-            :{left:-11,width:22,top:-1,th:1,ll:-10,rl:8,lw:2,lh:2};
+         T={left:-12,width:24,top:-2,th:2,ll:-10,rl:8,lw:2,lh:3};
     gr(T.left,T.top,T.width,T.th,'#614237');
     gr(T.ll,0,T.lw,T.lh,'#614237');
     gr(T.rl,0,T.lw,T.lh,'#614237');
@@ -6243,8 +6241,8 @@ function frontProps(n){
     // Enlarged flat pastry: every block still uses exactly the pet pixel grid.
     // Its flavour colour is selected only on sitting down;
     // the centre pixel of the first row is fixed red strawberry jam.
-    let cake=A.snack==='white'?'#f5ead8':'#efb6c3',cw=wide?5:3,ch=wide?3:2,
-        cakeGX=wide?-12:-8,cakeGY=wide?-5:-3;
+    let cake=A.snack==='white'?'#f5ead8':'#efb6c3',cw=5,ch=3,
+    cakeGX=-9,cakeGY=-5;
     gr(cakeGX,cakeGY,cw,ch,cake);gr(cakeGX+Math.floor(cw/2),cakeGY,1,1,'#c94e58');
     if(lift===0){p.globalAlpha=.38;pp(cx-u,cy-5*u,u,3*u,'#fff8ec');p.globalAlpha=1}
   }
